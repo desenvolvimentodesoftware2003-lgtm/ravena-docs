@@ -1,0 +1,5 @@
+Jelcome to Arch Linux!
+
+'lease configure the system!
+
+Please enter the new timezone name or number ("list" to list options, empty to sk

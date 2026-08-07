@@ -1,0 +1,94 @@
+OK
+OK
+OK
+
+OK
+
+OK
+OK
+
+OK
+OK
+OK
+OK
+
+OK
+OK
+nK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+OK
+
+nK
+OK
+OK
+
+OK
+OK
+OK
+
+Arquivo
+] Finished Create Static Device Nodes in /dev.
+] Reached target Preparation for Local File Systems.
+] Reached target Local File Systems.
+Starting Rule-based Manager for Device Events and Files ...
+] Started Journal Service.
+Starting Create System Files and Directories ...
+] Finished Create System Files and Directories.
+] Finished Coldplug All udev Devices
+] Started Rule-based Manager for Device Events and Files.
+] Reached target System Initialization.
+] Reached target Basic System.
+] Reached target Initrd Default Target.
+Starting Cleaning Up and Shutting Down Daemons.
+] Stopped target Initrd Default Target.
+] Stopped target Basic System
+] Stopped target Initrd Root Device.
+] Stopped target Path Units.
+] Stopped target Slice Units.
+] Stopped target Socket Units.
+] Stopped target System Initialization.
+] Stopped target Swaps.
+] Stopped target Timer Units.
+] Stopped Create List of Static Device Nodes.
+] Stopped Load Kernel Modules
+] Stopped Create System Files and Directories.
+] Stopped target Local File Systems.
+] Stopped target Preparation for Local File Systems.
+] Stopped Coldplug All udev Devices.
+Stopping Rule-based Manager for Device Events and Files ...
+] Finished Cleaning Up and Shutting Down Daemons.
+] Stopped Rule-based Manager for Device Events and Files.
+] Closed udev Control Socket.
+Starting Cleanup udev Database
+] Stopped Create Static Device Nodes in /dev.
+] Finished Cleanup udev Database.
+] Reached target Switch Root.
+Starting Switch Root ...
+FAILED] Failed to start Switch Root.
+ee 'systemctl status initrd-switch-root.service' for details.
+ou are in emergency mode. After logging in, type "journalctl -xb" to view
+Istem logs. "sustemctl reboot" to reboot, or
+
+Máquina
+
+Visualizar
+
+Entrada
+
+Dispositivos
+
+Ajuda
+
+..
+
+"exit"

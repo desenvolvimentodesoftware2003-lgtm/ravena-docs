@@ -1,0 +1,62 @@
+GNU nano 9.1
+#!/bin/bash
+
+PROFILEDEF.SH - Definicao do Perfil Ravena
+
+profiledef.sh
+
+Instalando imagem ...
+
+100%
+
+# Archiso - Arch Linux Customizado
+
+Informaçoes da ISO
+iso_name="ravena-archlinux"
+iso_label="RAVENA_$(date +%Y%m)"
+iso_publisher="Ravena Security Lab"
+iso_application="Ravena Security Sandbox"
+iso_version="$(date +%Y.zm.d)"
+intastall_dir="arch"
+arch="x86_64"
+bui ldmodes=(' iso' )
+bootmodes=('bios.syslinux.mbr' 'bios.syslinux.eltorito' 'uefi-x64.systemed-boot.esp' 'uefi-64.systemd-bot.eltorito[)
+
+# Configuracoes de boot (BIOS + UEFI)
+bootmodes=(' bios/grub' 'uefi/x64' )
+boot loader="grub"
+
+# Configuracoes do sistema
+timezone="Amer ica/Sao_Paulo"
+locale="pt_BR.UTF-8"
+keymap="br-abnt2"
+
+Configuracoes de rede
+hostname="ravena-sandbox"
+loma in="sandbox. local"
+
+t Configuracoes de usuario (SEM SENHA - uso pessoal)
+iser_name="ravena"
+iser_password=""
+iser_shell="/bin/bash"
+
+# Configuraçoes de ISO
+image_type="iso"
+iso_checksum="sha256"
+
+# Configuracoes de squashfs
+airootfs_image_type="squashfs"
+airootfs_tar_options=(' -- zstd' ' -- acls' ' -- xattrs' ' -- numeric-owner' )
+airootfs_mksquashfs_opt ions=('-comp' 'zstd' '-Xcompression-level' '19' )
+
+# Configuracoes de compressao
+squashfs_compression="zstd"
+squashfs_level=19
+
+file_permissions=(
+[["/etc/shadow"]="0:0:400"
+[["/etc/gshadow="]="0:0:400"
+[["/root"]="0:0:750"
+[["/root/.automated_script.sh"]="0:0:755"
+
+

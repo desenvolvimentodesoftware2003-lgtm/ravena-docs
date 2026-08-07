@@ -1,0 +1,17 @@
+otimização e particionamento de memória para execução de LLMs é o AirLLM, além do Turbovec, que atua na compressão de memória RAM para bancos de dados vetoriais.
+
+AirLLM
+
+Repositório: [https://github.com/allysone/AirLLM](https://github.com/allysone/AirLLM)
+
+Foco: Gerenciamento de VRAM/RAM para inferência de modelos de linguagem.
+
+Funcionamento: Em vez de manter todo o modelo carregado na VRAM da GPU, ele carrega e processa cada camada da rede neural individualmente. Isso viabiliza a execução de LLMs pesados (como Llama 3.1 70B ou 405B) em hardware com apenas 4 GB a 8 GB de VRAM.
+
+Turbovec
+
+Repositório: [https://github.com/turbovec/turbovec](https://github.com/turbovec/turbovec)
+
+Foco: Compressão de memória RAM para vetores e embeddings (vector search).
+
+Funcionamento: Aplica quantização (baseada no algoritmo TurboQuant do Google) para compactar o índice vetorial no sistema. Ele reduz, por exemplo, uma base vetorial de 31 GB de RAM para apenas 4 GB de consumo real na memória principal, o que é ideal para otimizar pipelines de RAG ou memória semântica.

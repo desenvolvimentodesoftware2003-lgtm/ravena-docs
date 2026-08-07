@@ -1,0 +1,38 @@
+k V4 Flach Erpe (New) , 50 7c
+Download necessario
+
+ravena-arc
+X
+
+rt
+
+!
+
+tê
+
+Md
+
+fs
+mÓ
+
+Esta imagem usa Syslinux 6.04/pre3-3-g05ac953c, mas este
+aplicativo inclui somente os arquivos de instalacao para
+Syslinux 6.04/pre1.
+
+Como novas versoes de Syslinux nao sao compativeis entre si,
+e nao seria seja possivel para o Rufus incluir todas elas, dois
+arquivos adicionais devem ser baixados a partir da Internet
+('Idlinux.sys' e 'Idlinux.bss'):
+- Selecione 'Sim' para se conectar a Internet e baixar esses
+arquivos
+- Selecione 'Nao' para cancelar a operacao
+
+Nota: Os arquivos serao baixados no diretorio atual do
+aplicativo e serao reutilizados automaticamente se estiverem
+presentes.
+
+co
+
+Sim
+
+Não

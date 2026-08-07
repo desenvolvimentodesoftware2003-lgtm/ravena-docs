@@ -1,0 +1,64 @@
+América do Norte
+
+Nova York / Nova Jersey (EUA): O epicentro financeiro global. Abriga a NYSE e a NASDAQ. Os principais data centers de execução e feeds de dados de alta frequência ficam concentrados no norte de Nova Jersey (Secaucus, Mahwah e Carteret) e em Manhattan.
+
+Europa
+
+Londres (Reino Unido): Sede da London Stock Exchange (LSE) e maior hub mundial para negociação de câmbio (Forex) e commodities.
+
+Frankfurt (Alemanha): Coração financeiro da União Europeia e sede da Deutsche Börse (Xetra). Ponto central de roteamento de dados do bloco europeu.
+
+Amsterdã (Holanda): Hub estratégico da Euronext e uma das infraestruturas de tráfego de dados e cabos submarinos mais rápidas do mundo.
+
+Ásia-Pacífico
+
+Tóquio (Japão): Sede da Tokyo Stock Exchange (TSE/JPX), referência para abertura dos mercados orientais.
+
+Hong Kong: Ponto de acesso direto para o capital asiático e para a Hong Kong Stock Exchange (HKEX).
+
+Singapura: Principal centro corporativo da Ásia para derivativos, commodities e liquidez SGX.
+
+Servidores na América do Sul
+A Mullvad conta com infraestrutura de servidores (WireGuard / OpenVPN) nos seguintes países da América do Sul:
+
+🇧🇷 Brasil
+São Paulo (br-sao): * Provedores/Datacenters principais: DataCamp, HostRoyale, DataPacket.
+
+Utilizados para conexões de baixa latência e alta largura de banda.
+
+Fortaleza (br-for):
+
+Provedores: Zenlayer.
+
+🇦🇷 Argentina
+Buenos Aires (ar-bue): Provedores como DataCamp.
+
+🇨🇱 Chile
+Santiago (cl-scl): Provedores como DataCamp.
+
+🇨🇴 Colômbia
+Bogotá (co-bog): Provedores como DataCamp.
+
+🇵🇪 Peru
+Lima (pe-lim): Provedores como DataCamp.
+
+2. Visão Geral Global dos Servidores
+A rede da Mullvad expande-se por mais de 50 países e 90 cidades, divididos principalmente em:
+
+América do Norte: Estados Unidos (várias cidades/estados), Canadá, México.
+
+Europa: Suécia (servidores próprios da Mullvad em Estocolmo, Gotemburgo e Malmö), Alemanha, Finlândia, Reino Unido, Países Baixos, França, Espanha, Itália, Suíça, entre outros.
+
+Ásia e Oceania: Japão, Singapura, Austrália, Nova Zelândia, Hong Kong.
+
+África e Oriente Médio: África do Sul, Israel, Emirados Árabes Unidos.
+
+3. Links Oficiais para Consulta e Gerador de Configuração
+Lista / Status Geral dos Servidores (Atualizado em Tempo Real):
+https://mullvad.net/pt/servers
+
+Gerador de Configurações WireGuard / OpenVPN:
+https://mullvad.net/pt/account/wireguard-config (Acesse logado com o número da sua conta Mullvad)
+
+Guia de Implementação e Configuração de Redes (WireGuard/CLI):
+https://mullvad.net/pt/help

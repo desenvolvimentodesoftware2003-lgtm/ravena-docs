@@ -1,0 +1,74 @@
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham E_FAIL
+(0x800040
+05)
+
+ador:
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham
+ador:
+
+E FAIL
+(0x800040
+05
+
+ador:
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham E_FAIL
+(0x800040
+05)
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham
+ador
+
+E FAIL
+[0x800040
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+5ATT
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham
+ador:
+
+E FAIL
+(0x800040
+051
+
+Falha no monitor ...
+
+Falha ao obter o parametro
+de tela.
+
+RC do Cham E_FAIL
+(0x800040
+051
+
+ador:

@@ -1,0 +1,1 @@
+A máquina virtual falhou no boot. Isto pode ser causado pela falta de um sistema operacional ou ordem de boot mal-configurada. Montar um DVD de instalação de sistema operacional pode resolver este problema. Caso selecione uma ISO, ela será montada assim que este diálogo for fechado.

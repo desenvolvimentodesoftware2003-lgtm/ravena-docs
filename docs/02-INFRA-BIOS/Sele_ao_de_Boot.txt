@@ -1,0 +1,55 @@
+Seleçao de Boot
+
+Propriedades do Drive
+Dispositivo
+NO_LABEL (Disco 1) [128 GB]
+SanDisk Cruzer Blade USB
+Device (114.6 GB)
+ravena-archlinux-2026.08.04-rvJu-xov_v-3U
+
+Tamanho da particao persistente
+
+SELECIONAR
+
+Esquema de partição
+MBR
+
+v Exibir propriedades avancadas do drive
+
+Opções de formatação
+Nome do volume
+RAVENA_202608
+
+Sistema de arquivos
+Large FAT32 (Padrao)
+
+^ Esconder opcoes avancadas de formataçao
+Formatação rapida
+Criar arquivos de nome estendido e icone
+
+Procurar blocos defeituosos
+
+Status
+
+0 (Sem persistência)
+
+Sistema de destino
+BIOS ou UEFI
+
+V
+
+Tamanho do cluster
+
+32 quilobytes (Padrao)
+
+>
+
+1 passada
+
+V
+
+A operaçao falhou
+
+INICIAR
+
+FECHAR

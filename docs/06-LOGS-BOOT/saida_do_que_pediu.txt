@@ -1,0 +1,12 @@
+oasn. systEmcit. Cummand nut rouna
+ravenaCravena-sandbox ~]$ sudo systemctl sshd
+nknown command verb 'sshd', did you mean 'show'?
+ravena@ravena-sandbox ~]$ sshd
+shd requires execution with an absolute path
+ravena@ravena-sandbox ~]$ sudo systemctl start sshd.service
+ravena@ravena-sandbox ~]$ journalctl -u sshd -- no-pager | tail -25
+int: You are currently not seeing messages from other users and the system.
+Users in groups 'adm', 'systemd-journal', 'wheel' can see all messages.
+Pass -q to turn off this notice.
+- No entries --
+ravena@ravena-sandbox ~]$

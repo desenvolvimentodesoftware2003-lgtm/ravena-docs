@@ -1,0 +1,16 @@
+or Wi-Fi, authenticate to the wireless network using the iwctl utility.
+or mobile broadband (WWAN) modems, connect with the mmcli utility.
+thernet, WLAN and WWAN interfaces using DHCP should work automatically.
+
+fter connecting to the internet, the installation guide can be accessed
+ia the convenience script Installation_guide.
+
+otearchiso ~
+# journalctl -u sshd -30 -- no-pager
+ournalctl: unrecognized option '-3'
+rootearchiso ~ # journalctl -u sshd -n 20 -- no-pager
+ig 02 12:37:43 archiso systemd[1]: Starting OpenSSH Daemon ...
+ig 02 12:37:44 archiso sshd[778]: Server listening on 0.0.0.0 port 22.
+ig 02 12:37:44 archiso sshd[778]: Server listening on :: port 22.
+ig 02 12:37:44 archiso systemd[1]: Started OpenSSH Daemon.
+otearchiso ~ #

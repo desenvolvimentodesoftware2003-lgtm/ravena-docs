@@ -1,0 +1,13 @@
+ia the convenience script Installation_guide.
+
+otearchiso
+otCarchiso
+243.241968] vboxsf: Host re jected mount of 'ravena-shared' with error -2
+ount: /mnt/shared: special device ravena-shared does not exist.
+dmesg(1) may have more information after failed mount system call.
+2 rootearchiso ~
+
+# mkdir -p /mt/shared
+~ # mount -t vboxsf ravena-shared /mnt/shared
+
+#

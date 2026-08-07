@@ -1,0 +1,467 @@
+Nome
+
+>
+
+>
+
+>
+
+O
+
+>
+
+>
+
+Windows Modules Installer Worker
+
+Visual Studio Code (10)
+
+Microsoft OneDrive
+
+Bun
+
+OpenJDK Platform binary (3)
+
+Antimalware Service Executable
+
+Windows Explorer
+
+Gerenciador de Tarefas
+
+Secure System
+
+Pesquisar (7)
+
+Gerenciador de Janelas da Area de Trabalho
+
+Indexador do Microsoft Windows Search
+
+Iniciar
+
+Host de Serviço: Servico de Rede
+
+Windows PowerShell
+
+Host de Servico: Integridade e Experiencias Otimizadas do Windows
+
+Windows PowerShell
+
+Microsoft Edge (5)
+
+Windows Widgets (8)
+
+Windows PowerShell
+
+Nome
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+Windows PowerShell
+
+Ferramenta de Captura
+
+Terminal (3)
+
+Host de Servico: Servico de Repositorio de Estado
+
+Host de Servico: Servico de Politica de Diagnostico
+
+LocalServiceNoNetworkFirewall (2)
+
+Host de Servico: Log de Eventos do Windows
+
+Intel Graphics Command Center Service
+
+ollama
+
+Host de Servico: Chamada de Procedimento Remoto (2)
+
+Windows PowerShell
+
+Registry
+
+Node.js JavaScript Runtime
+
+Host de Servico: Inicializador de Processo de Servidor DCOM (5)
+
+Node.js JavaScript Runtime
+
+Host de Servico: Assistente de Conexao de Conta Microsoft
+
+Host de Servico: CDPUserSvc_3b07b
+
+Shell Infrastructure Host
+
+Local Security Authority Process (3)
+
+Host de Servico: Servico de Interface de Repositorio de Rede
+
+Host de Servico: Servico do Gerenciador de Acesso de Recurso
+
+Host de Servico: Testador de instrumentacao de gerenciam. do Windows
+
+Host de Servico: Servico de Rede
+
+Host de Servico: Servico da Lista de Redes
+
+Host de Servico: WpnUserService_3b07b
+
+Host de Servico: Agendador de Tarefas
+
+Aplicativo de servicos e controle
+
+Host de Troca de Dados
+
+Device Association Framework Provider Host
+
+Host de Servico: Servico do Gerenciador de Acesso de Recurso
+
+Runtime Broker
+
+wsappx
+
+Application Frame Host
+
+Microsoft Windows Search Protocol Host
+
+Carregador CTF
+
+Windows PowerShell
+
+Windows PowerShell
+
+Dism Host Servicing Process
+
+Windows PowerShell
+
+Host de Servico: Sistema Local (Restrito a Rede)
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+>
+
+Host de Servico: Servico de Defesa Contra Ameacas da Web
+
+Dism Host Servicing Process
+
+Waves MaxxAudio Service Application
+
+Intel(R) Local Management Service (32 bits)
+
+Host de Servico: Servico de Plataforma de Dispositivos Conectados
+
+Windows Security Health Service
+
+Host de Servico: Servico do Sistema de Notificacoes por Push do Windows
+
+Host de Servico: Servico de Rede
+
+Realtek HD Audio Universal Service (2)
+
+Processo de Host para Tarefas do Windows
+
+Host de Servico: Gerenciador de Conta da Web
+
+Utilitario de Atendimento da Imagem Dism
+
+Microsoft Windows Search Filter Host
+
+Windows Driver Foundation - Processo de Host da Estrutura de Driver de Modo de Usuario
+
+ShellHost
+
+Host de Servico: cbdhsvc_3b07b
+
+Microsoft Windows Search Filter Host
+
+Host de Servico: Sistema Local
+
+Retomar
+
+Microsoft Network Realtime Inspection Service
+
+C:4.
+
+>
+
+Host de Servico: Sistema Local
+
+Retomar
+
+Utilitario de Atendimento da Imagem Dism
+
+Host de Serviço: Servico de Geolocalizaçao
+
+Microsoft Windows Search Filter Host
+
+Host da Janela do Console
+
+Microsoft Windows Search Filter Host
+
+Microsoft Network Realtime Inspection Service
+
+Host de Servico: Gerenciador de Usuarios
+
+Host de Servico: Gerenciador de Conexoes do Windows
+
+Windows Subsystem for Linux Service
+
+Host da Janela do Console
+
+Processador de comandos do Windows
+
+Host de Servico: Microsoft Passport
+
+Host de Servico: Instalacao Automatica de Dispositivos Conectados a Rede
+
+Host de Servico: Servico Local (Restrito a Rede)
+
+Instalador de Modulos do Windows
+
+Host de Servico: Informacoes sobre Aplicativos
+
+Host de Servico: Publicacao de Recursos de Descoberta de Funcao
+
+Host de Servico: Servico Local (Restrito a Rede)
+Host de Servico: Servico Local (Restrito a Rede)
+
+Host de Servico: Publicacao de Recursos de Descoberta de Funcao
+
+WavesSysSvc Service Application
+
+Host de Servico: Agente de Tempo
+
+Host de Servico: Agente de Conexao de Rede
+
+Host de Servico: Descoberta SSDP
+
+Host de Servico: Auxiliar de IP
+
+Host de Servico: Deteccao do hardware do shell
+
+Host de Servico: Uso de Dados
+
+SnippingTool
+
+Processo do tempo de Execucao do Servidor do Cliente
+
+Realtek HD Audio Universal Service
+
+IntelAudioService
+
+Host de Servico: COM+ evento do sistema
+
+LocalServiceHttp
+
+Host de Servico: Sistema Local
+
+Host de Servico: Servico de Gerenciamento de Radio
+
+Processador de comandos do Windows
+
+ollama app
+
+Host de Servico: Auxiliar NetBIOS TCP/IP
+
+Host de Servico: Agente de Politica IPsec
+>
+
+>
+
+Host de Servico: Servico Local (Sem Rede)
+
+User OOBE Broker
+
+Host de Servico: Servico de Notificacao de Eventos do Sistema
+
+Host de Servico: Servico de Rede Host
+
+. Host da Janela do Console
+
+Host de Servico: Servico de Perfil de Usuario
+
+Host de Servico: NPSMSvc_3b07b
+
+Host de Servico: Sistema Local (Restrito a Rede)
+
+Host de Servico: Servico de Avaliacao de Inventario e Compatibilidade
+
+Host de Servico: Cartao inteligente
+
+Host de Servico: Sistema Local
+
+Host de Serviço: Servidor
+
+Host de Servico: Servico de Associacao de Dispositivo
+
+Host de Servico: Horario do Windows
+
+bcmUshUpgradeService
+
+Aplicativo de subsistema de spooler
+
+Host Storage Application
+
+Usermode Font Driver Host
+
+Host de Servico: Aquisicao de Imagens do Windows (WIA)
+
+Host de Servico: Estacao de trabalho
+Windows Hello Security Process
+
+Host de Servico: Servico de Suporte a Bluetooth
+
+Host de Servico: WSAIFabricSvc
+
+Host de Servico: Servico de Gerenciamento de Entrada de Texto
+
+Host de Servico: webthreatdefusersvc_3b07b
+
+Console Window and PTY Host (Open Source)
+
+Windows Security notification icon
+
+Intel(R) Management Engine WMI Provider Registration (32 bits)
+
+Host de Serviço: Telefonia
+
+Host de Servico: Exibir Servico de Politica
+
+igfxEM Module
+
+Host de Servico: Servico de Aprimoramento de Exibicao
+
+igfxCUIService Module
+
+Host de Servico: Servico de Virtualizacao de Rede
+
+Host de Servico: Host de Provedor da Descoberta de Funcao
+
+Host de Servico: Construtor de Pontos de Extremidade de Audio do Windows
+
+DellFFDPWmiService
+
+Credential Guard & VBS Key Isolation
+
+Host de Servico: DevicesFlowUserSvc_3b07b
+
+Node.js JavaScript Runtime
+
+Hoct de Serico: Temar
+
+A
+
+>
+
+Host de Servico: Temas
+
+Windows Wireless LAN 802.11 Extensibility Framework
+
+Host de Servico: Servico SSTP
+
+Console Window and PTY Host (Open Source)
+
+Host de Servico: Servico de Dispositivos de Interface Humana
+
+IntelCpHeciSvc Executable
+
+Host de Servico: Servico de Host HV
+
+Host de Servico: ICS (Compartilhamento de Conexao com a Internet)
+
+Aplicativo de Inicializacao do Windows
+
+Node.js JavaScript Runtime
+
+Python Environment Tools
+
+Host da Janela do Console
+
+Processador de comandos do Windows
+
+Host da Janela do Console
+
+Host de Servico: Cliente de rastreamento de link distribuido
+
+Host da Janela do Console
+
+Gerenciador de Sessao do Windows
+
+System
+
+Intel(R) Rapid Storage Technology Management Service
+
+Intel(R) Dynamic Tuning Service
+>
+
+IntelCpHeciSvc Executable
+
+Host de Servico: Servico de Host HV
+
+Host de Servico: ICS (Compartilhamento de Conexao com a Internet)
+
+Aplicativo de Inicializacao do Windows
+
+Node.js JavaScript Runtime
+
+Python Environment Tools
+
+Host da Janela do Console
+
+Processador de comandos do Windows
+
+Host da Janela do Console
+
+Host de Servico: Cliente de rastreamento de link distribuido
+
+Host da Janela do Console
+
+Gerenciador de Sessao do Windows
+
+System
+
+Intel(R) Rapid Storage Technology Management Service
+
+Intel(R) Dynamic Tuning Service
+
+Windows Driver Foundation - Processo de Host da Estrutura de Driver de Modo de Usuario
+
+Intel HD Graphics Drivers for Windows(R)
+
+Intel(R) Dynamic Application Loader Host Interface
+
+Usermode Font Driver Host
+
+Interrupções do sistema

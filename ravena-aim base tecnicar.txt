@@ -1,0 +1,133 @@
+ravena-aim/
+├── src/                          # Código-fonte ativo (v1.0.0-beta)
+│   ├── core/                     # OmegaCore - Orquestrador Central
+│   │   ├── omega_core_v3.2.6.py  # Núcleo de orquestração
+│   │   ├── omega_v3.2.6.py       # Convergência final
+│   │   ├── omega.py              # Entrypoint principal
+│   │   └── ravena_model.py       # Modelo base da Ravena
+│   ├── security/                 # Segurança e Blindagem
+│   │   ├── security_core_v3.2.6.py
+│   │   ├── security_core_v3.2.7.py
+│   │   ├── hacker_agent.py       # Agente de Segurança Ofensiva (Red Team)
+│   │   ├── hacker_agent_v328_final.py
+│   │   ├── hacker_bypass_engine.py
+│   │   ├── hacker_heuristic_layer.py
+│   │   ├── auditor.py            # Auditor Universal
+│   │   ├── engine_patch_seguranca_ia.py
+│   │   ├── zero_trust_v3.2.6.py
+│   │   └── seguranca_avancada.py
+│   ├── rag/                      # RAG e Memória Vetorial
+│   │   ├── rag_advanced_v3.2.6.py
+│   │   ├── rag_core_v3.2.6.py
+│   │   ├── vision_rag_semantic_v3.2.6.py
+│   │   └── vision_module.py
+│   ├── trading/                  # Trading Bot e Mercado
+│   │   ├── signal_bridge_v3.2.6.py
+│   │   ├── bybit_connector_v3.2.6.py
+│   │   ├── trade_brain_v3.2.6.py
+│   │   ├── risk_manager_v3.2.6.py
+│   │   ├── sentiment_analyzer_v3.2.6.py
+│   │   ├── click_emulator_v3.2.6.py
+│   │   ├── health_monitor_v3.2.6.py
+│   │   └── audit_engine_v3.2.6.py
+│   ├── simulation/               # Simulação e Visão Ativa
+│   │   ├── active_vision_v3.2.6.py
+│   │   ├── simulacao_filter_v3.2.6.py
+│   │   └── monitor_logs_v3.2.6.py
+│   ├── learning/                 # Aprendizado e DNA
+│   │   ├── learning_core_v3.2.6.py
+│   │   └── dna_sucesso_v3.2.6.py
+│   ├── orchestration/            # Agentes e Subagentes
+│   │   ├── ravena_modular_main.py
+│   │   ├── ravena_chat_agent_v3.2.6.py
+│   │   ├── search_agent_v3.2.6.py
+│   │   ├── specialized_agents_v3.2.6.py
+│   │   ├── agente_dev_v3.2.6.py
+│   │   └── dashboard_controller_v3.2.6.py
+│   └── utils/                    # Utilitários
+│       ├── utils_core_v3.2.6.py
+│       ├── social_connector.py
+│       ├── external_api_manager_v3.2.6.py
+│       ├── telegram_bot_refinement_v3.2.6.py
+│       ├── empathy_metrics_v3.2.6.py
+│       ├── cultural_generation_v3.2.6.py
+│       └── oci_readiness_check.py
+├── tests/                        # Suíte de testes
+├── config/                       # Configurações (config_v3.json)
+├── docker/                       # Dockerfile e docker-compose para OCI
+├── docs/                         # Documentação técnica organizada
+│   ├── 00_PDFs/
+│   ├── 01_Arquitetura_Nuvem/
+│   ├── 02_Ciberseguranca/
+│   ├── 03_Arquitetura_Sistema/
+│   ├── 05_Doc_Dev_Repositorio/
+│   ├── 07_Dados_DNA/
+│   ├── 08_Guias_Tutoriais/
+│   ├── 10_IA_RAG_Visao/
+│   ├── 11_Infra_Hardware/
+│   ├── 12_Planos_Estrategicos/
+│   ├── 13_Pronto_Ativar/
+│   └── 14_Relatorios_Conclusao/
+├── legacy/                       # Versões anteriores (referência)
+├── requirements.txt              # Dependências Python
+├── .env.example                  # Template de variáveis de ambiente
+└── .gitignore
+Arquitetura em 4 Camadas
+Camada	‐	Principais
+Percepção	Captura de dados de mercado e sinais	signal_bridge, bybit_connector,active_vision
+Cognição	Análise, RAG e tomada de decisão	omega_core, rag_advanced,trade_brain
+Execução	Operações de negociação e automação	click_emulator, risk_manager,social_connector
+Governança	Segurança, auditoria e compliance	security_core, hacker_agent, auditor,zero_trust
+Filosofia: Soberania Híbrida
+A Ravena opera com independência local (pode operar offline) enquanto se beneficia de inteligência em nuvem quando disponível. O sistema nunca depende de um único ponto de falha externo.
+
+Modo Soberano: Operação 100% local com modelos embarcados
+Modo Híbrido: Combina LLMs em nuvem com validação local
+Modo Nuvem: Orquestração completa via OCI
+Agentes Especialistas Integrados
+Agente de Busca 360 ( search_agent_v3.2.6.py): Buscas abrangentes em múltiplas fontes
+Agente Dev ( agente_dev_v3.2.6.py): Auxílio em manutenção e manutenção
+Agente de Chat ( ravena_chat_agent_v3.2.6.py): Interface conversacional natural
+Agente Hacker ( hacker_agent.py): Red Team automatizado para testes ofensivos
+Agentes Especializados ( specialized_agents_v3.2.6.py): Módulos sob demanda
+Implantação (Oracle Cloud Infrastructure)
+Pré-requisitos
+Docker e Docker Compose instalados
+Conta OCI com compartimento configurado
+Chaves API da Bybit (testnet para beta)
+Início rápido
+# 1. Clonar repositório
+git clone https://github.com/desenvolvimentodesoftware2003-lgtm/ravena-aim.git
+cd ravena-aim
+
+# 2. Configurar variáveis de ambiente
+cp .env.example .env
+# Editar .env com suas credenciais
+
+# 3. Subir com Docker Compose
+cd docker
+docker-compose up -d
+
+# 4. Verificar saúde
+docker-compose ps
+curl http://localhost:8000/health
+Protocolos de Segurança
+Zero Trust: Toda comunicação entre módulos é validada
+Lockdown V2.2: Blindagem contra manipulação de prompts
+Protocolo R6: 6 camadas de validação de integridade
+Agente Hacker (Red Team): Testes ofensivos automatizados
+Registro de alterações
+v1.0.0-beta (Junho 2026)
+Reorganização completa da estrutura de diretórios para produção
+Integração do Agente Hacker (v3.2.7/v3.2.8)
+Adição da oci_readiness_check.pyvalidação de implantação
+Dockerfile e docker-compose para Oracle Cloud
+Remoção de duplicatas e arquivos legados (movidos para legacy/)
+54 módulos Python ativos organizados em 8 domínios
+requisitos.txt e .env.example para configuração rápida
+v3.2.6 ELITE-CONSOLIDATED (Abril de 2026)
+Versão anterior com estrutura modular consolidada
+Integração de agentes especialistas (Busca, Dev, Chat)
+Documentação organizada em 14 categorias
+licença
+Projeto privado. Todos os direitos reservados.

@@ -1,0 +1,22 @@
+$ # Extrair novamente e verificar chave completa
+asar extract "C:\Program Files\WindowsApps\ManusAI.Manus_1.6.5.0_x64__vajzd2mq3s8wj\resources\app.asar" "C:\Users\DELL\OneDrive\Documentos\manus_analysis\extracted"
+
+# Buscar chave Stripe completa
+Write-Host "=== CHAVE STRIPE COMPLETA ==="
+Get-ChildItem "C:\Users\DELL\OneDrive\Documentos\manus_analysis\extracted" -Recurse -File -ErrorAction SilentlyContinue |
+    Select-String -Pattern "pk_live_[A-Za-z0-9]+" -ErrorAction SilentlyContinue |
+    Select-Object -First 5 |
+    ForEach-Object { 
+        $key = $_.Matches[0].Value
+        Write-Host "   Tamanho: $($key.Length) caracteres"
+        Write-Host "   Chave: $key`n"
+    }
+=== CHAVE STRIPE COMPLETA ===
+   Tamanho: 107 caracteres
+   Chave: pk_live_51R15XBHkfKp4fCS9DWKtTmV2Gs0dTLI0oSl6jpVBcl5BWwl6YsDTeL3vpE5yV9oehPAFZWxMQKwaAXBXiAmfNFI800QI6Ucx94
+
+   Tamanho: 107 caracteres
+   Chave: pk_live_51R15XBHkfKp4fCS9DWKtTmV2Gs0dTLI0oSl6jpVBcl5BWwl6YsDTeL3vpE5yV9oehPAFZWxMQKwaAXBXiAmfNFI800QI6Ucx94
+
+   Tamanho: 107 caracteres
+   Chave: pk_live_51R15XBHkfKp4fCS9DWKtTmV2Gs0dTLI0oSl6jpVBcl5BWwl6YsDTeL3vpE5yV9oehPAFZWxMQKwaAXBXiAmfNFI800QI6Ucx94

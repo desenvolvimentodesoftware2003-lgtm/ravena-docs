@@ -1,0 +1,55 @@
+Quando a aplicação ou a interface (como o eDEX-UI ou um processo em Node.js/Electron) trava completamente por excesso de consumo de memória, vazamento de memória (memory leak) ou processos-filho que ficam pendurados no sistema, existem várias formas de contornar, destravar e prevenir esse problema no seu projeto personalizado.
+
+1. Como Destravar Agora (Recuperar o Sistema)
+Se o ecossistema/interface congelou e não responde ao teclado/rato:
+
+Matar os processos pendurados pelo Terminal (em outra TTY ou Atalho):
+Pressione Ctrl + Alt + F2 (ou F3) para abrir um terminal de emergência TTY no Linux e execute:
+
+Bash
+# Finalizar processos do eDEX / Electron / Node que travaram
+pkill -f edex-ui
+pkill -f node
+pkill -f electron
+Para voltar à interface gráfica, pressione Ctrl + Alt + F1 ou F7.
+
+Limpar a memória RAM acumulada (Cache do Kernel):
+
+Bash
+sudo sync; echo 3 | sudo tee /proc/sys/vm/drop_caches
+2. Como Contornar e Prevenir no Seu Próprio Projeto Customizado
+Já que está desenvolvendo a sua própria versão baseada no estudo do repositório, implemente estas correções no código para garantir que não volte a travar:
+
+A. Aumentar o Limite de Memória Heap do Node.js/Electron
+Por padrão, o V8 (engine do Node.js) limita a memória a ~1.4GB. Quando o terminal ou os gráficos do eDEX exigem mais, o Node estoura (Out of Memory).
+
+Solução: No package.json do seu projeto, passe a flag --max-old-space-size nos scripts de inicialização (por exemplo, definindo até 4GB ou 8GB):
+
+JSON
+"scripts": {
+  "start": "node --max-old-space-size=4096 .",
+  "electron": "electron --max-old-space-size=4096 ."
+}
+B. Tratar a Destruição de Processos Filho (child_process / spawn)
+O eDEX-UI cria processos filhos em background para ler status de rede (netstat), CPU e terminal (pty.js / node-pty). Se o app for atualizado ou trocar de módulo sem matar os processos anteriores, eles acumulam até travar o PC.
+
+Solução no seu código: Certifique-se de que, ao fechar a janela ou recarregar um componente, você chama .kill() em todos os processos ativos:
+
+JavaScript
+// Exemplo no evento de limpeza do componente
+window.onbeforeunload = () => {
+    if (terminalProcess) {
+        terminalProcess.kill();
+    }
+};
+C. Limitar a Taxa de Atualização de Telemetria (Throttling)
+Módulos que lêem o uso de CPU/RAM em tempo real via loops contínuos (setInterval de 100ms) causam estresse térmico e travamentos no sistema.
+
+Solução: Aumente o intervalo de atualização para no mínimo 1000ms (1 segundo) ou 2000ms e utilize requestAnimationFrame para renderização visual da interface.
+
+D. Garantir o Uso do Swapfile no Linux
+Garante que, mesmo que a memória RAM de 16GB encha completamente durante testes com modelos ou ferramentas CLI pesadas, o sistema operacional não trave totalmente nem chame o OOM-Killer:
+
+Bash
+# Verificar se o Swapfile de 8GB está ativo no sistema
+swapon --show

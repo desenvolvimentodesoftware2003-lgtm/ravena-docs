@@ -1,0 +1,20 @@
+Pass -q to turn off this notice.
+- No entries -
+ravena@ravena-sandbox ~]$ sudo systemctl start sshd
+ravena@ravena-sandbox ~]$ systemctl is-active sshd
+ctive
+ravena@ravena-sandbox ~]$ ss -tlnp | grep22
+bash: grep22: command not found
+ravenaCravena-sandbox ~]$ ss -tlnp | grep 22
+ISTEN 0
+ISTEN 0
+ravena@ravena-sandbox ~]$
+
+128
+128
+
+0.0.0.0:22
+[ : : ]:22
+
+0.0.0.0 :*
+[ : : ] : *

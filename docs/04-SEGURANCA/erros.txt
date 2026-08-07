@@ -1,0 +1,72 @@
+Para criar a sua própria VPN personalizada do zero (sem depender do aplicativo oficial ou de clientes de terceiros), a forma mais eficiente e moderna é usar o WireGuard.
+
+Abaixo está o passo a passo completo com os comandos para configurar o seu próprio servidor VPN (numa VPS/nuvem) e gerar os ficheiros de configuração para os seus clientes (PC, telemóvel, etc.).
+
+Passo 1: Instalar o WireGuard no Servidor (Linux)
+Ligue-se ao seu servidor VPS via SSH e execute os seguintes comandos:
+
+Bash
+# Atualizar a lista de pacotes e instalar o WireGuard
+sudo apt update && sudo apt install wireguard -y
+
+# Mudar para o diretório de configurações do WireGuard
+cd /etc/wireguard/
+
+# Definir permissão restrita para segurança das chaves
+umask 077
+
+# Gerar o par de chaves (Privada e Pública) do Servidor
+wg genkey | tee server_private.key | wg pubkey > server_public.key
+Passo 2: Criar o Ficheiro de Configuração do Servidor (wg0.conf)
+Edite o ficheiro de configuração do servidor:
+
+Bash
+sudo nano /etc/wireguard/wg0.conf
+Cole a seguinte estrutura (substitua <CHAVE_PRIVADA_DO_SERVIDOR> pelo conteúdo gerado em server_private.key e ajuste a sua interface de rede, ex: eth0 ou ens3):
+
+Ini, TOML
+[Interface]
+PrivateKey = <CHAVE_PRIVADA_DO_SERVIDOR>
+Address = 10.0.0.1/24
+ListenPort = 51820
+PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+# Cliente 1 (O seu computador ou telemóvel)
+[Peer]
+PublicKey = <CHAVE_PUBLICA_DO_CLIENTE_1>
+AllowedIPs = 10.0.0.2/32
+Passo 3: Ativar o Encaminhamento de IP (IP Forwarding)
+Para que o servidor funcione como um roteador e passe o tráfego de internet:
+
+Bash
+# Ativar o IP Forwarding no kernel
+echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
+sudo sysctl -p
+
+# Iniciar o serviço do WireGuard e ativar no boot
+sudo systemctl enable --now wg-quick@wg0
+Passo 4: Gerar a Configuração para o Seu Cliente (Sua Máquina)
+Na sua máquina local (ou no servidor para exportar para a sua máquina):
+
+Bash
+# Gerar chaves do Cliente 1
+wg genkey | tee client_private.key | wg pubkey > client_public.key
+Crie o ficheiro client.conf no seu dispositivo:
+
+Ini, TOML
+[Interface]
+PrivateKey = <CHAVE_PRIVADA_DO_CLIENTE>
+Address = 10.0.0.2/24
+DNS = 1.1.1.1, 8.8.8.8
+
+[Peer]
+PublicKey = <CHAVE_PUBLICA_DO_SERVIDOR>
+Endpoint = <IP_PUBLICO_DO_SEU_SERVIDOR>:51820
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+Script de Automação (Instalação em 1 Comando)
+Se preferir automatizar a criação do servidor e a geração de ficheiros de clientes/QR Codes para telemóveis, pode utilizar o script oficial da comunidade:
+
+Bash
+wget https://git.io/wireguard -O wireguard-install.sh && bash wireguard-install.sh

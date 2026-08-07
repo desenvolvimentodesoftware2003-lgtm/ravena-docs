@@ -1,0 +1,20 @@
+ig 02 12:37:44 archiso systemd[1]: Started OpenSSH Daemon.
+otCarchiso ~ # ip addr
+: lo: <LOOPBACK, UP, LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 :: 1/128 scope host noprefixroute
+valid_lft forever preferred_lft forever
+enp0s3: <BROADCAST, MULTICAST, UP, LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+link/ether 08:00:27:c2:5a:16 brd ff:ff:ff:ff:ff:ff
+altname enx080027c25a16
+inet 10.0.2.15/24 metric 100 brd 10.0.2.255 scope global dynamic enp0s3
+valid_lft 86050sec preferred_lft 86050sec
+inet6 fd17:625c:f037:2 : f53e :7990:641e:7d1/64 scope global temporary dynamic
+valid_lft 86053sec preferred_lft 14053sec
+inet6 fd17:625c:f037:2:a00:27ff : fec2:5a16/64 scope global dynamic mgtmpaddr noprefixroute
+valid_lft 86053sec preferred_lft 14053sec
+inet6 fe80: :a00:27ff : fec2 :5a16/64 scope link proto kernel_11
+valid_lft forever preferred_lft forever
+otearchiso #_

@@ -1,0 +1,5 @@
+Arch Linux install medium (x86_64, UEFI)
+Arch Linux install medium (x86_64, UEFI) with s
+Memtest86+
+EFI Shell
+Reboot Into Firmware Interface

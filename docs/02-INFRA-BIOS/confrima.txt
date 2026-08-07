@@ -1,0 +1,54 @@
+Rufus 4.6.2208
+
+X
+
+Propriedades do Drive
+Dispositivo
+NO_LABEL (Disco 1) [128 GB]
+
+Seleção de Boot
+ravena-archlinux-2026.08.04-RV5b-x86_64.iso
+Tamanho da particao persistente
+
+v
+
+SELECIONAR
+
+Esquema de partição
+MBR
+
+v Exibir propriedades avancadas do drive
+
+Opções de formatação
+Nome do volume
+RAVENA 202608
+
+Sistema de arquivos
+Large FAT32 (Padrao)
+
+v Exibir opções avançada_
+
+Status
+
+0 (Sem persistência)
+
+Sistema de destino
+BIOS ou UEFI
+
+Use este campo para definir
+o nome do drive.
+Caracteres acentuados sao
+aceitos.
+
+lo cluster
+tes (Padrao)
+
+V
+
+PRONTO
+
+INICIAR
+
+FECHAR
+
+Usando a imagem: ravena-archlinux-2026.08.04-RV5b-x86_64.iso

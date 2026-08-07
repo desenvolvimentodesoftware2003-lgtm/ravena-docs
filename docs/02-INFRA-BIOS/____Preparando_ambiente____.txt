@@ -1,0 +1,38 @@
+=== Preparando ambiente ===
+mnt/shared/setup_ravena.sh: linha 29: sudo: comando nao encontrado
+== Gerando senhas ===
+
+GERANDO SENHAS SEGURAS
+
+[1/5] Gerando senhas ...
+[OK] Senhas geradas
+[2/5] Criando arquivo .env ...
+[OK] Arquivo criado: /root/ravena/ravena-archiso/.env . passwords
+[3/5] Criando script SQL de inicializacao ...
+[OK] Script SQL criado: /root/ravena/ravena-archiso/archiso/configs/ravena/airoot
+[4/5] Criando script de inicializacao do banco ...
+[OK] Script de inicializacao criado
+[5/5] Criando script de configuracao do Redis ...
+[OK] Script do Redis criado
+
+SENHAS GERADAS COM SUCESSO
+
+Arquivo de senhas: /root/ravena/ravena-archiso/.env . passwords
+
+IMPORTANTE :
+1. Guarde este arquivo em local seguro
+2. NAO commit no Git
+3. As senhas sao:
+- PostgreSQL : Qnd2C1K4NQ5p iFF6Rwb8yTPBq2HpUx0
+- Redis: LGBTlv2eiHAFN8e5Zq1HfffEwkq7KdL
+- JWT: NSTDkKHcuQctFfxZPruhK22d jqGVgMXTJeAOCCaZKEfHkxAqkuLm i T3Fz TuBxNZ
+- Web: vOFe4CuZz5Hyth6wEHbeSEQFbrm3Du jmBaD89DLxbtMR2v88s2c IPE8WRDO I
+- Grafana: J2XE11TuSqnwZAGOrD15fsI
+
+[root@ravena
+
+= Compilando ISO (pode levar 15-30 min) ===
+mnt/shared/setup_ravena.sh: linha 35: sudo: comando nao encontrado
+= Pronto!
+A ISO estara em: ~/ravena/output/
+1#

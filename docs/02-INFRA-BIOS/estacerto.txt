@@ -1,0 +1,18 @@
+Pastas Compartilhadas
+
+Nome Caminho
+
+V
+
+Acesso Montar Automaticamente
+
+Em
+
+Co ... to Sim
+
+Pastas da Máquina
+Pastas Transientes
+
+Pastas Globais
+C:\Users\DELL\VirtualBox_Shared
+..........

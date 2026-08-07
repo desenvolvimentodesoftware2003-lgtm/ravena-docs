@@ -1,0 +1,30 @@
+root/ravena/ravena-archiso/archiso/configs
+root/ravena/ravena-archiso/archiso/configs
+root/ravena/ravena-archiso/archiso/configs
+root/ravena/ravena-archiso/archiso/configs
+root/ravena/ravena-archiso/archiso/configs
+root/ravena/ravena-archiso/archiso/configs
+root/.bash_history
+root/.ssh
+ind: '-': No such file or directory
+ind: 'nome' : No such file or directory
+ind: 'profiledef.sh' : No such file or directory
+rootCarchiso /]# arch-chroot /mnt
+=> WARNING: /mnt is not a mountpoint. This may have undesirable side effects.
+ount: /mnt/proc: mount point does not exist.
+dmesg(1) may have more information after failed mount system call.
+=> ERROR: failed to setup chroot /mnt
+rootearchiso / ]# mount dev/sda2 /mnt
+rootCarchiso /]# cd mt/root/ravena/ravena-archiso/archiso/cnf igs/ravena
+ash: cd: mt/root/ravena/ravena-archiso/archiso/cnfigs/ravena: No such file or directory
+root@archiso /]# mount dev/sda2 /mnt
+
+Ctrl
+
+Alt
+
+AltGr
+
+Menu
+
+Ctrl
