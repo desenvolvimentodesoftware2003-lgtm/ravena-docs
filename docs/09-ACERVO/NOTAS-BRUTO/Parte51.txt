@@ -1,0 +1,4 @@
+melhor_score, melhor_resposta = melhores[0]
+
+if melhor_score >= THRESHOLD:
+    return melhor_resposta

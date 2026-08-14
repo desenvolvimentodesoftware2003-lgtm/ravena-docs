@@ -1,0 +1,13 @@
+Ajustes finos no mesmo código da celula 
+
+Expande suas palavras-chave:
+Python
+if any(p in pergunta for p in [
+    "cigarro", "saúde", "doença", "câncer", "tabagismo", "sintoma"
+]):
+    return "saude"
+Python
+if any(p in pergunta for p in [
+    "brasil", "história", "descobriu", "independência", "colonização"
+]):
+    return "historia"

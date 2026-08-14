@@ -1,0 +1,5 @@
+Correção:
+
+if score_top1 < 0.70:
+    fallback_total()
+E NÃO responder parcialmente

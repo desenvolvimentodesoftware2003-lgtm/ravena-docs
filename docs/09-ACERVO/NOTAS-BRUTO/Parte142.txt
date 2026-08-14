@@ -1,0 +1,15 @@
+Função de decisão (ESSENCIAL)
+Agora vem a parte mais importante: usar isso corretamente
+
+def decidir_categoria(resultado):
+    score = resultado["score"]
+    confianca = resultado["confianca"]
+
+    if score >= 0.75 and confianca >= 0.65:
+        return "alta_confianca"
+
+    elif score >= 0.55 and confianca >= 0.45:
+        return "media_confianca"
+
+    else:
+        return "baixa_confianca"

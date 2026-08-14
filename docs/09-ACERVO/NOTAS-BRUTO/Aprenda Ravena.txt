@@ -1,0 +1,35 @@
+Resposta base (usa essa como padrão)
+
+Respiração celular é o processo pelo qual as células transformam glicose em energia (ATP), geralmente utilizando oxigênio, liberando dióxido de carbono e água.
+
+ 1. Variações estruturais (base sólida)
+Plain text
+o que é respiração celular
+definição de respiração celular
+explique a respiração celular
+como funciona a respiração celular
+qual é o processo de respiração celular
+
+ 2. Variações semânticas (núcleo real)
+
+como as células produzem energia
+como a célula gera energia
+de onde vem a energia das células
+como o corpo produz energia nas células
+como a glicose vira energia nas células
+
+3. Variações com leve ambiguidade (importante)
+
+como a energia é produzida nas células
+como o organismo gera energia
+como o corpo transforma alimento em energia
+como ocorre a produção de energia no corpo
+
+aqui começa a disputa com fotossíntese
+
+ 4. Variações ruidosas (usuário real)
+
+célula cria energia como
+energia da célula vem de onde
+como corpo faz energia
+como energia acontece nas células

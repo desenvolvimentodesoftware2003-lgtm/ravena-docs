@@ -1,0 +1,158 @@
+categorias_dados = [
+    {
+        "nome": "saude",
+        "descricao": "Diagnóstico, tratamento e sintomas de saúde humana e animal.",
+        "exemplos": [
+            "Quais são os sintomas de dengue?",
+            "Estou com dor no peito, o que pode ser?",
+            "Como tratar ansiedade?"
+        ]
+    },
+    {
+        "nome": "ciencia",
+        "descricao": "Explicação de fenômenos naturais envolvendo física, química e biologia.",
+        "exemplos": [
+            "O que é energia cinética?",
+            "Como funciona a gravidade?",
+            "O que é fotossíntese?"
+        ]
+    },
+    {
+        "nome": "matematica",
+        "descricao": "Cálculos, números, equações e raciocínio lógico matemático.",
+        "exemplos": [
+            "Quanto é 2+2?",
+            "Resolve x² + 5x = 0",
+            "O que é derivada?"
+        ]
+    },
+    {
+        "nome": "tecnologia",
+        "descricao": "Programação, software, hardware e sistemas computacionais.",
+        "exemplos": [
+            "Como criar um programa em Python?",
+            "O que é inteligência artificial?",
+            "O que é um algoritmo?"
+        ]
+    },
+    {
+        "nome": "historia",
+        "descricao": "Eventos passados e evolução das sociedades humanas.",
+        "exemplos": [
+            "O que foi a Segunda Guerra Mundial?",
+            "Quem descobriu o Brasil?"
+        ]
+    },
+    {
+        "nome": "geografia",
+        "descricao": "Territórios, clima, relevo e organização do espaço terrestre.",
+        "exemplos": [
+            "Qual é a capital do Canadá?",
+            "O que é clima tropical?"
+        ]
+    },
+    {
+        "nome": "filosofia",
+        "descricao": "Reflexões sobre existência, conhecimento, ética e realidade.",
+        "exemplos": [
+            "O que é existencialismo?",
+            "O que é ética?"
+        ]
+    },
+    {
+        "nome": "religiao",
+        "descricao": "Crenças, fé, práticas espirituais e doutrinas religiosas.",
+        "exemplos": [
+            "O que é o cristianismo?",
+            "O que significa fé?"
+        ]
+    },
+    {
+        "nome": "politica",
+        "descricao": "Governos, poder, eleições e organização política.",
+        "exemplos": [
+            "O que é democracia?",
+            "Como funcionam as eleições?"
+        ]
+    },
+    {
+        "nome": "economia",
+        "descricao": "Dinheiro, mercado, investimentos e atividade econômica.",
+        "exemplos": [
+            "O que é inflação?",
+            "O que é PIB?"
+        ]
+    },
+    {
+        "nome": "arte",
+        "descricao": "Expressões artísticas como pintura, música e cinema.",
+        "exemplos": [
+            "Quem foi Picasso?",
+            "O que é arte moderna?"
+        ]
+    },
+    {
+        "nome": "entretenimento",
+        "descricao": "Filmes, séries, jogos e cultura pop.",
+        "exemplos": [
+            "Me indica um filme",
+            "Qual série está em alta?"
+        ]
+    },
+    {
+        "nome": "esporte",
+        "descricao": "Regras e práticas de atividades esportivas.",
+        "exemplos": [
+            "O que é impedimento?",
+            "Quem ganhou a Copa?"
+        ]
+    },
+    {
+        "nome": "linguagem",
+        "descricao": "Uso prático da língua, escrita e gramática.",
+        "exemplos": [
+            "Corrige essa frase",
+            "Como usar vírgula?"
+        ]
+    },
+    {
+        "nome": "linguistica",
+        "descricao": "Estudo científico da estrutura das línguas.",
+        "exemplos": [
+            "O que é sintaxe?",
+            "O que é fonética?"
+        ]
+    },
+    {
+        "nome": "culinaria",
+        "descricao": "Receitas, preparo de alimentos e cozinha.",
+        "exemplos": [
+            "Como fazer arroz?",
+            "Receita de bolo"
+        ]
+    },
+    {
+        "nome": "espaco",
+        "descricao": "Astronomia, planetas, estrelas e universo.",
+        "exemplos": [
+            "O que é um buraco negro?",
+            "O que é uma estrela?"
+        ]
+    },
+    {
+        "nome": "logistica",
+        "descricao": "Transporte, armazenamento e distribuição de recursos.",
+        "exemplos": [
+            "O que é cadeia de suprimentos?",
+            "O que é estoque?"
+        ]
+    },
+    {
+        "nome": "geral",
+        "descricao": "Perguntas vagas ou sem contexto definido.",
+        "exemplos": [
+            "Pode explicar melhor?",
+            "Não entendi"
+        ]
+    }
+]

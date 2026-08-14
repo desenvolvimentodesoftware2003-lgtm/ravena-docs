@@ -1,0 +1,69 @@
+PESOS = {
+    "ciencia": 1.0,
+    "matematica": 1.0,
+    "saude": 0.95,
+    "historia": 0.9,
+    "geral": 0.7
+}
+
+def buscar_memoria(pergunta):
+    categorias = prever_categorias(pergunta)
+
+    todos_resultados = []
+
+    for categoria in categorias:
+        path = get_path_topico(categoria)
+        memoria = carregar_conhecimento(path)
+
+        candidatos = _get_memory_candidates(pergunta, memoria)
+
+        if not candidatos:
+            continue
+
+        # pega o melhor candidato desse núcleo
+        melhor_score, melhor_item = max(candidatos, key=lambda x: x[0])
+
+        peso = PESOS.get(categoria, 0.5)
+        score_final = melhor_score * peso
+
+        todos_resultados.append({
+            "categoria": categoria,
+            "item": melhor_item,
+            "score": melhor_score,
+            "score_final": score_final,
+            "path": path
+        })
+
+    # fallback: tenta geral se nada encontrado
+    if not todos_resultados:
+        path_geral = get_path_topico("geral")
+        memoria_geral = carregar_conhecimento(path_geral)
+
+        candidatos = _get_memory_candidates(pergunta, memoria_geral)
+
+        if not candidatos:
+            return None, 0
+
+        melhor_score, melhor_item = max(candidatos, key=lambda x: x[0])
+
+        return descriptografar(melhor_item["resposta"]), melhor_score
+
+    # 🔥 escolha final entre núcleos
+    melhor_global = max(todos_resultados, key=lambda x: x["score_final"])
+
+    item = melhor_global["item"]
+    path = melhor_global["path"]
+
+    resposta = descriptografar(item["resposta"])
+
+    print(f"DEBUG: Núcleo escolhido: {melhor_global['categoria']}")
+    print(f"DEBUG: Score base: {melhor_global['score']}")
+    print(f"DEBUG: Score final: {melhor_global['score_final']}")
+
+    # atualizar acessos
+    item["acessos"] = item.get("acessos", 0) + 1
+
+    memoria = carregar_conhecimento(path)
+    salvar_conhecimento(memoria, path)
+
+    return resposta, melhor_global["score_final"]

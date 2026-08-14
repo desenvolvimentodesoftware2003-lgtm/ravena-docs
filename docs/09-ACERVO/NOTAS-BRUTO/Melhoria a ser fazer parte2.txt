@@ -1,0 +1,88 @@
+def buscar_memoria(pergunta_original, categoria_classificada, intencao_detectada):
+    # 🔴 CORREÇÃO PRINCIPAL: embedding com texto ORIGINAL
+    emb_perg = gerar_embedding(pergunta_original)
+
+    # normalizado só para apoio (token/fuzzy)
+    pergunta_norm = normalizar_texto(pergunta_original)
+
+    candidatos = []
+    print(f"LOG_BUSCAR: '{pergunta_original}' | cat='{categoria_classificada}' | int='{intencao_detectada}'")
+
+    def _avaliar_topico(topico, bonus_categoria):
+        for item in carregar_conhecimento(topico):
+            decay_confidence(item)
+            decay_weights(item)
+
+            perg_desc = descriptografar(item['pergunta'])
+            resp_desc = descriptografar(item['resposta'])
+
+            # 🔴 IMPORTANTE: embedding salvo deve ser do TEXTO ORIGINAL
+            emb_item = np.array(item['embedding_pergunta'])
+
+            # normalizado apenas para fuzzy
+            perg_norm_item = normalizar_texto(perg_desc)
+
+            # similaridade híbrida
+            score = calcular_similaridade_hibrida(
+                emb_perg,
+                pergunta_norm,
+                emb_item,
+                perg_norm_item
+            )
+
+            # bônus contextuais
+            score += bonus_categoria
+            score += INTENTION_BONUS.get(intencao_detectada, 0) * PESOS["intention_match_bonus_multiplier"]
+            score += item.get('confianca', 1.0) * PESOS["confidence_bonus_per_unit"]
+            score += item.get('peso', 1.0) * PESOS["access_bonus_per_access"]
+
+            # threshold adaptado por categoria
+            current_semantic_threshold = SEMANTIC_THRESHOLD / PESOS_DORMANCIA_CATEGORIA.get(topico, 1.0)
+
+            if score >= current_semantic_threshold:
+                candidatos.append({
+                    'item': item,
+                    'score': score,
+                    'categoria': topico,
+                    'pergunta_original_item': perg_desc,
+                    'resposta_original_item': resp_desc,
+                })
+
+    # 1ª passada (categoria principal)
+    _avaliar_topico(categoria_classificada, PESOS["category_match_bonus"])
+
+    # 2ª passada (fallback global)
+    if not candidatos:
+        print("LOG_BUSCAR: Expandindo busca para todas as categorias.")
+        for topico in DESCRICOES_CATEGORIA:
+            if topico != categoria_classificada:
+                _avaliar_topico(topico, 0)
+
+    if not candidatos:
+        print("LOG_BUSCAR: Nenhum candidato encontrado.")
+        return None
+
+    # melhor candidato
+    melhor = sorted(candidatos, key=lambda x: x['score'], reverse=True)[0]
+
+    # atualização de uso
+    melhor['item']['acessos'] = melhor['item'].get('acessos', 0) + 1
+    melhor['item']['timestamp'] = time.time()
+
+    mem = carregar_conhecimento(melhor['categoria'])
+    for i, it in enumerate(mem):
+        if it['id'] == melhor['item']['id']:
+            mem[i] = melhor['item']
+            break
+
+    salvar_conhecimento(mem, melhor['categoria'])
+
+    adicionar_a_memoria_curta(
+        pergunta_original,
+        melhor['resposta_original_item'],
+        melhor['item'],
+        melhor['categoria'],
+        intencao_detectada,
+    )
+
+    return melhor

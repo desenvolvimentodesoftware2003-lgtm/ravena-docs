@@ -1,0 +1,45 @@
+def buscar_memoria(pergunta):
+    categorias = prever_categorias(pergunta)
+
+    melhores_resultados = []
+
+    for categoria in categorias:
+        memoria = carregar_memoria_categoria(categoria)
+
+        melhor_score = 0
+        melhor_resposta = None
+
+        for item in memoria:
+            emb_pergunta = modelo.encode([pergunta])
+            emb_item = [item["embedding"]]
+
+            score_semantico = cosine_similarity(emb_pergunta, emb_item)[0][0]
+
+            # fuzzy como reforço
+            score_fuzzy = fuzz.ratio(
+                normalizar_texto(pergunta),
+                normalizar_texto(descriptografar(item["pergunta"]))
+            ) / 100
+
+            # combinar scores
+            score = (score_semantico * 0.7) + (score_fuzzy * 0.3)
+
+            if score > melhor_score:
+                melhor_score = score
+                melhor_resposta = descriptografar(item["resposta"])
+
+        # aplicar peso do núcleo
+        peso = PESOS.get(categoria, 0.5)
+        score_final = melhor_score * peso
+
+        melhores_resultados.append({
+            "categoria": categoria,
+            "resposta": melhor_resposta,
+            "score": melhor_score,
+            "score_final": score_final
+        })
+
+    # escolher o melhor entre todos núcleos
+    melhor_global = max(melhores_resultados, key=lambda x: x["score_final"])
+
+    return melhor_global["resposta"], melhor_global["score_final"]

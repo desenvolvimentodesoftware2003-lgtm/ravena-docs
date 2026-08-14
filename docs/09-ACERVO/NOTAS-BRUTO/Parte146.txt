@@ -1,0 +1,21 @@
+FILTRO ANTES DO RANKING FINAL
+
+def filtrar_por_intencao(candidatos, intencao_pergunta):
+    filtrados = []
+
+    for c in candidatos:
+        tipo_item = c.get("tipo", "geral")
+
+        # compatibilidade
+        if tipo_item == intencao_pergunta:
+            c["score"] *= 1.2  # boost forte
+            filtrados.append(c)
+
+        elif tipo_item == "geral":
+            filtrados.append(c)
+
+        else:
+            c["score"] *= 0.7  # penalização real
+            filtrados.append(c)
+
+    return sorted(filtrados, key=lambda x: x["score"], reverse=True)

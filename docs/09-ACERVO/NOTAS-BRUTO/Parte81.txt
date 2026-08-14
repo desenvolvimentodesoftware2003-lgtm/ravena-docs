@@ -1,0 +1,8 @@
+Usar na busca
+Troca isso:
+
+p_sem_contexto, p_com_contexto = construir_pergunta_com_contexto(pergunta_original)
+
+Por:
+
+p_sem_contexto, p_com_contexto = construir_pergunta_com_contexto(pergunta_reescrita)

@@ -1,0 +1,21 @@
+for item in mem:
+    sim = cosine_similarity([novo_emb], [item_emb])[0][0]
+
+    if sim > 0.75:
+        item['peso'] += 0.1
+        item['confianca'] += 0.05
+
+# Sub-clusters com KMeans
+
+kmeans = KMeans(n_clusters=5)
+labels = kmeans.fit_predict(lista_embeddings)
+
+# Agora cada item tem:
+
+item['cluster_id'] = labels[i]
+
+Melhor versão:
+Quando detectar cluster novo:
+
+if cluster_size < 3:
+    gerar_variacoes_semanticas()

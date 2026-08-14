@@ -1,0 +1,71 @@
+DETECÇÃO (if false)
+
+falha = False
+
+if not top1:
+    falha = True
+
+elif top1["score"] < 0.75:
+    falha = True
+
+elif top1["item"]["resposta"] is None:
+    falha = True
+
+ 2. CLASSIFICAÇÃO DO ERRO (ESSENCIAL)
+
+def classificar_erro(top1, contexto):
+
+    if top1 is None:
+        return "sem_candidatos"
+
+    if top1["item"]["resposta"] is None:
+        return "erro_memoria"
+
+    if top1["score"] < 0.75:
+        return "baixa_similaridade"
+
+    if top1["item"].get("tipo") != contexto["intencao"]:
+        return "intencao_errada"
+
+    if contexto["conf_cat"] < 0.4:
+        return "categoria_fraca"
+
+    return "desconhecido"
+
+ 3. CORREÇÃO DIRECIONADA
+Aqui está o que você queria de verdade:
+
+def corrigir_erro(tipo_erro, pergunta, candidatos):
+
+    if tipo_erro == "erro_memoria":
+        return tentar_recarregar_memoria(pergunta)
+
+    if tipo_erro == "categoria_fraca":
+        return busca_global(pergunta)
+
+    if tipo_erro == "intencao_errada":
+        return rerank_sem_intencao(candidatos)
+
+    if tipo_erro == "baixa_similaridade":
+        return fallback_resposta(pergunta)
+
+    return fallback_resposta(pergunta)
+
+JUNTANDO TUDO (o padrão correto)
+
+if falha:
+
+    tipo_erro = classificar_erro(top1, contexto)
+
+    resposta_corrigida = corrigir_erro(
+        tipo_erro,
+        pergunta,
+        candidatos
+    )
+
+    log_erro_estruturado({
+        "pergunta": pergunta,
+        "erro": tipo_erro
+    })
+
+    return resposta_corrigida

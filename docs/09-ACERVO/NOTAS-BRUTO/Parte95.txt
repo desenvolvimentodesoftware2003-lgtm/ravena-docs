@@ -1,0 +1,20 @@
+Integrar no fluxo principal
+Dentro do processar_pergunta:
+
+tipo = classificar_tipo_pergunta(pergunta_original)
+
+Ajustar resposta final
+
+ CASO OPINIÃO
+
+if tipo == "opiniao" and resposta_final:
+    return f"Isso pode variar. {resposta_final}"
+
+CASO DESCONHECIDO
+(se não encontrou nada)
+
+if resposta_final is None:
+    return "Ainda não sei isso com certeza. Você pode me ensinar?"
+
+ CASO FATO
+mantém normal

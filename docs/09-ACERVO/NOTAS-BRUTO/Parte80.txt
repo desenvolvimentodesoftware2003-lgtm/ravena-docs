@@ -1,0 +1,6 @@
+Integrar no fluxo principal
+Dentro de processar_pergunta, antes da busca:
+
+pergunta_reescrita = reescrever_pergunta(pergunta_original)
+
+print(f"LOG: Pergunta reescrita: {pergunta_reescrita}")

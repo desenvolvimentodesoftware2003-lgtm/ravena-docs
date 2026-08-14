@@ -1,0 +1,65 @@
+import os
+import hashlib
+import shutil
+from datetime import datetime
+
+# 🔧 CONFIGURAÇÃO (ajusta se precisar)
+PASTA_PROJETO = "/content/RAVENA"
+PASTA_QUARENTENA = os.path.join(PASTA_PROJETO, "__quarentena__")
+RELATORIO = os.path.join(PASTA_PROJETO, f"relatorio_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+
+os.makedirs(PASTA_QUARENTENA, exist_ok=True)
+
+def hash_arquivo(caminho):
+    hasher = hashlib.md5()
+    with open(caminho, 'rb') as f:
+        while True:
+            chunk = f.read(4096)
+            if not chunk:
+                break
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+hashes = {}
+movidos = []
+
+print("🔍 Iniciando varredura...")
+
+for root, dirs, files in os.walk(PASTA_PROJETO):
+    if "__quarentena__" in root:
+        continue
+
+    for file in files:
+        caminho = os.path.join(root, file)
+
+        try:
+            file_hash = hash_arquivo(caminho)
+
+            if file_hash in hashes:
+                destino = os.path.join(PASTA_QUARENTENA, file)
+
+                base, ext = os.path.splitext(file)
+                contador = 1
+
+                while os.path.exists(destino):
+                    destino = os.path.join(PASTA_QUARENTENA, f"{base}_{contador}{ext}")
+                    contador += 1
+
+                shutil.move(caminho, destino)
+                movidos.append((caminho, destino))
+
+            else:
+                hashes[file_hash] = caminho
+
+        except Exception as e:
+            print(f"⚠️ Erro em {caminho}: {e}")
+
+# 📄 Relatório
+with open(RELATORIO, "w", encoding="utf-8") as f:
+    f.write("RELATÓRIO DE QUARENTENA - RAVENA\n\n")
+    for origem, destino in movidos:
+        f.write(f"MOVIDO:\n{origem} -> {destino}\n\n")
+
+print("\n✅ FINALIZADO")
+print(f"📦 Arquivos movidos: {len(movidos)}")
+print(f"📄 Relatório: {RELATORIO}")

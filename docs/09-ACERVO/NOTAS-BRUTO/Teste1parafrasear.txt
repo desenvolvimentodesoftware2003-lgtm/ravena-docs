@@ -1,0 +1,22 @@
+MÉTRICA 1 — Taxa de acerto (antes vs depois)
+
+Cria um conjunto fixo de testes:
+
+testes = [
+    ("o que é fotossíntese", "fotossíntese"),
+    ("como plantas produzem energia", "fotossíntese"),
+    ("energia das plantas vem de onde", "fotossíntese"),
+]
+
+Mede assim:
+
+def avaliar_taxa_acerto(testes):
+    acertos = 0
+
+    for pergunta, esperado in testes:
+        resposta = processar_pergunta(pergunta)
+
+        if esperado.lower() in resposta.lower():
+            acertos += 1
+
+    return acertos / len(testes)

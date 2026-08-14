@@ -1,0 +1,2 @@
+# 🔥 AUTO LIMPEZA RAVENA
+exec(open('/content/drive/MyDrive/ravena_cleaner.py').read())

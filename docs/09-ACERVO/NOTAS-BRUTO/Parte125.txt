@@ -1,0 +1,58 @@
+# ============================================================
+# BLOCO 24 — FAXINA AUTOMÁTICA (MIGRAÇÃO E RECLASSIFICAÇÃO)
+# ============================================================
+def realizar_faxina_na_memoria():
+    print("--- INICIANDO FAXINA SEMÂNTICA NA RAVENA ---")
+    
+    # 1. Mapear arquivos antigos na raiz da pasta de conhecimento
+    if not os.path.exists(CONHECIMENTO_BASE_PATH):
+        print("Pasta de conhecimento não encontrada.")
+        return
+
+    arquivos_na_raiz = [f for f in os.listdir(CONHECIMENTO_BASE_PATH) if f.endswith('.json')]
+    
+    itens_migrados = 0
+
+    for arquivo in arquivos_na_raiz:
+        caminho_antigo = os.path.join(CONHECIMENTO_BASE_PATH, arquivo)
+        
+        # Ignorar se for um diretório (já organizado)
+        if os.path.isdir(caminho_antigo):
+            continue
+            
+        print(f"Lendo arquivo antigo: {arquivo}...")
+        memorias_antigas = carregar_conhecimento_bruto(caminho_antigo)
+        
+        for item in memorias_antigas:
+            # Descriptografar para entender o que é o assunto
+            pergunta_original = descriptografar(item['pergunta'])
+            
+            # RECLASSIFICAÇÃO: O momento "Tony Stark"
+            # Usamos o novo Bloco 15 para decidir onde isso realmente deve morar
+            nova_categoria = classificar_tipo_pergunta(pergunta_original)
+            
+            # Salvar na nova estrutura de pastas (Bloco 12)
+            memoria_destino = carregar_conhecimento(nova_categoria)
+            
+            # Verificar se já não existe para não duplicar
+            if not any(it['id'] == item['id'] for it in memoria_destino):
+                item['categoria'] = nova_categoria # Atualiza o metadado
+                memoria_destino.append(item)
+                salvar_conhecimento(memoria_destino, nova_categoria)
+                itens_migrados += 1
+        
+        # Opcional: Renomear o arquivo antigo para não processar de novo
+        os.rename(caminho_antigo, caminho_antigo + ".backup")
+
+    print(f"--- FAXINA CONCLUÍDA: {itens_migrados} itens organizados em novas pastas! ---")
+
+def carregar_conhecimento_bruto(path):
+    """Auxiliar para ler arquivos sem a lógica de subpastas do Bloco 12"""
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except:
+        return []
+
+# Para rodar a faxina, basta descomentar a linha abaixo e dar Play:
+# realizar_faxina_na_memoria()

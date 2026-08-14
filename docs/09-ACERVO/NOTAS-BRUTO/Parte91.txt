@@ -1,0 +1,20 @@
+Ajustar busca
+Dentro do buscar_memoria:
+
+ você não pega mais item["resposta"]
+Você faz:
+
+melhor_resposta = None
+melhor_score_resposta = 0
+
+for r in item["respostas"]:
+    score_r = (
+        score_base
+        + (r["peso"] * 0.05)
+        + (r["acessos"] * 0.01)
+        + (r["confianca"] * 0.03)
+    )
+
+    if score_r > melhor_score_resposta:
+        melhor_score_resposta = score_r
+        melhor_resposta = r

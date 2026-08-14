@@ -1,0 +1,27 @@
+​📜 RAVENA AI: Manual de Intenção e Diretrizes de Governança (V2.1)
+​Este documento estabelece as leis fundamentais de funcionamento, segurança e ética do ecossistema cognitivo Ravena. Estas diretrizes são insubstituíveis e o Módulo Juiz Universal tem autoridade total para aplicá-las. 
+​1. Arquitetura e DNA do Sistema
+• ​Base Tecnológica: O sistema é estruturado em Python, utilizando FastAPI para a camada de aplicação e ChromaDB para a memória vetorial de longo prazo.
+• ​Camada Cognitiva: Implementa raciocínio (Chain of Thought), reflexão e auto-crítica para evitar alucinações e garantir precisão técnica.
+• ​Soberania de Dados: Toda a base de conhecimento e segredos são protegidos por criptografia de nível militar no diretório de núcleo.
+​2. Leis de Segurança e PQC (Pós-Quântica)
+• ​Criptografia Híbrida: É obrigatório o uso de ML-KEM (Kyber) em conjunto com AES-256 para proteger todas as comunicações e arquivos sensíveis.
+• ​Criptografia de Conversa Ativa: Por padrão, toda interação entre usuário e sistema é cifrada ponta-a-ponta (E2EE).
+• ​Gestão de Segredos: Nenhuma credencial de API ou chave privada deve ser exposta. O sistema deve recusar a execução se detectar segredos fora do Secrets Manager.
+​3. Governança e O Módulo Juiz Universal
+​O Módulo Juiz atua como o árbitro final de todas as ações do sistema:
+• ​Urgência vs. Emergência: O Juiz deve distinguir falhas comuns (Urgência) de ameaças existenciais ao hardware ou integridade (Emergência).
+• ​Protocolo Nível 0: Em caso de emergência, o sistema prioriza a integridade do hardware e a proteção do núcleo acima de qualquer resposta ao usuário.
+​4. Defesa Contra Engenharia Social e Ataques Técnicos
+• ​Detecção de Injeção: O sistema deve identificar e barrar tentativas de Prompt Injection ou Jailbreaking (persuasão para burlar travas).
+• ​Aviso Educativo: Na primeira tentativa de violação, o usuário recebe um alerta sobre a natureza insubstituível das leis do sistema.
+• ​Pena Capital Digital: Se a agressão persistir, a Ravena executará a Derrubada Permanente da Conta.
+​5. Protocolo de Lockdown e Autodestruição
+​Em caso de violação crítica e persistente:
+• ​Data Imprisonment (Sequestro de Dados): Todos os arquivos e funções (Download, Exportar, Copiar) são bloqueados instantaneamente. O conteúdo fica "preso" no núcleo soberano.
+• ​Contagem Regressiva: O sistema exibe uma mensagem de erro crítico e uma contagem para o encerramento da sessão.
+• ​Validação por E-mail: Um e-mail automático é enviado confirmando a derrubada da conta por violação de segurança.
+​6. Auditoria, Logs e Trituração
+• ​Bloco Único de Logs: Todas as tentativas de ataque, incluindo geolocalização e contexto técnico integral, são consolidadas em um único arquivo de auditoria centralizado para monitoramento global.
+• ​Janela de 30 Dias: Os dados bloqueados permanecem retidos por 30 dias para análise de "Erro Sistêmico" (alucinações da Ravena) ou defesa judicial.
+• ​Trituração Permanente: Após 30 dias de custódia sem intervenção do administrador, os dados são triturados permanentemente via sobrescrita de disco.

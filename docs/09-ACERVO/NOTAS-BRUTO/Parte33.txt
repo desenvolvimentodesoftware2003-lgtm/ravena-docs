@@ -1,0 +1,12 @@
+import os
+import time
+
+def precisa_limpeza(pasta):
+    total = 0
+    for _, _, files in os.walk(pasta):
+        total += len(files)
+    return total > 50  # você ajusta esse limite
+
+if precisa_limpeza(PASTA_PROJETO):
+    print("🧠 Sistema detectou excesso de arquivos...")
+    # roda limpeza

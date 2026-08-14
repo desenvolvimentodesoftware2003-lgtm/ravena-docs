@@ -1,0 +1,32 @@
+def rerank_avancado(candidatos, intencao, pergunta):
+
+    for c in candidatos:
+        item = c["item"]
+
+        # =====================
+        # 1. MATCH DE INTENÇÃO
+        # =====================
+        if item.get("tipo") == intencao:
+            c["score"] *= 1.25
+        elif item.get("tipo") != "geral":
+            c["score"] *= 0.7
+
+        # =====================
+        # 2. BOOST DE ENTIDADE
+        # =====================
+        if entidade_match(pergunta, item["texto"]):
+            c["score"] *= 1.15
+
+        # =====================
+        # 3. PENALIDADE DE RUÍDO
+        # =====================
+        if item["categoria"] == "culinaria" and "planta" in pergunta:
+            c["score"] *= 0.6
+
+        # =====================
+        # 4. HISTÓRICO (memória viva)
+        # =====================
+        acessos = item.get("acessos", 1)
+        c["score"] *= (1 + (acessos * 0.05))
+
+    return sorted(candidatos, key=lambda x: x["score"], reverse=True)

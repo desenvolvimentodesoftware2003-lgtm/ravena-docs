@@ -1,0 +1,12 @@
+CORREÇÃO ESTRUTURAL (ESSA É A CHAVE)
+
+1. ADICIONAR “ÂNCORA DE CONCEITO”
+Quando aprender:
+
+def extrair_conceito(pergunta):
+    palavras_importantes = [p for p in pergunta.lower().split() if len(p) > 4]
+    return palavras_importantes[:2]  # simples e funcional
+
+Salvar:
+
+"conceitos": extrair_conceito(pergunta)

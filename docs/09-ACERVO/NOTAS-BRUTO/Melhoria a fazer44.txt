@@ -1,0 +1,9 @@
+categorias = [
+    {
+        "nome": "",
+        "descricao": ,
+        "exemplos": [
+          
+        ]
+    }
+]

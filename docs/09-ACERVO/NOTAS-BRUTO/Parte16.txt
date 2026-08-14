@@ -1,0 +1,16 @@
+def comando_interno(pergunta):
+
+    if pergunta == "/status":
+        return "RAVENA ativa. Sistema funcionando."
+
+    if pergunta == "/memoria":
+        total = len(memoria)
+        return f"RAVENA possui {total} itens aprendidos."
+
+    if pergunta == "/criador":
+        return "Criador: Alexsander Soares Leal de Oliveira."
+
+    if pergunta == "/ajuda":
+        return ajuda_ravena()
+
+    return None

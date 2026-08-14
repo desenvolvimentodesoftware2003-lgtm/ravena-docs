@@ -1,0 +1,28 @@
+Dentro do processar_pergunta:
+
+if pergunta_original.startswith("correto:"):
+    ajustar_feedback(pergunta_original, positivo=True)
+
+elif pergunta_original.startswith("errado:"):
+    ajustar_feedback(pergunta_original, positivo=False)
+
+Função
+
+def ajustar_feedback(pergunta, positivo=True):
+    topico = classificar_topico(pergunta)
+    path = get_path_topico(topico)
+    memoria = carregar_conhecimento(path)
+
+    pergunta_norm = normalizar_texto(pergunta.replace("correto:", "").replace("errado:", "").strip())
+
+    for item in memoria:
+        if descriptografar(item["pergunta"]) == pergunta_norm:
+
+            for r in item["respostas"]:
+                if positivo:
+                    r["confianca"] += 0.2
+                else:
+                    r["confianca"] -= 0.2
+
+            salvar_conhecimento(memoria, path)
+            return "Feedback aplicado"

@@ -1,0 +1,17 @@
+import numpy as np
+
+def buscar_resposta_semantica(pergunta, memoria_semantica, threshold=0.7):
+    pergunta_embed = gerar_embedding(pergunta)
+    melhor_similaridade = 0
+    melhor_resposta = None
+    
+    for item in memoria_semantica:
+        sim = np.dot(pergunta_embed, item['embedding']) / (np.linalg.norm(pergunta_embed) * np.linalg.norm(item['embedding']))
+        if sim > melhor_similaridade:
+            melhor_similaridade = sim
+            melhor_resposta = item['resposta']
+    
+    if melhor_similaridade >= threshold:
+        return melhor_resposta
+    else:
+        return None

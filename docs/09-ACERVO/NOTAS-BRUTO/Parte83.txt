@@ -1,0 +1,20 @@
+Adiciona isso no código:
+
+# Criar função de ajuste automático
+
+def ajustar_peso(item, score):
+    """
+    Ajusta o peso automaticamente baseado na qualidade da resposta
+    """
+
+    # se resposta foi MUITO boa
+    if score > 0.80:
+        item["peso"] = item.get("peso", 1) + 0.1
+
+    # se resposta foi aceitável
+    elif score > 0.65:
+        item["peso"] = item.get("peso", 1) + 0.05
+
+    # se resposta foi ruim (mas passou)
+    else:
+        item["peso"] = max(0.5, item.get("peso", 1) - 0.05)

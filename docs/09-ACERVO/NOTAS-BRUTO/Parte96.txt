@@ -1,0 +1,20 @@
+# Criar função de auto-avaliação
+
+def auto_avaliar_resposta(pergunta, resposta, score):
+    """
+    Avalia se a resposta faz sentido com a pergunta
+    """
+
+    pergunta_norm = normalizar_texto(pergunta)
+    resposta_norm = normalizar_texto(resposta)
+
+    similaridade = fuzz.ratio(pergunta_norm, resposta_norm) / 100
+
+    #  critérios básicos
+    if score < 0.6:
+        return "baixa_confianca"
+
+    if similaridade < 0.2:
+        return "possivel_erro"
+
+    return "ok"

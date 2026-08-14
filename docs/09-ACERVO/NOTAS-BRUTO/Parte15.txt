@@ -1,0 +1,19 @@
+# ============================================
+# BLOCO 15 — SISTEMA DE AJUDA
+# ============================================
+
+def ajuda_ravena():
+
+    texto = """
+Comandos da RAVENA:
+
+/status   -> mostra estado do sistema
+/memoria  -> mostra quantidade de memórias
+/criador  -> mostra quem criou a RAVENA
+/ajuda    -> mostra esta lista de comandos
+
+Para ensinar algo:
+aprenda: pergunta = resposta
+"""
+
+    return texto

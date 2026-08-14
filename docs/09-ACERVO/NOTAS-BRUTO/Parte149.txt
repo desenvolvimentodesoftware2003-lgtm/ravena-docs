@@ -1,0 +1,8 @@
+ZONA CINZENTA (FALLBACK INTELIGENTE)
+
+def fallback_resposta(pergunta):
+    return {
+        "resposta": "Não tenho certeza suficiente para responder com precisão ainda.",
+        "acao": "aprender",
+        "pergunta_original": pergunta
+    }

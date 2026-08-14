@@ -1,0 +1,4 @@
+Correção:
+Você precisa de validação na hora de salva
+
+if similaridade(pergunta, resposta) < threshold:

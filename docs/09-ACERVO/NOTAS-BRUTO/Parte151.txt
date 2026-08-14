@@ -1,0 +1,60 @@
+def fallback_diagnostico(pergunta, candidatos, contexto):
+
+    diagnostico = {
+        "erro": True,
+        "motivo": None,
+        "detalhes": {}
+    }
+
+    top1 = candidatos[0] if candidatos else None
+
+    # =========================
+    # 1. SCORE BAIXO
+    # =========================
+    if not top1 or top1["score"] < 0.75:
+        diagnostico["motivo"] = "baixa_similaridade"
+
+    # =========================
+    # 2. INTENÇÃO ERRADA
+    # =========================
+    if top1:
+        if top1["item"].get("tipo") != contexto["intencao"]:
+            diagnostico["motivo"] = "intencao_incorreta"
+
+    # =========================
+    # 3. CATEGORIA SUSPEITA
+    # =========================
+    if contexto["conf_cat"] < 0.4:
+        diagnostico["motivo"] = "categoria_insegura"
+
+    # =========================
+    # 4. POSSÍVEL ERRO DE DADOS (criptografia etc)
+    # =========================
+    if top1 and top1["item"]["resposta"] is None:
+        diagnostico["motivo"] = "erro_dado_memoria"
+
+    # =========================
+    # LOG ESTRUTURADO
+    # =========================
+    log_erro_estruturado({
+        "pergunta": pergunta,
+        "top1": top1,
+        "top3": candidatos[:3],
+        "contexto": contexto,
+        "diagnostico": diagnostico
+    })
+
+    return {
+        "resposta": "Ainda não tenho certeza suficiente.",
+        "debug": diagnostico
+    }
+
+def analisar_logs_erros(logs):
+
+    contagem = {}
+
+    for log in logs:
+        motivo = log["diagnostico"]["motivo"]
+        contagem[motivo] = contagem.get(motivo, 0) + 1
+
+    return contagem

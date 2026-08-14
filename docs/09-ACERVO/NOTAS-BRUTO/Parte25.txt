@@ -1,0 +1,131 @@
+# >>> Instalação da biblioteca de embeddings
+!pip install sentence-transformers
+
+# >>> Importações
+import os, json
+import numpy as np
+from sentence_transformers import SentenceTransformer
+
+# >>> Conectar Drive (ajuste conforme seu caminho)
+from google.colab import drive
+drive.mount('/content/drive')
+
+# >>> Inicializar modelo semântico
+model = SentenceTransformer('all-MiniLM-L6-v2')
+
+# >>> Função de normalização
+def normalizar_texto(texto):
+    texto = texto.lower().replace("?", "").replace("!", "").strip()
+    return texto
+
+# >>> Carregar memória semântica do Drive
+memoria_semantica_path = "/content/drive/MyDrive/RAVENA/memoria_semantica.json"
+if os.path.exists(memoria_semantica_path):
+    with open(memoria_semantica_path, "r") as f:
+        memoria_semantica = json.load(f)
+else:
+    memoria_semantica = []
+
+# >>> Função para gerar embedding
+def gerar_embedding(texto):
+    return model.encode(normalizar_texto(texto)).tolist()
+
+# >>> Função para aprender algo novo
+def aprender_semantico(pergunta, resposta):
+    embedding = gerar_embedding(pergunta)
+    memoria_semantica.append({
+        "pergunta": pergunta,
+        "resposta": resposta,
+        "embedding": embedding
+    })
+    # Salvar no Drive
+    with open(memoria_semantica_path, "w") as f:
+        json.dump(memoria_semantica, f)
+    print(f"Aprendi: '{pergunta}' → '{resposta}'")
+
+# >>> Função de busca semântica
+def buscar_resposta_semantica(pergunta, threshold=0.7):
+    if not memoria_semantica:
+        return None
+    pergunta_embed = np.array(gerar_embedding(pergunta))
+    melhor_similaridade = 0
+    melhor_resposta = None
+    for item in memoria_semantica:
+        emb = np.array(item['embedding'])
+        sim = np.dot(pergunta_embed, emb) / (np.linalg.norm(pergunta_embed) * np.linalg.norm(emb))
+        if sim > melhor_similaridade:
+            melhor_similaridade = sim
+            melhor_resposta = item['resposta']
+    if melhor_similaridade >= threshold:
+        return melhor_resposta
+    return None
+
+# >>> Função de sugestão automática (aprendizado guiado)
+def sugerir_resposta(pergunta):
+    # Exemplo simples baseado em palavras-chave
+    palavras_chave = ["capital", "brasil"]
+    if all(p in normalizar_texto(pergunta) for p in palavras_chave):
+        return "Brasília?"
+    return None
+
+# >>> Comandos de gerenciamento
+def ver_memoria_semantica():
+    if not memoria_semantica:
+        print("Memória semântica vazia.")
+        return
+    for i, item in enumerate(memoria_semantica, start=1):
+        print(f"{i}: Pergunta: {item['pergunta']} → Resposta: {item['resposta']}")
+
+def limpar_memoria_semantica():
+    global memoria_semantica
+    memoria_semantica = []
+    with open(memoria_semantica_path, "w") as f:
+        json.dump(memoria_semantica, f)
+    print("Memória semântica limpa.")
+
+# >>> Função principal de resposta da RAVENA
+def responder(pergunta):
+    # Verificar comandos internos
+    comando = normalizar_texto(pergunta)
+    if comando == "/vermemoria":
+        ver_memoria_semantica()
+        return ""
+    elif comando == "/limparmemoria":
+        limpar_memoria_semantica()
+        return ""
+    
+    # Buscar memória semântica
+    resposta = buscar_resposta_semantica(pergunta)
+    
+    # Se não encontrar, sugerir resposta guiada
+    if not resposta:
+        sugestao = sugerir_resposta(pergunta)
+        if sugestao:
+            return f"Acho que a resposta pode ser: {sugestao}\nVocê pode me confirmar ou corrigir usando: aprenda: pergunta = resposta"
+        else:
+            return """Ainda não sei responder isso.
+Você pode me ensinar usando:
+aprenda: pergunta = resposta"""
+    
+    return resposta
+
+# >>> Loop de conversa
+print("RAVENA 0.7 iniciada. Digite 'sair' para encerrar.")
+while True:
+    pergunta = input("Você: ")
+    if normalizar_texto(pergunta) == "sair":
+        print("RAVENA encerrada.")
+        break
+    # Aprendizado rápido pelo comando "aprenda:"
+    if pergunta.lower().startswith("aprenda:"):
+        try:
+            conteudo = pergunta[8:].split("=")
+            p = conteudo[0].strip()
+            r = conteudo[1].strip()
+            aprender_semantico(p, r)
+        except:
+            print("Erro ao ensinar. Use: aprenda: pergunta = resposta")
+    else:
+        resposta = responder(pergunta)
+        if resposta:
+            print("RAVENA:", resposta)

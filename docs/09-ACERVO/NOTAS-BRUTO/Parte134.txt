@@ -1,0 +1,13 @@
+CORREÇÃO OBRIGATÓRIA: VALIDAÇÃO DE ENTIDADE
+Você precisa de um filtro antes da resposta:
+
+def validar_entidade(pergunta, candidato):
+    palavras_pergunta = set(pergunta.lower().split())
+    palavras_candidato = set(candidato.lower().split())
+
+    intersecao = palavras_pergunta & palavras_candidato
+
+    return len(intersecao) >= 2  # ajuste fino depois
+
+if score >= HIGH_CONFIDENCE and validar_entidade(pergunta, melhor_item["pergunta"]):
+    return resposta

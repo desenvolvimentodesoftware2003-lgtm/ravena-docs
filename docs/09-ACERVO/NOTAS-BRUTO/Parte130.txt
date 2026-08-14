@@ -1,0 +1,12 @@
+def detectar_cluster_pergunta(emb_pergunta, kmeans):
+    sims = cosine_similarity([emb_pergunta], kmeans.cluster_centers_)[0]
+    return int(np.argmax(sims))
+
+Dentro do buscar_memoria, você adiciona:
+
+cluster_pergunta = detectar_cluster_pergunta(emb_perg, kmeans)
+
+E depois, no loop:
+
+if item.get("cluster_id") == cluster_pergunta:
+    score += 0.03  # bem leve

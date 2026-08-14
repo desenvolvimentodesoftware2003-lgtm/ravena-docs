@@ -1,0 +1,143 @@
+1. PRÉ-PROCESSAMENTO
+
+def normalizar(texto):
+    return texto.lower().strip()
+ 2. DETECÇÃO DE INTENÇÃO (CRÍTICO)
+Isso vem ANTES de tudo
+
+INTENCOES = {
+    "definicao": ["o que é", "o que são", "explique"],
+    "procedimento": ["como", "como fazer"],
+    "causa": ["por que", "o que causa"],
+    "comparacao": ["diferença", "compare"],
+    "identificacao": ["qual", "quem"],
+    "risco": ["perigo", "riscos"]
+}
+
+def detectar_intencao(pergunta):
+    pergunta = pergunta.lower()
+    for tipo, padrões in INTENCOES.items():
+        for p in padrões:
+            if p in pergunta:
+                return tipo
+    return "geral"
+
+ 3. CLASSIFICAÇÃO DE CATEGORIA (SOFT)
+ Aqui você usa embedding 
+
+def classificar_categoria(pergunta):
+    # retorna (categoria, confiança)
+    return categoria, confianca
+
+ 4. BUSCA DE CANDIDATOS
+
+def buscar_candidatos(pergunta, categoria, confianca):
+    if confianca < 0.4:
+        return buscar_em_todas(pergunta)
+    else:
+        return buscar_na_categoria(pergunta, categoria)
+
+5. FILTRO ESTRUTURAL (O CORAÇÃO DO SISTEMA)
+ 
+
+def mesma_intencao(p1, p2):
+    return detectar_intencao(p1) == detectar_intencao(p2)
+
+def overlap(p1, p2):
+    s1 = set(p1.split())
+    s2 = set(p2.split())
+    return len(s1 & s2) / max(len(s1), 1)
+Aplicação:
+Python
+def filtrar_candidatos(pergunta, candidatos):
+    filtrados = []
+
+    for c in candidatos:
+        score = c["score"]
+
+        # BLOQUEIO OU PENALIDADE
+        if not mesma_intencao(pergunta, c["pergunta"]):
+            score *= 0.5
+
+        if overlap(pergunta, c["pergunta"]) < 0.3:
+            score *= 0.7
+
+        c["score_filtrado"] = score
+        filtrados.append(c)
+
+    return filtrados
+
+ 6. RERANKING FINAL
+
+def rerank(pergunta, candidatos):
+    for c in candidatos:
+        score = c["score_filtrado"]
+
+        #  BOOST MATCH EXATO
+        if pergunta.strip() == c["pergunta"].strip():
+            score += 0.5
+
+        # leve boost por categoria correta
+        if c["categoria"] == "correta":
+            score += 0.1
+
+        c["score_final"] = score
+
+    return sorted(candidatos, key=lambda x: x["score_final"], reverse=True)
+
+ 7. DECISÃO FINAL
+
+def decidir(candidatos):
+    melhor = candidatos[0]
+
+    if melhor["score_final"] < 0.7:
+        return None  # fallback
+
+    return melhor
+
+ 8. CONTROLE DE APRENDIZADO (ANTI-CONTAMINAÇÃO)
+Python
+def pode_aprender(confianca_categoria, score_final):
+    if confianca_categoria < 0.4:
+        return False
+
+    if score_final < 0.8:
+        return False
+
+    return True
+
+9. FALLBACK DIAGNÓSTICO (INTELIGENTE)
+ Agora o fallback vira ferramenta de debug
+
+def fallback(pergunta, candidatos):
+    return {
+        "erro": "baixa_confianca",
+        "top_3": candidatos[:3],
+        "sugestao": "rever intenção ou base de conhecimento"
+    }
+
+PIPELINE FINAL INTEGRADO
+
+def pipeline(pergunta):
+
+    pergunta = normalizar(pergunta)
+
+    intencao = detectar_intencao(pergunta)
+
+    categoria, confianca = classificar_categoria(pergunta)
+
+    candidatos = buscar_candidatos(pergunta, categoria, confianca)
+
+    candidatos = filtrar_candidatos(pergunta, candidatos)
+
+    candidatos = rerank(pergunta, candidatos)
+
+    melhor = decidir(candidatos)
+
+    if melhor is None:
+        return fallback(pergunta, candidatos)
+
+    if pode_aprender(confianca, melhor["score_final"]):
+        aprender(melhor)
+
+    return melhor["resposta"]

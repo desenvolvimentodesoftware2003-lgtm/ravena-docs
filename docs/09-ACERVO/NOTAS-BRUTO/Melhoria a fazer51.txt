@@ -1,0 +1,24 @@
+DETECÇÃO AUTOMÁTICA DE ESTADO
+
+def esta_criptografado(dado):
+    return isinstance(dado, str) and dado.startswith("ENC::")
+LEITURA SEGURA
+
+def ler_dado(dado):
+
+    if esta_criptografado(dado):
+        try:
+            return descriptografar(dado)
+        except:
+            return None  # ou log de erro
+
+    return dado
+
+ ESCRITA CONSISTENTE
+
+def salvar_dado(dado, usar_cripto):
+
+    if usar_cripto:
+        return criptografar(dado)
+
+    return dado

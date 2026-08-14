@@ -1,0 +1,28 @@
+CORREÇÃO OBRIGATÓRIA
+
+ 1. NÃO USE K FIXO
+Troque isso:
+
+k = 3
+
+Por:
+
+k = min(3, len(itens) // 2)
+ou 
+melhor ainda:
+
+if len(itens) < 6:
+    pular_clusterizacao()
+
+2. CRITÉRIO MÍNIMO
+
+MIN_ITENS_CLUSTER = 5
+
+Se não tiver isso:
+❌ não clusteriza
+
+ 3. DETECÇÃO DE CLUSTER RUIM
+Adicione:
+
+if media_similaridade > 0.95:
+    print("Cluster suspeito (possível overfit ou cluster unitário)")

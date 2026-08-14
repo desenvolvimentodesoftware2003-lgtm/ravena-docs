@@ -1,0 +1,42 @@
+# ============================================
+# RAVENA
+# BLOCO 12 — SISTEMA DE RESPOSTA ATUALIZADO
+# ============================================
+
+def responder(pergunta):
+
+    pergunta_original = pergunta
+
+    pergunta = pergunta.lower()
+
+    if pergunta.startswith("aprenda:"):
+
+        conteudo = pergunta.replace("aprenda:", "").strip()
+
+        partes = conteudo.split("=")
+
+        if len(partes) == 2:
+
+            chave = partes[0].strip()
+            valor = partes[1].strip()
+
+            return aprender(chave, valor)
+
+        else:
+            return "Use o formato: aprenda: pergunta = resposta"
+
+    resposta_memoria = buscar_memoria(pergunta)
+
+    if resposta_memoria:
+
+        registrar_log(f"RAVENA respondeu de memória para '{pergunta_original}': '{resposta_memoria}'")
+
+        return resposta_memoria
+
+    if "oi" in pergunta:
+        return "Olá. Eu sou a Artificial Inteligente RAVENA."
+
+    if "quem te criou" in pergunta:
+        return "Fui criada por Alexsander Soares Leal de Oliveira."
+
+    return "Ainda estou aprendendo."

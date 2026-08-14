@@ -1,0 +1,8 @@
+REMOVE completamente:
+
+"fallback_controlado"
+
+e usa isso como lógica:
+
+if score < threshold:
+    return "fallback"

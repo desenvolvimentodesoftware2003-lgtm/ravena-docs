@@ -1,0 +1,9 @@
+Correção obrigatória
+Adiciona limite:
+
+MAX_VARIACOES_POR_CONCEITO = 10
+
+E antes de gerar:
+
+if tamanho_cluster >= MAX_VARIACOES_POR_CONCEITO:
+    skip

@@ -1,0 +1,4 @@
+BLOQUEAR APRENDIZADO RUIM
+
+if score < 0.55:
+    não aprende

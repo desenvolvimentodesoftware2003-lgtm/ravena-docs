@@ -1,0 +1,13 @@
+@app.route("/")
+def home():
+    return """
+    <html>
+    <body>
+        <h2>RAVENA Beta 1</h2>
+        <form method="post" action="/chat">
+            <input type="text" name="msg" placeholder="Digite sua mensagem..." style="width:300px;">
+            <button type="submit">Enviar</button>
+        </form>
+    </body>
+    </html>
+    """

@@ -1,0 +1,10 @@
+# ============================================
+# RAVENA
+# BLOCO 1 — CONECTAR GOOGLE DRIVE
+# ============================================
+
+from google.colab import drive
+
+drive.mount('/content/drive')
+
+print("Google Drive conectado com sucesso.")

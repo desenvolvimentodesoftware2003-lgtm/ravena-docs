@@ -1,0 +1,7 @@
+"geral": """
+Categoria residual para entradas que não se encaixam claramente em nenhum domínio específico.
+Abrange perguntas vagas, ambíguas, incompletas ou de curiosidade geral sem contexto definido.
+
+Não representa um campo de conhecimento específico e deve ser usada apenas quando
+não há similaridade suficiente com outras categorias mais bem definidas.
+"""

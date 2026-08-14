@@ -1,0 +1,9 @@
+if falha:
+
+    tipo_erro = classificar_erro(top1, contexto)
+
+    # log obrigatório
+    log_erro(tipo_erro)
+
+    # resolução simples (pode evoluir depois)
+    return fallback_resposta(pergunta)

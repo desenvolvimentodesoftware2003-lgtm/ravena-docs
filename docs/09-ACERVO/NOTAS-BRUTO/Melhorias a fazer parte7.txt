@@ -1,0 +1,10 @@
+Correção correta
+Use o centroide do cluster:
+Python
+centroide = kmeans.cluster_centers_[cluster_id]
+E pega o item mais próximo:
+Python
+def item_mais_representativo(memoria, embeddings, centroide):
+    sims = cosine_similarity([centroide], embeddings)[0]
+    idx = np.argmax(sims)
+    return memoria[idx]

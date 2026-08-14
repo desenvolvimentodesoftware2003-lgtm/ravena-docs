@@ -1,0 +1,17 @@
+Correção imediata (prioridade máxima)
+Você precisa travar isso:
+
+if score_categoria == -1:
+    raise Exception("ERRO: Classificador de categoria não retornou valor válido")
+
+ 
+Correção estrutural (faça isso agora)
+1. Garantir retorno válido
+
+if score_categoria is None or score_categoria < 0:
+    categoria = "fallback_controlado"
+    score_categoria = 0.0
+2. Nunca permitir "geral" como default bruto
+
+if categoria == "geral" and score_categoria < 0.2:
+    categoria = "fallback_controlado"

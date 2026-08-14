@@ -1,0 +1,16 @@
+Definir limites
+
+HIGH_CONFIDENCE = 0.65
+LOW_CONFIDENCE = 0.50 # LOW_CONFIDENCE = 0.30/senão vira chute
+
+2. Fallbeck
+
+def gerar_resposta_fallback(item, score):
+    return f"""
+Isso pode estar relacionado a:
+
+{item['resposta']}
+
+⚠️ Ainda estou validando essa informação.
+Score: {round(score, 2)}
+"""

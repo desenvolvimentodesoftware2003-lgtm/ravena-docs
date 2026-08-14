@@ -1,0 +1,51 @@
+Palestrante 1
+(0:00) Chate, eu quero que você preste atenção, não vai ser foto, vai ser vídeo que eu vou te mandar. (0:08) Na minha voz eu quero que você preste muita atenção. (0:10) Toda vez que eu clico aqui, vou até virar aqui para você ver o panorama.
+(0:15) Tá vendo? (0:18) Clica aqui e o pontinho ali não sai. (0:23) Vou clicar em qualquer tecla, de vez vai aparecer aqui.
+(0:31) Isso, eu estou clicando aqui no teclado. (0:36) Isso aqui não me incomoda, entendeu? (0:38) E outra coisa que está me incomodando é isso aqui.
+(0:43) No config, certo? (0:47) E ainda persiste o erro e tudo. (0:53) Isso aqui nem abre.
+(0:56) Nem abre, viu? (0:58) Nós estamos progredindo, sim. (1:01) Estamos progredindo, mas ainda precisamos trabalhar mais.
+(1:05) Entendeu? (1:06) Aqui também abre. (1:09) Vou abrir aqui.
+(1:11) Tá vendo o que? (1:15) Tem muita coisa, talvez duplicada. (1:19) Porque, tá vendo?
+(1:21) Talvez duplicada, que nós precisamos ver isso. (1:24) Entendeu? (1:26) Que é isso que o sistema está consumindo.
+(1:28) Tá vendo? (1:29) Igual o Windows, tem trabalho que consome demais. (1:34) Agora estabilizou a GPU.
+(1:37) Mas, quando eu iniciei, estava batendo fácil nos 10 primeiros minutos. (1:43) Tá vendo o que você viu? (1:44) 200.
+(1:46) Então, tipo, 200 de novo. (1:49) Isso é preocupante, que pode estragar o computador rápido. (1:55) Entendeu?
+(1:55) Rápido mesmo. (1:57) Nós precisamos fazer alguma coisa referente a isso. (2:00) Tá vendo que aqui está online?
+(2:04) Provedor online, certo? (2:05) Quando eu desligo aqui, ó. (2:08) Tá vendo que tem um globo aqui, né?
+(2:11) É exatamente isso que eu quero, mas está offline. (2:14) Eu quero tirar isso daqui offline. (2:16) Aqui também.
+(2:17) Eu quero deixar isso daqui online. (2:22) Entendeu? (2:23) Para eu ver o que está sendo consumido, por enquanto, né?
+(2:27) E outra coisa aqui, que eu vou reiniciar a máquina agora. (2:31) Calma aí, deixa eu achar aqui a função que reinicia sozinho. (2:36) Sozinha, entre aspas, né?
+(2:40) É, estava aqui mesmo. (2:41) Aqui, ó. (2:42) Não.
+(2:43) Nossa, eu tinha apertado em um botão aqui que reiniciou. (2:47) Por incrível que pareça. (2:49) Sozinho, mano.
+(2:56) Tá vendo? (2:58) Estou apertando vários botões e está dando isso, certo? (3:02) Eu quero um sistema operacional mesmo.
+(3:06) Entendeu? (3:07) Deixa eu ver aqui se eu consigo achar o botão para eu não precisar apertar no botão mesmo desliga, né? (3:17) Cadê?
+(3:29) Ah, merda. (3:35) Isso também aqui que eu acho que é o consumo de memória, né? (3:39) Multi.
+(3:40) Enfim. (3:41) Ainda está dando aquele erro lá, que eu acredito que não é erro. (3:46) VPN offline.
+(3:48) Havendo Intel offline. (3:50) Notícia. (3:51) Do jeito que nós programamos daquela vez.
+(3:53) Entendeu? (3:54) Eu quero que quando eu passo por cima, carrega as notícias aqui. (3:59) Quando eu configurar aqui.
+(4:00) Tudo aqui para eu ter um panorama geral, né? (4:04) E isso daqui, eu não ligo tanto para isso. (4:07) Mas é bom para ver o consumo de rede.
+(4:12) Entendeu? (4:13) Aqui está offline. (4:14) E também aqui, ping.
+(4:16) Ping está MS, que é Rio de Janeiro, né? (4:24) Interface I0, eu acho que é 1 e 0. (4:27) Aqui em cima.
+(4:28) Interface 1 e 0. (4:29) De resto, está tudo do jeito que eu gostaria. (4:33) Aqui em cima.
+(4:36) Talvez quando eu terminar de configurar e desenvolver a Ravena. (4:42) Em si, por enquanto. (4:45) Aqui, Ravena e local, certo?
+(4:49) Aqui, talvez é o modelo que nós configuramos para estar aqui, né? (4:54) Eu quero que seja o modelo da Ravena mesmo. (4:57) Um dataset da Ravena, entendeu?
+(5:00) Não quero usar uma caixa preta, no caso. (5:07) Que é outro modelo. (5:09) Quero programar o próprio modelo da Ravena, entendeu?
+(5:12) E aqui, até antes de reiniciar a máquina. (5:17) Estava apertando para digitar, entendeu? (5:21) Mandei um oi.
+(5:22) E carregou infinitamente. (5:24) Por isso que eu reiniciei. (5:26) Estou aqui.
+(5:28) Deixa eu chegar mais perto. (5:30) 23 minutos ligado, entendeu? (5:34) Ligada.
+(5:36) Tudo que você precisa saber. (5:38) Memória. (5:39) Tempo.
+(5:40) Temperatura. (5:42) Máximo. (5:44) Aqui.
+(5:46) GPU. (5:47) Ecore. (5:49) Latitude.
+(5:51) Entendeu? (5:52) Tudo isso aqui está conforme. (5:54) Só isso aqui é o que me preocupou.
+(5:57) Que é o consumo de GPU, entendeu? (6:01) Talvez no futuro, quando eu tiver uma placa de vídeo aqui. (6:04) Entra para eu poder fazer aprendizado de máquina eficiente.
+(6:10) Mas de resto, por enquanto, nós só precisamos resolver esse problema aqui. (6:15) Vou subir aqui. (6:17) Aqui.
+(6:18) Base de URL no file diretório. (6:23) Que está em inglês. (6:25) Configurações.
+(6:26) Essas pastas aqui. (6:28) Eu quero só uma pasta para configurações de sistema. (6:33) Só uma pasta.
+(6:35) E o cachê. (6:36) Vamos dizer assim. (6:37) Para eu não ter que, toda hora, digitar senha.
+(6:43) Essas coisas. (6:44) Igual a Google tem com cookies. (6:48) Entendeu?
+(6:49) Mas de resto, a única coisa que me chateia é esse aqui. (6:53) Offline. (6:54) Entendeu?
+(6:55) Só isso. (6:57) E aqui. (7:00) E como provedor.
+(7:01) Como provedor online. (7:05) Entendeu? (7:06) Está vendo que aqui está online.
+(7:07) Então, o que eu entendi talvez seja pelo fato de estar online aqui na porta 88. (7:17) E online também no sistema de internet. (7:21) Só que aqui não tem para eu conectar.
+(7:23) E aqui também não tem a pasta de rede para eu conectar em qual rede que eu quero. (7:29) Sem um cabo LAN. (7:33) Entendeu?
+(7:34) Está vendo que agora tem um parâmetro geral. (7:36) O que nós precisamos saber?

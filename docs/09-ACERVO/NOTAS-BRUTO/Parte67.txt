@@ -1,0 +1,35 @@
+resultado_sem_contexto = buscar(pergunta)
+resultado_com_contexto = buscar(pergunta + contexto)
+
+if score_sem_contexto >= score_com_contexto:
+    usar resultado_sem_contexto
+else:
+    usar resultado_com_contexto
+
+Poder deleta esse comando no código 
+pergunta = memoria_curta[-1] + " " + pergunta
+
+Subistitui por : def construir_pergunta_com_contexto(pergunta_atual):
+    if not memoria_curta:
+        return pergunta_atual, pergunta_atual
+
+    ultima = memoria_curta[-1]["pergunta"]
+
+    pergunta_sem_contexto = pergunta_atual
+    pergunta_com_contexto = ultima + " " + pergunta_atual
+
+    return pergunta_sem_contexto, pergunta_com_contexto
+
+Usar DUAS buscas Na hora de buscar:
+
+p1, p2 = construir_pergunta_com_contexto(pergunta)
+
+resultado1, score1 = buscar_memoria(p1)
+resultado2, score2 = buscar_memoria(p2)
+
+Escolher o melhor
+
+if score1 >= score2:
+    resposta = resultado1
+else:
+    resposta = resultado2

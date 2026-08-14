@@ -1,0 +1,16 @@
+# ============================================
+# RAVENA
+# BLOCO 6 — LOOP DE CONVERSA
+# ============================================
+
+while True:
+
+    usuario = input("Você: ")
+
+    if usuario.lower() == "sair":
+        print("RAVENA: Encerrando conversa.")
+        break
+
+    resposta = responder(usuario)
+
+    print("RAVENA:", resposta)

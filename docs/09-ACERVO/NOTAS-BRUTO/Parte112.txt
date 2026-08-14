@@ -1,0 +1,4 @@
+Adaptar retorno
+Depois de ordenar candidatos:
+Python
+conflito = detectar_conflito(todas_memorias_candidatas)

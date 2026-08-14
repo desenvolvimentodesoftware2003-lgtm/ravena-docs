@@ -1,0 +1,26 @@
+agora a escolha do conceito não é aleatória, ela define se você vai evoluir rápido ou travar.
+Vou te dar um critério técnico, não opinião.
+
+Regra para escolher o próximo conceito
+
+Você NÃO deve escolher:
+❌ algo totalmente novo
+❌ algo muito distante
+❌ algo simples demais
+
+✅ Você deve escolher:
+um conceito semanticamente próximo da fotossíntese, mas distinto
+🎯 Melhor escolha pra você agora
+👉 Respiração celular
+🧠 Por que essa é a melhor escolha
+
+1. Mesma categoria (ciência)
+não quebra seu classificador
+reaproveita embeddings
+
+2. Alta proximidade semântica
+
+fotossíntese ↔ respiração celular
+👉 isso cria:
+competição no ranking
+necessidade real de precisão

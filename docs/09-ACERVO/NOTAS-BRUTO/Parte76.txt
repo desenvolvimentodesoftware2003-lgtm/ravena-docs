@@ -1,0 +1,11 @@
+IMPLEMENTAÇÃO (simples, sem quebrar nada)
+
+def detectar_intencao(pergunta):
+    pergunta = pergunta.lower()
+
+    for tipo, palavras in TIPOS_INTENCAO.items():
+        for p in palavras:
+            if p in pergunta:
+                return tipo
+
+    return "geral"

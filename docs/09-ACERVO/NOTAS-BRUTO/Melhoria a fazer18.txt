@@ -1,0 +1,5 @@
+BUSCA DUPLA
+Você reutiliza sua função existente:
+
+def buscar_conceito(conceito):
+    return buscar_memoria(conceito)  # já usa seu sistema atual

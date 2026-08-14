@@ -1,0 +1,16 @@
+MÉTRICA 3 — Consistência (ESSA É A MAIS IMPORTANTE)
+ essa pega erro escondido
+
+Teste:
+Repete perguntas parecidas:
+Python
+testes = [
+    "o que é fotossíntese",
+    "como funciona fotossíntese",
+    "explique fotossíntese",
+    "como plantas produzem energia",
+]
+
+Você observa:
+todas retornam a MESMA resposta?
+ou varia?

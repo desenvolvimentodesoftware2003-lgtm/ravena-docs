@@ -1,0 +1,27 @@
+PASSO 2 — RE-RANQUEAR COM REGRAS
+Agora entra o diferencial:
+
+def re_rankear(pergunta, candidatos):
+    melhor = None
+    melhor_score = 0
+
+    for item in candidatos:
+        score = item["score"]
+
+        # Validação de entidade
+        if not validar_entidade(pergunta, item["pergunta"]):
+            score *= 0.5
+
+        # Validação de conceito
+        if not validar_conceito(pergunta, item):
+            score *= 0.7
+
+        # Pequeno boost se bater muito bem
+        if score > 0.7:
+            score += 0.05
+
+        if score > melhor_score:
+            melhor_score = score
+            melhor = item
+
+    return melhor, melhor_score

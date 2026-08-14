@@ -1,0 +1,13 @@
+def calcular_similaridade_hibrida(pergunta, memoria_item):
+    # Similaridade semântica (embedding)
+    sim_semantica = cosine_similarity(pergunta["embedding"], memoria_item["embedding"])
+
+    # Similaridade por palavras (overlap)
+    tokens_pergunta = set(pergunta["texto"].split())
+    tokens_memoria = set(memoria_item["pergunta"].split())
+
+    intersecao = tokens_pergunta.intersection(tokens_memoria)
+    sim_tokens = len(intersecao) / max(len(tokens_pergunta), 1)
+
+    # Peso híbrido
+    return (sim_semantica * 0.7) + (sim_tokens * 0.3)

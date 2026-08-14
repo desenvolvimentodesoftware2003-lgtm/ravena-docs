@@ -1,0 +1,21 @@
+GERAÇÃO DA RESPOSTA
+Python
+def comparar_conceitos(conceito1, conceito2):
+    resp1 = buscar_conceito(conceito1)
+    resp2 = buscar_conceito(conceito2)
+
+    if not resp1 or not resp2:
+        return "Ainda não tenho conhecimento suficiente para comparar esses conceitos."
+
+    return f"""
+Comparação entre {conceito1} e {conceito2}:
+
+{conceito1}:
+{resp1}
+
+ {conceito2}:
+{resp2}
+
+Diferença principal:
+Enquanto {conceito1} trata de {resumir(resp1)}, {conceito2} está relacionado a {resumir(resp2)}.
+"""

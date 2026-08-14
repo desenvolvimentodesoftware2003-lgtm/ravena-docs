@@ -1,0 +1,39 @@
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:56:28] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:56:28] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:56:36] "POST /chat HTTP/1.1" 200 -
+LOG: Pergunta original recebida: 'Oi'
+LOG: Buscando na memória por: 'oi'
+LOG: Nenhuma memória encontrada para: 'oi'
+DEBUG: Nenhuma resposta acima do threshold (0.65), melhor similaridade: 0.2424 para 'Oi'
+LOG: Resposta de saudação: 'Olá. Eu sou a Artificial Inteligente RAVENA!'
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:57:30] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:57:47] "POST /chat HTTP/1.1" 200 -
+LOG: Pergunta original recebida: 'Quem te criou'
+LOG: Buscando na memória por: 'quem te criou'
+LOG: Nenhuma memória encontrada para: 'quem te criou'
+DEBUG: Nenhuma resposta acima do threshold (0.65), melhor similaridade: 0.5440 para 'Quem te criou'
+LOG: Resposta sobre o criador: 'Fui criada por Alexsander Soares Leal de Oliveira!'
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:57:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [18/Mar/2026 19:58:04] "POST /chat HTTP/1.1" 200 -
+LOG: Pergunta original recebida: 'Sair'
+LOG: Buscando na memória por: 'sair'
+LOG: Nenhuma memória encontrada para: 'sair'
+DEBUG: Nenhuma resposta acima do threshold (0.65), melhor similaridade: 0.1941 para 'Sair'
+LOG: Nenhuma resposta específica encontrada para 'Sair'. Resposta padrão: 'Você pode me ensinar usando o formato: aprenda: pergunta = resposta'
+ERROR:root:Unexpected exception finding object shape
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/dist-packages/google/colab/_debugpy_repr.py", line 54, in get_shape
+    shape = getattr(obj, 'shape', None)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/werkzeug/local.py", line 318, in __get__
+    obj = instance._get_current_object()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/werkzeug/local.py", line 519, in _get_current_object
+    raise RuntimeError(unbound_message) from None
+RuntimeError: Working outside of request context.
+
+This typically means that you attempted to use functionality that needed
+an active HTTP request. Consult the documentation on testing for
+information about how to avoid this problem.
+WARNING:pyngrok.process.ngrok:t=2026-03-18T19:58:47+0000 lvl=warn msg="Stopping forwarder" name=http-5000-86e1082a-8e0a-420c-9c42-b25902e1531a acceptErr="failed to accept connection: Listener closed"
+WARNING:pyngrok.process.ngrok:t=2026-03-18T19:58:47+0000 lvl=warn msg="Error restarting forwarder" name=http-5000-86e1082a-8e0a-420c-9c42-b25902e1531a err="failed to start tunnel: remote gone away"

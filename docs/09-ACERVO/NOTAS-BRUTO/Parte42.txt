@@ -1,0 +1,60 @@
+import os
+import re
+import shutil
+
+# Diretório de origem (onde estão seus códigos bagunçados)
+SOURCE_DIR = "projeto_original"
+
+# Diretório organizado (novo)
+DEST_DIR = "projeto_organizado"
+
+# Padrão para identificar funções
+FUNC_PATTERN = re.compile(r'def\s+(\w+)\s*\(.*?\):', re.DOTALL)
+
+def criar_estrutura():
+    os.makedirs(DEST_DIR, exist_ok=True)
+    os.makedirs(os.path.join(DEST_DIR, "funcoes"), exist_ok=True)
+    os.makedirs(os.path.join(DEST_DIR, "outros"), exist_ok=True)
+
+def extrair_funcoes(codigo):
+    funcoes = []
+    matches = list(FUNC_PATTERN.finditer(codigo))
+
+    for i, match in enumerate(matches):
+        inicio = match.start()
+        fim = matches[i + 1].start() if i + 1 < len(matches) else len(codigo)
+        bloco = codigo[inicio:fim]
+
+        nome_funcao = match.group(1)
+        funcoes.append((nome_funcao, bloco))
+
+    return funcoes
+
+def organizar_arquivo(caminho_arquivo):
+    with open(caminho_arquivo, "r", encoding="utf-8") as f:
+        codigo = f.read()
+
+    funcoes = extrair_funcoes(codigo)
+
+    if funcoes:
+        for nome, bloco in funcoes:
+            novo_arquivo = os.path.join(DEST_DIR, "funcoes", f"{nome}.py")
+            with open(novo_arquivo, "w", encoding="utf-8") as f_out:
+                f_out.write(bloco)
+    else:
+        # Se não tiver função, joga em "outros"
+        shutil.copy(caminho_arquivo, os.path.join(DEST_DIR, "outros"))
+
+def reorganizar_projeto():
+    criar_estrutura()
+
+    for root, dirs, files in os.walk(SOURCE_DIR):
+        for file in files:
+            if file.endswith(".py"):
+                caminho = os.path.join(root, file)
+                organizar_arquivo(caminho)
+
+    print("✅ Projeto reorganizado com sucesso!")
+
+if __name__ == "__main__":
+    reorganizar_projeto()

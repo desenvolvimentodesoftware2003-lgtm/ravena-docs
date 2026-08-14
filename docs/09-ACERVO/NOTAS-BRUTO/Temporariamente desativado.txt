@@ -1,0 +1,9 @@
+while True:
+    entrada = input("Você: ")
+
+    if entrada.lower() in ["sair", "exit"]:
+        print("RAVENA: Encerrando...")
+        break
+
+    resposta = processar_pergunta(entrada)
+    print("RAVENA:", resposta)

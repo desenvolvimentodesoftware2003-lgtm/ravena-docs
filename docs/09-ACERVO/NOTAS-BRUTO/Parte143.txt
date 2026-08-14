@@ -1,0 +1,30 @@
+Integração no seu pipeline
+
+res = detectar_categoria(pergunta, DESCRICOES_CATEGORIA, encoder)
+nivel = decidir_categoria(res)
+
+print("DEBUG_CATEGORIA:", res)
+
+if nivel == "alta_confianca":
+    categoria_final = res["categoria"]
+
+elif nivel == "media_confianca":
+    # usa categoria + busca global leve
+    categoria_final = res["categoria"]
+    usar_busca_global = True
+
+else:
+    # fallback inteligente
+    categoria_final = None
+    usar_busca_global = True
+
+def embedding_categoria_com_exemplos(descricao, exemplos, encoder):
+    textos = [descricao] + exemplos
+    embs = [encoder(t) for t in textos]
+    return np.mean(embs, axis=0)
+
+Erro que você NÃO pode cometer
+Não faça:
+
+if score > 0.55:
+    aceita

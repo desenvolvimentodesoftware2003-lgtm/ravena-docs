@@ -1,0 +1,69 @@
+IMPLEMENTAÇÃO
+🔹 1. Atualizar caminhos
+No bloco de configurações:
+Python
+CONHECIMENTO_PATH = os.path.join(BASE_PATH, "memoria", "conhecimento.json")
+CONVERSA_PATH = os.path.join(BASE_PATH, "memoria", "conversa.json")
+🔹 2. Adaptar memória de conhecimento
+Substitui:
+Python
+MEMORIA_PATH
+👉 por:
+Python
+CONHECIMENTO_PATH
+Atualiza funções:
+Python
+def carregar_conhecimento():
+    if not os.path.exists(CONHECIMENTO_PATH):
+        return []
+    with open(CONHECIMENTO_PATH, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def salvar_conhecimento(memoria):
+    os.makedirs(os.path.dirname(CONHECIMENTO_PATH), exist_ok=True)
+    with open(CONHECIMENTO_PATH, 'w', encoding='utf-8') as f:
+        json.dump(memoria, f, ensure_ascii=False, indent=4)
+Substitui:
+Python
+memoria_semantica = carregar_memoria()
+👉 por:
+Python
+memoria_conhecimento = carregar_conhecimento()
+🔹 3. Atualizar uso no sistema
+Troca tudo:
+Python
+memoria_semantica
+👉 por:
+Python
+memoria_conhecimento
+🔹 4. Criar módulo de conversa (persistente)
+Python
+def carregar_conversa():
+    if not os.path.exists(CONVERSA_PATH):
+        return []
+    with open(CONVERSA_PATH, 'r', encoding='utf-8') as f:
+        return json.load(f)
+
+def salvar_conversa(conversa):
+    os.makedirs(os.path.dirname(CONVERSA_PATH), exist_ok=True)
+    with open(CONVERSA_PATH, 'w', encoding='utf-8') as f:
+        json.dump(conversa, f, ensure_ascii=False, indent=4)
+🔹 5. Integrar com memória curta
+Depois de processar resposta:
+Python
+conversa = carregar_conversa()
+
+conversa.append({
+    "pergunta": pergunta_original,
+    "resposta": resposta
+})
+
+if len(conversa) > 20:
+    conversa.pop(0)
+
+salvar_conversa(conversa)
+
+IMPORTANTE
+NÃO mistura os arquivos
+NÃO usa conversa para aprendizado automático ainda
+NÃO altera criptografia do conhecimento

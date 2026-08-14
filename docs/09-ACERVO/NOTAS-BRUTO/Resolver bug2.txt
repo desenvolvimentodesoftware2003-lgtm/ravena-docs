@@ -1,0 +1,21 @@
+@app.route("/chat", methods=["POST"])
+def chat():
+    msg = request.form["msg"]
+    resposta = processar_pergunta(msg)
+
+    return f"""
+    <html>
+    <body>
+        <h2>RAVENA Beta 1</h2>
+
+        <p><b>Você:</b> {msg}</p>
+        <p><b>RAVENA:</b> {resposta}</p>
+
+        <form method="post" action="/chat">
+            <input type="text" name="msg" placeholder="Digite sua mensagem..." style="width:300px;">
+            <button type="submit">Enviar</button>
+        </form>
+
+    </body>
+    </html>
+    """

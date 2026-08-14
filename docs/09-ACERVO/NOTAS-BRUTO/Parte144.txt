@@ -1,0 +1,4 @@
+def embedding_categoria_com_exemplos(descricao, exemplos, encoder):
+    textos = [descricao] + exemplos
+    embs = [encoder(t) for t in textos]
+    return np.mean(embs, axis=0)

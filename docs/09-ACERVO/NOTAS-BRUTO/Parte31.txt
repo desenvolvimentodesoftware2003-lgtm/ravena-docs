@@ -1,0 +1,61 @@
+import os
+import hashlib
+import shutil
+
+# Caminho do projeto (altere se precisar)
+PASTA_PROJETO = "./RAVENA"
+PASTA_QUARENTENA = os.path.join(PASTA_PROJETO, "__quarentena__")
+RELATORIO = os.path.join(PASTA_PROJETO, "relatorio_quarentena.txt")
+
+# Criar pasta de quarentena se não existir
+os.makedirs(PASTA_QUARENTENA, exist_ok=True)
+
+def hash_arquivo(caminho):
+    hasher = hashlib.md5()
+    with open(caminho, 'rb') as f:
+        while chunk := f.read(4096):
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+hashes = {}
+movidos = []
+
+for root, dirs, files in os.walk(PASTA_PROJETO):
+    # Ignorar a própria quarentena
+    if "__quarentena__" in root:
+        continue
+
+    for file in files:
+        caminho = os.path.join(root, file)
+
+        try:
+            file_hash = hash_arquivo(caminho)
+
+            if file_hash in hashes:
+                destino = os.path.join(PASTA_QUARENTENA, file)
+
+                # Evitar sobrescrever
+                contador = 1
+                base, ext = os.path.splitext(file)
+                while os.path.exists(destino):
+                    destino = os.path.join(PASTA_QUARENTENA, f"{base}_{contador}{ext}")
+                    contador += 1
+
+                shutil.move(caminho, destino)
+                movidos.append((caminho, destino))
+
+            else:
+                hashes[file_hash] = caminho
+
+        except Exception as e:
+            print(f"Erro em {caminho}: {e}")
+
+# Gerar relatório
+with open(RELATORIO, "w", encoding="utf-8") as f:
+    f.write("RELATÓRIO DE QUARENTENA - RAVENA\n\n")
+    for origem, destino in movidos:
+        f.write(f"MOVIDO:\n{origem} -> {destino}\n\n")
+
+print("✅ Processo finalizado.")
+print(f"Arquivos movidos: {len(movidos)}")
+print(f"Relatório salvo em: {RELATORIO}")

@@ -1,0 +1,13 @@
+1.Transforme Bônus em Multiplicadores
+​Em vez de score += bonus, use score *= (1 + bonus).
+• ​Por que? Se a similaridade semântica for quase zero, multiplicar por 1.1 continuará sendo quase zero. Somar 0.1 transforma um erro em um acerto falso.
+​
+2. Implemente um "Filtro de Sanidade" (Hard Cut)
+​Altere o loop de busca para que ele só aplique bônus se o sem_sim (similaridade semântica) for decente.
+​Exemplo de correção no código:
+# Dentro do loop de busca de itens:
+if sem_sim < 0.5: # Se não houver pelo menos 50% de match real
+    continue # Ignora os bônus e pula para o próximo item
+
+3. Isole as Categorias
+​Se a categoria primária for detectada com alta confiança, a Ravena deve priorizar apenas aquele arquivo JSON. Atualmente, ela está misturando tudo e o bônus de PESOS_POR_CATEGORIA está fazendo o tópico "Ciência" ou "Esporte" atropelar os outros.

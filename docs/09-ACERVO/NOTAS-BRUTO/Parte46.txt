@@ -1,0 +1,132 @@
+# =========================
+# 🔌 MONTAR GOOGLE DRIVE
+# =========================
+def montar_drive():
+    try:
+        from google.colab import drive
+        drive.mount('/content/drive')
+        print("✅ Drive conectado")
+    except:
+        print("⚠️ Não está no Colab")
+
+# =========================
+# 📁 DEFINIR DIRETÓRIOS
+# =========================
+def definir_diretorios():
+    base = "/content/drive/MyDrive/RAVENA"
+    source = f"{base}/projeto_original"
+    dest = f"{base}/projeto_organizado"
+    return source, dest
+
+# =========================
+# 📂 CRIAR E VALIDAR PASTAS
+# =========================
+import os
+
+def preparar_pastas(source, dest):
+    os.makedirs(source, exist_ok=True)
+    os.makedirs(dest, exist_ok=True)
+    os.makedirs(os.path.join(dest, "funcoes"), exist_ok=True)
+    os.makedirs(os.path.join(dest, "outros"), exist_ok=True)
+    print("📁 Pastas prontas")
+
+# =========================
+# 🔍 VERIFICAR ARQUIVOS .PY
+# =========================
+def verificar_arquivos(source):
+    arquivos = [f for f in os.listdir(source) if f.endswith(".py")]
+
+    if not arquivos:
+        print("⚠️ Nenhum arquivo .py encontrado")
+        return False
+
+    print(f"✅ {len(arquivos)} arquivo(s) encontrado(s):")
+    for a in arquivos:
+        print(f" - {a}")
+
+    return True
+
+# =========================
+# 🧠 EXTRAIR FUNÇÕES
+# =========================
+import re
+
+FUNC_PATTERN = re.compile(r'def\s+(\w+)\s*\(.*?\):', re.DOTALL)
+
+def extrair_funcoes(codigo):
+    funcoes = []
+    matches = list(FUNC_PATTERN.finditer(codigo))
+
+    for i, match in enumerate(matches):
+        inicio = match.start()
+        fim = matches[i + 1].start() if i + 1 < len(matches) else len(codigo)
+        bloco = codigo[inicio:fim]
+        nome = match.group(1)
+        funcoes.append((nome, bloco))
+
+    return funcoes
+
+# =========================
+# 📦 ORGANIZAR ARQUIVO
+# =========================
+import shutil
+
+def organizar_arquivo(caminho, dest):
+    try:
+        with open(caminho, "r", encoding="utf-8") as f:
+            codigo = f.read()
+    except Exception as e:
+        print(f"⚠️ Erro ao ler {caminho}: {e}")
+        return
+
+    funcoes = extrair_funcoes(codigo)
+
+    if funcoes:
+        for nome, bloco in funcoes:
+            novo = os.path.join(dest, "funcoes", f"{nome}.py")
+
+            contador = 1
+            base = nome
+            while os.path.exists(novo):
+                novo = os.path.join(dest, "funcoes", f"{base}_{contador}.py")
+                contador += 1
+
+            with open(novo, "w", encoding="utf-8") as f_out:
+                f_out.write(bloco)
+    else:
+        try:
+            shutil.copy(caminho, os.path.join(dest, "outros"))
+        except Exception as e:
+            print(f"⚠️ Erro ao copiar {caminho}: {e}")
+
+# =========================
+# 🚀 PROCESSAMENTO PRINCIPAL
+# =========================
+def processar(source, dest):
+    total = 0
+
+    for file in os.listdir(source):
+        if file.endswith(".py"):
+            caminho = os.path.join(source, file)
+            organizar_arquivo(caminho, dest)
+            total += 1
+
+    print(f"✅ {total} arquivo(s) processado(s)")
+
+# =========================
+# ▶️ EXECUÇÃO FINAL (ORDEM CORRETA)
+# =========================
+def main():
+    montar_drive()
+    source, dest = definir_diretorios()
+    preparar_pastas(source, dest)
+
+    if verificar_arquivos(source):
+        processar(source, dest)
+    else:
+        print("⛔ Execução cancelada")
+
+# =========================
+# 🔥 DISPARO AUTOMÁTICO
+# =========================
+main()

@@ -1,0 +1,12 @@
+Integrar no fluxo principal
+Dentro do processar_pergunta, depois de gerar a resposta:
+
+status = auto_avaliar_resposta(pergunta_original, resposta_final, score_sem_contexto)
+
+ # Reação da IA
+
+if status == "possivel_erro":
+    resposta_final = f"Posso estar enganada. {resposta_final}"
+
+elif status == "baixa_confianca":
+    resposta_final = f"Não tenho muita certeza, mas: {resposta_final}"

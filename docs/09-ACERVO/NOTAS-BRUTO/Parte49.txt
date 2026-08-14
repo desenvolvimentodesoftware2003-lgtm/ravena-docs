@@ -1,0 +1,5 @@
+memoria_semantica.append({
+    "pergunta": criptografar(pergunta_norm),
+    "resposta": criptografar(resposta),
+    "embedding": emb.tolist()
+})

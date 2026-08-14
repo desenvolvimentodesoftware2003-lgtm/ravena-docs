@@ -1,0 +1,39 @@
+# ============================================
+# RAVENA
+# BLOCO 8 — APRENDIZADO DA RAVENA
+# ============================================
+
+def responder(pergunta):
+
+    pergunta = pergunta.lower()
+
+    if pergunta.startswith("aprenda:"):
+
+        conteudo = pergunta.replace("aprenda:", "").strip()
+
+        partes = conteudo.split("=")
+
+        if len(partes) == 2:
+
+            chave = partes[0].strip()
+            valor = partes[1].strip()
+
+            memoria[chave] = valor
+
+            salvar_memoria()
+
+            return "Aprendi algo novo."
+
+        else:
+            return "Use o formato: aprenda: pergunta = resposta"
+
+    if pergunta in memoria:
+        return memoria[pergunta]
+
+    if "oi" in pergunta:
+        return "Olá. Eu sou a Artificial Inteligente RAVENA."
+
+    if "quem te criou" in pergunta:
+        return "Fui criada por Alexsander Soares Leal de Oliveira."
+
+    return "Ainda estou aprendendo."

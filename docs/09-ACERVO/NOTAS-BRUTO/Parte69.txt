@@ -1,0 +1,62 @@
+ESTRUTURA DO SISTEMA
+
+ Buscar em MAIS DE UM núcleo
+Ao invés de só:
+
+categoria = classificar_categoria(pergunta)
+dados = carregar(categoria)
+
+você faz:
+
+categorias_candidatas = prever_categorias(pergunta)
+Exemplo:
+
+["ciencia", "tecnologia", "geral"]
+
+ Buscar em cada núcleo
+
+resultados = []
+
+for categoria in categorias_candidatas:
+    resposta, score = buscar_memoria_categoria(pergunta, categoria)
+
+    resultados.append({
+        "categoria": categoria,
+        "resposta": resposta,
+        "score": score
+    })
+
+Aplicar PESO por núcleo
+Aqui entra inteligência:
+
+PESOS = {
+    "ciencia": 1.0,
+    "tecnologia": 0.9,
+    "historia": 0.85,
+    "geral": 0.7
+}
+
+ Score final
+
+for r in resultados:
+    peso = PESOS.get(r["categoria"], 0.5)
+    r["score_final"] = r["score"] * peso
+
+ Escolher o melhor
+
+melhor = max(resultados, key=lambda x: x["score_final"])
+
+ O que isso resolve
+
+✔ evita que "geral" roube resposta
+✔ prioriza conhecimento mais específico
+✔ mantém coerência entre áreas
+
+(nível mais refinado)
+Você pode melhorar a função:
+
+def prever_categorias(pergunta):
+Para retornar múltiplas:
+
+if "energia" in pergunta:
+    return ["ciencia", "tecnologia"]

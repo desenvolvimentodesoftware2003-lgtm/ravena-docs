@@ -1,0 +1,34 @@
+Correção:
+Você precisa disso:
+
+if similaridade_semantica > 0.5:
+    entidade = "medio"  # nunca fraco
+
+adicionar filtro de coerência de resposta
+Exemplo simples:
+
+def validar_resposta(pergunta, resposta):
+    sim = similaridade(pergunta, resposta)
+    return sim > 0.50  # mínimo semântico pergunta ↔ resposta
+
+AJUSTAR VALIDAÇÃO DE ENTIDADE
+Trocar lógica rígida por híbrida:
+
+if match_exato:
+    forte
+elif similaridade > 0.6:
+    medio
+else:
+    fraco
+
+VALIDAR COERÊNCIA PERGUNTA ↔ RESPOSTA
+Adicionar:
+
+if sim(pergunta, resposta) < 0.50:
+    rejeitar
+
+LIMPAR MEMÓRIA CONTAMINADA
+Isso aqui é importante:
+
+ você TEM dados errados salvos
+Não adianta só ajustar algoritmo.

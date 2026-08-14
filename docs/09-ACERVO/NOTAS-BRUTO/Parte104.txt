@@ -1,0 +1,21 @@
+Adaptar buscar_memoria
+ 
+
+return resposta_final, melhor_score, top_respostas
+
+ Integrar no processar_pergunta
+Depois de gerar a resposta:
+
+resposta, score, respostas_usadas = buscar_memoria(pergunta)
+tipo = classificar_tipo_pergunta(pergunta)
+
+explicacao = gerar_explicacao(
+    pergunta,
+    respostas_usadas,
+    score,
+    tipo
+)
+
+Exibir junto da resposta
+
+resposta_final = f"{resposta}\n\n[Explicação: {explicacao}]"

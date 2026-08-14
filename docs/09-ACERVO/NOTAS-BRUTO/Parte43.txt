@@ -1,0 +1,102 @@
+# =========================
+# 🔌 SETUP AUTOMÁTICO COLAB
+# =========================
+import os
+import re
+import shutil
+
+try:
+    from google.colab import drive
+    drive.mount('/content/drive')
+    print("✅ Google Drive conectado")
+except:
+    print("⚠️ Rodando fora do Colab")
+
+# Caminhos fixos (Drive)
+SOURCE_DIR = "/content/drive/MyDrive/projeto_original"
+DEST_DIR = "/content/drive/MyDrive/projeto_organizado"
+
+# Garante que as pastas existem
+os.makedirs(SOURCE_DIR, exist_ok=True)
+os.makedirs(DEST_DIR, exist_ok=True)
+os.makedirs(os.path.join(DEST_DIR, "funcoes"), exist_ok=True)
+os.makedirs(os.path.join(DEST_DIR, "outros"), exist_ok=True)
+
+print("📁 Estrutura verificada")
+
+# =========================
+# 🔍 PADRÃO DE FUNÇÃO
+# =========================
+FUNC_PATTERN = re.compile(r'def\s+(\w+)\s*\(.*?\):', re.DOTALL)
+
+# =========================
+# 🧠 EXTRAIR FUNÇÕES
+# =========================
+def extrair_funcoes(codigo):
+    funcoes = []
+    matches = list(FUNC_PATTERN.finditer(codigo))
+
+    for i, match in enumerate(matches):
+        inicio = match.start()
+        fim = matches[i + 1].start() if i + 1 < len(matches) else len(codigo)
+        bloco = codigo[inicio:fim]
+
+        nome_funcao = match.group(1)
+        funcoes.append((nome_funcao, bloco))
+
+    return funcoes
+
+# =========================
+# 📦 ORGANIZAR ARQUIVO
+# =========================
+def organizar_arquivo(caminho_arquivo):
+    try:
+        with open(caminho_arquivo, "r", encoding="utf-8") as f:
+            codigo = f.read()
+    except Exception as e:
+        print(f"⚠️ Erro ao ler {caminho_arquivo}: {e}")
+        return
+
+    funcoes = extrair_funcoes(codigo)
+
+    if funcoes:
+        for nome, bloco in funcoes:
+            base_nome = nome
+            novo_arquivo = os.path.join(DEST_DIR, "funcoes", f"{base_nome}.py")
+
+            # Evita sobrescrever
+            contador = 1
+            while os.path.exists(novo_arquivo):
+                novo_arquivo = os.path.join(DEST_DIR, "funcoes", f"{base_nome}_{contador}.py")
+                contador += 1
+
+            with open(novo_arquivo, "w", encoding="utf-8") as f_out:
+                f_out.write(bloco)
+    else:
+        try:
+            shutil.copy(caminho_arquivo, os.path.join(DEST_DIR, "outros"))
+        except Exception as e:
+            print(f"⚠️ Erro ao copiar {caminho_arquivo}: {e}")
+
+# =========================
+# 🚀 EXECUÇÃO
+# =========================
+def reorganizar_projeto():
+    arquivos_encontrados = 0
+
+    for root, dirs, files in os.walk(SOURCE_DIR):
+        for file in files:
+            if file.endswith(".py"):
+                arquivos_encontrados += 1
+                caminho = os.path.join(root, file)
+                organizar_arquivo(caminho)
+
+    if arquivos_encontrados == 0:
+        print("⚠️ Nenhum arquivo .py encontrado em projeto_original")
+    else:
+        print(f"✅ {arquivos_encontrados} arquivos processados com sucesso!")
+
+# =========================
+# ▶️ RODAR AUTOMÁTICO
+# =========================
+reorganizar_projeto()

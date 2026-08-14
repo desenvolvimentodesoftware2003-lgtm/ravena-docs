@@ -1,0 +1,5 @@
+Correção simples:
+Adiciona fallback:
+
+if score_categoria < 0.30:
+    buscar_em_todas_categorias = True

@@ -1,0 +1,5 @@
+candidatos = buscar_top_k(pergunta)
+
+melhor_item, score_final = re_rankear(pergunta, candidatos)
+
+resposta = decidir_resposta(melhor_item, score_final)

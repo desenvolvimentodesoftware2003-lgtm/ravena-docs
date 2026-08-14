@@ -1,0 +1,7 @@
+# IMPLEMENTAÇÃO SEGURA (modo passivo)
+Adiciona isso no código (sem ativar forte):
+
+ Limite de peso (CAP)
+
+PESO_MAX = 3.0
+PESO_MIN = 0.5

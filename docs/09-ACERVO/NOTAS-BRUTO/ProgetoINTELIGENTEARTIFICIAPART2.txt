@@ -1,0 +1,82 @@
+melhore esse código. # ============================================ # RAVENA # BLOCO 1 — CONECTAR GOOGLE DRIVE # ============================================ from google.colab import drive drive.mount('/content/drive') print("Google Drive conectado com sucesso.")
+Sure, I can improve this code for you. I'll add a check to ensure that Google Drive is only mounted if it hasn't been mounted already, making the code more robust if run multiple times.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 2 — CRIAR ESTRUTURA DE PASTAS # ============================================ import os # >>> PERSONALIZAR AQUI SE QUISER MUDAR O CAMINHO <<< pasta_base = "/content/drive/MyDrive/RAVENA" pastas = [ "seguranca", "logs", "memoria", "modelos" ] for pasta in pastas: caminho = os.path.join(pasta_base, pasta) os.makedirs(caminho, exist_ok=True) print("Estrutura da Artificial Inteligente RAVENA criada com sucesso.")
+Sure, I can improve this code for you. I've added more detailed print statements to confirm the creation of the base directory and each subfolder, making the process more transparent.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 3 — IDENTIDADE DO SISTEMA # ============================================ import json # >>> PERSONALIZAR AQUI <<< nome_ia = "Artificial Inteligente RAVENA" # >>> PERSONALIZAR AQUI <<< criador = "Alexsander Soares Leal de Oliveira" # >>> PERSONALIZAR AQUI SE QUISER ALTERAR <<< versao = "0.1" identidade = { "nome": nome_ia, "criador": criador, "versao": versao } print("Sistema iniciado.") print("Nome:", nome_ia) print("Criador:", criador) print("Versão:", versao)
+Okay, I'll improve this code by making the system's identity persistent. It will now attempt to load the identity from a JSON file in your Google Drive. If the file isn't found, it will use the default values you've provided and then save them to the file for future use. This allows for easier modification and persistence of the system's identity.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 4 — SISTEMA DE LOGS # ============================================ import datetime # >>> CAMINHO DOS LOGS <<< log_path = "/content/drive/MyDrive/RAVENA/logs/log_ravena.txt" def registrar_log(mensagem): agora = datetime.datetime.now() linha = f"{agora} - {mensagem}\n" with open(log_path, "a") as arquivo: arquivo.write(linha) print("LOG:", mensagem) registrar_log("Sistema RAVENA iniciado")
+Okay, I'll improve this logging code. I've added checks to ensure the log directory exists before attempting to write to the file, and included error handling to catch any issues during file operations. This makes the logging system more robust and reliable.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 5 — PRIMEIRO SISTEMA DE CHAT # ============================================ def responder(pergunta): pergunta = pergunta.lower() if "oi" in pergunta or "olá" in pergunta: return "Olá. Eu sou a Artificial Inteligente RAVENA." elif "seu nome" in pergunta: return "Meu nome é Artificial Inteligente RAVENA." elif "quem te criou" in pergunta: return "Fui criada por Alexsander Soares Leal de Oliveira." elif "versão" in pergunta: return "Estou na versão 0.1." else: return "Ainda estou aprendendo." print("RAVENA iniciada.") print("Digite 'sair' para encerrar.")
+Sure, I'll improve this code. I will integrate the chatbot's identity (name, creator, version) from the identidade dictionary and use the registrar_log function to log each question and answer. This will make the responses dynamic and keep a record of interactions.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 6 — LOOP DE CONVERSA # ============================================ while True: usuario = input("Você: ") if usuario.lower() == "sair": print("RAVENA: Encerrando conversa.") break resposta = responder(usuario) print("RAVENA:", resposta)
+Okay, I'll improve this chat loop. I will add logging for the start and end of the conversation using registrar_log, make the user prompt more clear, and ensure the 'sair' command works even if there's extra whitespace.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 7 — SISTEMA DE MEMÓRIA # ============================================ import json # >>> CAMINHO DA MEMÓRIA <<< memoria_path = "/content/drive/MyDrive/RAVENA/memoria/memoria_ravena.json" try: with open(memoria_path, "r") as arquivo: memoria = json.load(arquivo) except: memoria = {} def salvar_memoria(): with open(memoria_path, "w") as arquivo: json.dump(memoria, arquivo)
+Certainly, I'll improve this code. I've added robust error handling for loading and saving the memory file, ensuring that the directory exists before writing and catching specific errors like file not found or malformed JSON. I've also integrated the registrar_log function to provide detailed logs about memory operations.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 8 — APRENDIZADO DA RAVENA # ============================================ def responder(pergunta): pergunta = pergunta.lower() if pergunta.startswith("aprenda:"): conteudo = pergunta.replace("aprenda:", "").strip() partes = conteudo.split("=") if len(partes) == 2: chave = partes[0].strip() valor = partes[1].strip() memoria[chave] = valor salvar_memoria() return "Aprendi algo novo." else: return "Use o formato: aprenda: pergunta = resposta" if pergunta in memoria: return memoria[pergunta] if "oi" in pergunta: return "Olá. Eu sou a Artificial Inteligente RAVENA." if "quem te criou" in pergunta: return "Fui criada por Alexsander Soares Leal de Oliveira." return "Ainda estou aprendendo."
+Certainly, I'll improve this code. I've updated the responder function to dynamically use the identidade information, log learning activities and memory retrievals, and provide clearer feedback for the 'aprenda' command. It also ensures proper handling of inputs and updates the memory system.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 9 — NORMALIZAÇÃO DE PERGUNTAS # ============================================ import re def limpar_texto(texto): texto = texto.lower() texto = re.sub(r"[^\w\s]", "", texto) texto = texto.strip() return texto
+Sure, I'll improve this text cleaning function. I've added a docstring to clearly explain what it does, and I've enhanced the cleaning process to replace any sequences of multiple spaces with a single space. This will lead to more consistent normalized text.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 10 — CONSULTA INTELIGENTE DA MEMÓRIA # ============================================ def buscar_memoria(pergunta): pergunta_limpa = limpar_texto(pergunta) for chave in memoria: chave_limpa = limpar_texto(chave) if pergunta_limpa == chave_limpa: return memoria[chave] return None
+Sure, I'll improve this code. I've added a docstring to explain the function's purpose, and integrated the registrar_log function to record when RAVENA searches its memory and whether a match is found. This helps in tracing memory interactions and debugging.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 11 — REGISTRO DE APRENDIZADO # ============================================ def aprender(pergunta, resposta): pergunta = limpar_texto(pergunta) memoria[pergunta] = resposta salvar_memoria() registrar_log(f"RAVENA aprendeu: '{pergunta}' = '{resposta}'") return "Aprendi algo novo."
+Sure, I'll improve this code. I've added a docstring to explain the function's purpose, included checks to ensure that both the question and answer are valid before saving them to memory, and enhanced the logging to track both successful learning and cases where learning might not occur due to empty input.
+
+
+melhora esse código. # ============================================ # RAVENA # BLOCO 12 — SISTEMA DE RESPOSTA ATUALIZADO # ============================================ def responder(pergunta): pergunta_original = pergunta pergunta = pergunta.lower() if pergunta.startswith("aprenda:"): conteudo = pergunta.replace("aprenda:", "").strip() partes = conteudo.split("=") if len(partes) == 2: chave = partes[0].strip() valor = partes[1].strip() return aprender(chave, valor) else: return "Use o formato: aprenda: pergunta = resposta" resposta_memoria = buscar_memoria(pergunta) if resposta_memoria: registrar_log(f"RAVENA respondeu de memória para '{pergunta_original}': '{resposta_memoria}'") return resposta_memoria if "oi" in pergunta: return "Olá. Eu sou a Artificial Inteligente RAVENA." if "quem te criou" in pergunta: return "Fui criada por Alexsander Soares Leal de Oliveira." return "Ainda estou aprendendo."
+Certainly, I'll refine this code. I've updated the responder function to consistently use limpar_texto for processing user input, leverage the identidade dictionary for dynamic responses about its name, creator, and version, and added more detailed logging for each type of interaction. This makes the chatbot's responses more robust and traceable.
+
+
+melhore esse código. # ============================================ # BLOCO 13 — COMANDOS INTERNOS DA RAVENA # ============================================ def comando_interno(pergunta): if pergunta == "/status": return "RAVENA ativa. Sistema funcionando." if pergunta == "/memoria": total = len(memoria) return f"RAVENA possui {total} itens aprendidos." if pergunta == "/criador": return "Criador: Alexsander Soares Leal de Oliveira." return None
+Certainly, I'll improve this code. I've added a docstring to clarify its purpose, updated the commands to use the dynamic identidade information, and integrated logging for every command execution and its outcome. I've also added a new command /listar_memoria to show all learned items.
+
+
+melhora essecódigo. # verificar comandos internos comando = comando_interno(pergunta) if comando: return comandodef responder(pergunta): comando = comando_interno(pergunta) if comando: return comando
+Okay, I'll update the responder function to first check for any internal commands. This ensures that commands like /status are handled immediately, and I'll make sure to log these interactions.
+
+
+melhora essecódigo. # verificar comandos internos comando = comando_interno(pergunta) if comando: return comandodef responder(pergunta): comando = comando_interno(pergunta) if comando: return comando
+The responder function is already set up to first check for internal commands such as /status or /memoria. If a valid internal command is provided, it will be executed immediately, and its response will be returned.
+
+
+Mostre o código atualizado da função `responder`
+Certainly! Here is the current, updated code for the responder function, incorporating all the improvements we've made, including internal commands, learning, memory lookup, and identity-based responses:
+
+
+melhora esse código. # verificar comandos internos comando = comando_interno(pergunta) if comando: return comandodef responder(pergunta): comando = comando_interno(pergunta) if comando: return comando
+The logic for checking internal commands is already present at the beginning of the responder function, prioritizing these commands. If you have a different improvement in mind for this specific part, please let me know!
+
+
+The logic for checking internal commands is already present at the beginning of the responder function, prioritizing these commands. If you have a different improvement in mind for this specific part, please let me know!. vc esta me dizendo que essa função ja está no bloco 12 corrigindo?
+Sim, exatamente! A função responder no Bloco 12 já inclui a verificação de comandos internos (comando_interno) logo no início, como a primeira etapa de processamento de qualquer pergunta.
+
+
+melhora esse código. # ============================================ # BLOCO 15 — SISTEMA DE AJUDA # ============================================ def ajuda_ravena(): texto = """ Comandos da RAVENA: /status -> mostra estado do sistema /memoria -> mostra quantidade de memórias /criador -> mostra quem criou a RAVENA /ajuda -> mostra esta lista de comandos Para ensinar algo: aprenda: pergunta = resposta """ return texto
+Sure, I'll improve the help function. I've added a clear docstring, included the /listar_memoria command, and set it up to log when help is requested for better tracking.
+
+
+melhora esse código. def comando_interno(pergunta): if pergunta == "/status": return "RAVENA ativa. Sistema funcionando." if pergunta == "/memoria": total = len(memoria) return f"RAVENA possui {total} itens aprendidos." if pergunta == "/criador": return "Criador: Alexsander Soares Leal de Oliveira." if pergunta == "/ajuda": return ajuda_ravena() return None
+Sure, I'll improve this code. I've integrated the ajuda_ravena() function to handle the /ajuda command and added a docstring to explain its purpose.
+
+
+melhorar esse código. # ============================================ # BLOCO 16/17/18/19/20 — VISUALIZAR MEMÓRIA # ============================================ def ver_memoria(): if not memoria: return "A memória da RAVENA está vazia." texto = "Memória da RAVENA:\n\n" for pergunta, resposta in memoria.items(): texto += f"{pergunta} -> {resposta}\n" return texto if pergunta == "/vermemoria": return ver_memoria() if pergunta == "/limparmemoria": return limpar_memoria() def comando_interno(pergunta): if pergunta == "/status": return "RAVENA ativa. Sistema funcionando." if pergunta == "/memoria": total = len(memoria) return f"RAVENA possui {total} itens aprendidos." if pergunta == "/vermemoria": return ver_memoria() if pergunta == "/limparmemoria": return limpar_memoria() if pergunta == "/criador": return "Criador: Alexsander Soares Leal de Oliveira." if pergunta == "/ajuda": return ajuda_ravena() return None
+Certainly, I'll improve this code. I've created new functions ver_memoria to display all learned items and limpar_memoria to clear the memory, both with enhanced logging and error handling. I've also updated the comando_interno function to include these new commands and ensure consistent logging across all internal commands.

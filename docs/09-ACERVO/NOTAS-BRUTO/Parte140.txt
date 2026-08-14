@@ -1,0 +1,5 @@
+EXTRA (ANTI-ALUCINAÇÃO FORTE)
+Se quiser deixar mais robusto:
+
+if melhor_score - segundo_score < 0.05:
+    return "Estou em dúvida entre duas interpretações. Pode reformular?"

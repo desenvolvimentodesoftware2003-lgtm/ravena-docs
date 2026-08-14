@@ -1,0 +1,44 @@
+# ============================================
+# BLOCO 18 — VISUALIZAR MEMÓRIA
+# ============================================
+
+def ver_memoria():
+
+    if not memoria:
+        return "A memória da RAVENA está vazia."
+
+    texto = "Memória da RAVENA:\n\n"
+
+    for pergunta, resposta in memoria.items():
+        texto += f"{pergunta} -> {resposta}\n"
+
+    return texto
+
+if pergunta == "/vermemoria":
+    return ver_memoria()
+
+if pergunta == "/limparmemoria":
+    return limpar_memoria()
+
+def comando_interno(pergunta):
+
+    if pergunta == "/status":
+        return "RAVENA ativa. Sistema funcionando."
+
+    if pergunta == "/memoria":
+        total = len(memoria)
+        return f"RAVENA possui {total} itens aprendidos."
+
+    if pergunta == "/vermemoria":
+        return ver_memoria()
+
+    if pergunta == "/limparmemoria":
+        return limpar_memoria()
+
+    if pergunta == "/criador":
+        return "Criador: Alexsander Soares Leal de Oliveira."
+
+    if pergunta == "/ajuda":
+        return ajuda_ravena()
+
+    return None

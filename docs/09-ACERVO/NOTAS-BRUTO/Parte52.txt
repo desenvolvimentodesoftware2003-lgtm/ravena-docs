@@ -1,0 +1,3 @@
+melhor_score, melhor_pergunta, melhor_resposta = melhores[0]
+
+print(f"DEBUG: Melhor match: {melhor_pergunta} ({melhor_score})")

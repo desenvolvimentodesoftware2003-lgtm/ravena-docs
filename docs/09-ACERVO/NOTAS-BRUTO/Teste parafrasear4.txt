@@ -1,0 +1,7 @@
+MÉTRICA EXTRA (nível mais avançado, mas simples)
+
+“Cluster está sendo usado?”
+Adiciona log:
+
+if item.get("cluster_id") == cluster_pergunta:
+    print("MATCH CLUSTER ✔")

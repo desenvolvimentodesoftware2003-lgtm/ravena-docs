@@ -1,0 +1,58 @@
+============================================
+RAVENA 0.9 — ARQUITETURA COMPLETA ESTABILIZADA
+============================================
+import os import json import re import unicodedata from sentence_transformers import SentenceTransformer from sklearn.metrics.pairwise import cosine_similarity from cryptography.fernet import Fernet from fuzzywuzzy import fuzz
+============================================
+CONFIG
+============================================
+BASE_PATH = "/content/drive/MyDrive/RAVENA" CONHECIMENTO_BASE_PATH = os.path.join(BASE_PATH, "memoria", "conhecimento") CONVERSA_PATH = os.path.join(BASE_PATH, "memoria", "conversa.json") CHAVE_PATH = os.path.join(BASE_PATH, "seguranca", "chave.key")
+THRESHOLD = 0.65 MAX_MEMORIA_POR_TOPICO = 500
+modelo = SentenceTransformer('all-MiniLM-L6-v2')
+============================================
+SEGURANÇA
+============================================
+def carregar_ou_criar_chave(): os.makedirs(os.path.dirname(CHAVE_PATH), exist_ok=True) if not os.path.exists(CHAVE_PATH): chave = Fernet.generate_key() with open(CHAVE_PATH, "wb") as f: f.write(chave) else: with open(CHAVE_PATH, "rb") as f: chave = f.read() return Fernet(chave)
+fernet = carregar_ou_criar_chave()
+def criptografar(texto): return fernet.encrypt(texto.encode()).decode()
+def descriptografar(texto): return fernet.decrypt(texto.encode()).decode()
+============================================
+UTIL
+============================================
+def remover_acentos(texto): nfkd = unicodedata.normalize('NFKD', texto) return "".join([c for c in nfkd if not unicodedata.combining(c)])
+def normalizar_texto(texto): texto = remover_acentos(texto.lower().strip()) texto = re.sub(r"[^\w\s]", "", texto) return texto
+def gerar_embedding(texto): return modelo.encode([texto])[0]
+============================================
+MEMÓRIA
+============================================
+def get_path_topico(topico): os.makedirs(CONHECIMENTO_BASE_PATH, exist_ok=True) return os.path.join(CONHECIMENTO_BASE_PATH, f"{topico}.json")
+def carregar_conhecimento(path): if not os.path.exists(path): return [] with open(path, 'r', encoding='utf-8') as f: return json.load(f)
+def salvar_conhecimento(memoria, path): memoria = esquecer_memorias(memoria) with open(path, 'w', encoding='utf-8') as f: json.dump(memoria, f, ensure_ascii=False, indent=4)
+============================================
+ESQUECIMENTO INTELIGENTE
+============================================
+def score_memoria(item): return (item.get("peso",1)*0.7)+(item.get("acessos",0)*0.3)
+def esquecer_memorias(memoria): if len(memoria) <= MAX_MEMORIA_POR_TOPICO: return memoria memoria.sort(key=lambda x: score_memoria(x)) excesso = len(memoria) - MAX_MEMORIA_POR_TOPICO return memoria[excesso:]
+============================================
+APRENDIZADO INTELIGENTE
+============================================
+def avaliar_aprendizado(pergunta, resposta, score, acessos=0): pontos = 0 if score > 0.8: pontos += 2 elif score > 0.6: pontos += 1 if len(resposta.split()) > 8: pontos += 1 if acessos > 2: pontos += 2 if any(k in pergunta for k in ["o que é","como","por que"]): pontos += 1 if "não sei" in resposta.lower(): pontos -= 2 return pontos
+def deve_aprender(pergunta, resposta, score, acessos=0): return avaliar_aprendizado(pergunta, resposta, score, acessos) >= 3
+============================================
+CONFLITO
+============================================
+def detectar_conflito(candidatos): if len(candidatos) < 2: return False return abs(candidatos[0][0] - candidatos[1][0]) < 0.05
+============================================
+BUSCA
+============================================
+def buscar_memoria(pergunta): path = get_path_topico("geral") memoria = carregar_conhecimento(path)
+pergunta_norm = normalizar_texto(pergunta) emb = gerar_embedding(pergunta_norm) candidatos = [] for item in memoria: emb_salvo = item["embedding"] pergunta_salva = descriptografar(item["pergunta"]) sem = cosine_similarity([emb],[emb_salvo])[0][0] fuzzy = fuzz.ratio(pergunta_norm, pergunta_salva)/100 score = (sem*0.7)+(fuzzy*0.3) if score < 0.6: continue score_final = score + (item.get("peso",1)*0.05)+(item.get("acessos",0)*0.01) candidatos.append((score_final,item)) if not candidatos: return {"tipo":"vazio"} candidatos.sort(reverse=True,key=lambda x:x[0]) if detectar_conflito(candidatos): respostas = [descriptografar(c[1]["resposta"]) for c in candidatos[:2]] return {"tipo":"conflito","respostas":respostas} melhor = candidatos[0][1] melhor["acessos"] = melhor.get("acessos",0)+1 salvar_conhecimento(memoria,path) return { "tipo":"normal", "resposta":descriptografar(melhor["resposta"]), "score":candidatos[0][0] } 
+============================================
+APRENDER
+============================================
+def aprender(pergunta,resposta): path = get_path_topico("geral") memoria = carregar_conhecimento(path)
+pergunta_norm = normalizar_texto(pergunta) emb = gerar_embedding(pergunta_norm) memoria.append({ "pergunta":criptografar(pergunta_norm), "resposta":criptografar(resposta), "embedding":emb.tolist(), "peso":1, "acessos":0 }) salvar_conhecimento(memoria,path) 
+============================================
+PROCESSAMENTO
+============================================
+def processar_pergunta(pergunta):
+if pergunta.lower().startswith("aprenda"): try: conteudo = pergunta.lower().replace("aprenda:","") p,r = conteudo.split("=") aprender(p.strip(),r.strip()) return "Aprendido." except: return "Erro no formato." resultado = buscar_memoria(pergunta) if resultado["tipo"] == "conflito": return "Conflito:\n- " + "\n- ".join(resultado["respostas"]) if resultado["tipo"] == "normal": resp = resultado["resposta"] if deve_aprender(pergunta,resp,resultado["score"]): aprender(pergunta,resp) return resp return "Ainda não sei. Me ensine usando: aprenda: pergunta = resposta"

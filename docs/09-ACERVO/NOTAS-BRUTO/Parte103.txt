@@ -1,0 +1,17 @@
+# Criar função de explicação
+
+def gerar_explicacao(pergunta, respostas_usadas, score, tipo):
+    explicacao = []
+
+    explicacao.append(f"Tipo da pergunta: {tipo}")
+    explicacao.append(f"Nível de confiança: {round(score, 2)}")
+
+    if len(respostas_usadas) > 1:
+        explicacao.append("Resposta gerada por síntese de múltiplas informações.")
+    else:
+        explicacao.append("Resposta baseada em memória direta.")
+
+    if score < 0.6:
+        explicacao.append("Baixa confiança na resposta.")
+
+    return " | ".join(explicacao)

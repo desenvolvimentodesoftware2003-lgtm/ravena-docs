@@ -1,0 +1,15 @@
+Similaridade baseada em pergunta + resposta
+
+Atualiza seu cálculo:
+
+sim_pergunta = cosine_similarity([emb_perg], [emb_item])[0][0]
+sim_resposta = cosine_similarity([emb_perg], [embedding_resposta])[0][0]
+
+sim_semantica = (sim_pergunta * 0.6) + (sim_resposta * 0.4)
+
+Reduz influência do fuzzy
+
+PESOS = {
+    "semantic": 0.9,
+    "fuzzy": 0.1,
+}

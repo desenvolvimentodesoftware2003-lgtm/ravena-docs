@@ -1,0 +1,2 @@
+with open("/content/drive/MyDrive/RAVENA/projeto_original/teste.py", "w") as f:
+    f.write("def teste():\n    print('RAVENA funcionando')")

@@ -1,0 +1,17 @@
+def detectar_intencao(texto):
+    texto = texto.lower()
+
+    if "o que é" in texto or "qual o processo" in texto:
+        return "definicao"
+    if "diferença" in texto or "comparação" in texto:
+        return "comparacao"
+    if "por que" in texto or "causa" in texto:
+        return "causa"
+
+    return "geral"
+
+Classificar intenção da memória
+Você já tem parcialmente (int='efeito', etc)
+Padroniza:
+Python
+item["tipo"] = "definicao" | "comparacao" | "causa"

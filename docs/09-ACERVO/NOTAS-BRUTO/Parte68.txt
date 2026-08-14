@@ -1,0 +1,35 @@
+IMPLEMENTAÇÃO (simples e segura)
+
+Adicionar categoria na memória
+Quando aprender:
+Python
+novo_item = {
+    "pergunta": criptografar(pergunta),
+    "resposta": criptografar(resposta),
+    "embedding": emb.tolist(),
+    "categoria": categoria
+}
+
+Criar função de classificação simples
+Começa simples (sem ML):
+
+def classificar_categoria(pergunta):
+    pergunta = pergunta.lower()
+
+    if "brasil" in pergunta or "história" in pergunta:
+        return "historia"
+    elif "equação" in pergunta or "matemática" in pergunta:
+        return "matematica"
+    elif "cigarro" in pergunta or "saúde" in pergunta:
+        return "saude"
+    elif "clima" in pergunta or "física" in pergunta:
+        return "ciencia"
+    else:
+        return "geral"
+
+Buscar só no núcleo correto
+
+categoria = classificar_categoria(pergunta)
+dados = carregar_memoria_categoria(categoria)
+
+depois aplica sua busca semântica normal

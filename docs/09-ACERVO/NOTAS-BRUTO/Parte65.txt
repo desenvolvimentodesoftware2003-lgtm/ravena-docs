@@ -1,0 +1,15 @@
+Buscar no núcleo principal
+
+topico = classificar_topico(pergunta)
+
+ Buscar também no geral (fallback inteligente)
+
+memorias = []
+
+memorias += buscar_em(topico)
+
+if topico != "geral":
+    memorias += buscar_em("geral")
+
+ Juntar e rankear
+ Usa o mesmo sistema de score

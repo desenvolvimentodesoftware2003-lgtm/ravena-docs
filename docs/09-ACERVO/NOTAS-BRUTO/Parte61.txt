@@ -1,0 +1,39 @@
+Ajuste direto no código
+
+if conversa:
+    ultima = conversa[-1]["pergunta"]
+
+    similaridade_contexto = calcular_similaridade(ultima, pergunta_original)
+
+    if similaridade_contexto > 60:  # pode ajustar
+        pergunta = ultima + " " + pergunta
+
+Melhor prática (recomendado)
+Normaliza tudo:
+
+resposta = resposta.lower()
+Ou mantém padrão consistente.
+
+Ajuste no aprender()
+ANTES de dar append, faz isso:
+
+for item in memoria_conhecimento:
+    pergunta_salva = descriptografar(item["pergunta"])
+
+    if pergunta_salva == pergunta_norm:
+        # ATUALIZA em vez de duplicar
+        item["resposta"] = criptografar(resposta)
+        item["peso"] += 1  # opcional (reforça)
+        
+        salvar_conhecimento(memoria_conhecimento)
+        return "Atualizei essa informação!"
+
+Se não existir, aí sim adiciona:
+
+memoria_conhecimento.append({
+    "pergunta": criptografar(pergunta_norm),
+    "resposta": criptografar(resposta),
+    "embedding": emb.tolist(),
+    "peso": 1,
+    "acessos": 0
+})

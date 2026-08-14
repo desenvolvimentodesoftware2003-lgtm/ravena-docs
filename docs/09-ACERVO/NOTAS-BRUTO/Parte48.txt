@@ -1,0 +1,5 @@
+def criptografar(texto):
+    return fernet.encrypt(texto.encode()).decode()
+
+def descriptografar(texto):
+    return fernet.decrypt(texto.encode()).decode()

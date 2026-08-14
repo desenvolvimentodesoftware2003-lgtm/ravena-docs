@@ -1,0 +1,7 @@
+SOLUÇÃO: pipeline de comparação DETECÇÃO DE INTENÇÃO
+
+Adicione isso antes da busca normal:
+
+def detectar_comparacao(pergunta):
+    gatilhos = ["diferença", "diferenca", "comparar", "vs", "versus"]
+    return any(g in pergunta.lower() for g in gatilhos)

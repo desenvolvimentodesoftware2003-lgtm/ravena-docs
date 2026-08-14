@@ -1,0 +1,18 @@
+Como calcular score corretamente:
+
+score_nome = sim(pergunta, nome_categoria)
+score_desc = sim(pergunta, descricao)
+score_exemplos = max(sim(pergunta, ex) for ex in exemplos)
+
+score_final = (0.4 * score_desc) + (0.4 * score_exemplos) + (0.2 * score_nome)
+Ajuste crítico adicional
+
+Troca isso:
+
+if max_score < threshold:
+    return -1
+
+Por:
+
+if max_score < threshold:
+    return categoria_mais_proxima, max_score

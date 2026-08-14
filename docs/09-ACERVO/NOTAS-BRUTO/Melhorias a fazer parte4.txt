@@ -1,0 +1,8 @@
+Remover “filtro por categoria” na primeira fase
+Hoje:
+Python
+_avaliar_topico(categoria_classificada)
+ Novo:
+Python
+for topico in DESCRICOES_CATEGORIA:
+    _avaliar_topico(topico, bonus_categoria)

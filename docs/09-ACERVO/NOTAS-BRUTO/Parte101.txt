@@ -1,0 +1,19 @@
+# Criar função de síntese
+
+def sintetizar_respostas(respostas):
+    """
+    Combina múltiplas respostas relevantes em uma só
+    """
+
+    textos = [descriptografar(r["texto"]) for r in respostas]
+
+    # remove duplicadas simples
+    textos_unicos = list(set(textos))
+
+    if len(textos_unicos) == 1:
+        return textos_unicos[0]
+
+    # 🔥 junta com coerência básica
+    resposta_final = " ".join(textos_unicos)
+
+    return resposta_final

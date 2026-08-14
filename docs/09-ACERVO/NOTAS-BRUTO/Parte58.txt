@@ -1,0 +1,40 @@
+CORREÇÃO CERTA (simples e profissional)
+Troca isso:
+Python
+if "oi" in pergunta:
+👉 Por isso:
+Python
+if pergunta.strip() == "oi":
+🧠 Faz o mesmo com o outro
+Troca:
+Python
+if "quem te criou" in pergunta:
+👉 por:
+Python
+if pergunta.strip() == "quem te criou":
+Correção extra (melhora MUITO)
+Na normalização, garante:
+Python
+import re
+
+def normalizar_texto(texto):
+    texto = texto.lower().strip()
+    texto = re.sub(r"[^\w\s]", "", texto)  # remove pontuação
+    return texto
+
+Tornar o comando mais flexível
+Troca isso:
+Python
+if pergunta.startswith("aprenda:"):
+✅ Por isso:
+Python
+if pergunta.startswith("aprenda"):
+🔹 E adapta o parser
+Python
+if pergunta.startswith("aprenda"):
+    try:
+        conteudo = pergunta.replace("aprenda", "").replace(":", "").strip()
+        p, r = conteudo.split("=")
+        return aprender(p.strip(), r.strip())
+    except:
+        return "Formato inválido. Use: aprenda: pergunta = resposta"

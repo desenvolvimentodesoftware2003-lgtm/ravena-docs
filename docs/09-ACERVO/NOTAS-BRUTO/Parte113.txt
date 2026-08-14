@@ -1,0 +1,25 @@
+Novo comportamento
+
+Substitui isso:
+Python
+return melhor_resposta
+
+Por isso:
+Python
+if conflito:
+    respostas = []
+
+    for score, item, _ in todas_memorias_candidatas[:2]:
+        respostas.append(descriptografar(item["resposta"]))
+
+    return {
+        "tipo": "conflito",
+        "respostas": respostas,
+        "score": melhor_score
+    }
+
+return {
+    "tipo": "normal",
+    "resposta": melhor_resposta_descriptografada,
+    "score": melhor_score
+}

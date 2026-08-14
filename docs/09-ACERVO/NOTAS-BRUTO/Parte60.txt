@@ -1,0 +1,24 @@
+ajuste fino importante
+Agora que o aprenda funciona, você precisa garantir consistência de armazenamento, senão vai ter bugs “fantasma” depois.
+
+ Padroniza entrada no aprendizado
+Dentro do aprender():
+
+pergunta_norm = normalizar_texto(pergunta)
+E salva sempre normalizado:
+
+"pergunta": criptografar(pergunta_norm)
+
+ Isso evita:
+duplicidade (“Brasil” vs “brasil”)
+falha de matching futuro
+
+Upgrade simples (mas poderoso)
+Antes de buscar na memória semântica, adiciona:
+
+conversa = carregar_conversa()
+
+if conversa:
+    ultima = conversa[-1]["pergunta"]
+    pergunta = ultima + " " + pergunta
+👉 Isso conecta contexto com conhecimento

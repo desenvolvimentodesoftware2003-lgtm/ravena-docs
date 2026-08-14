@@ -1,0 +1,13 @@
+s
+print(f"'O que é cigarro?' -> {classificar_topico('O que é cigarro?')}")
+print(f"'Qual a história do Brasil?' -> {classificar_topico('Qual a história do Brasil?')}")
+print(f"'Quem descobriu o Brasil?' -> {classificar_topico('Quem descobriu o Brasil?')}")
+print(f"'Como prevenir doenças?' -> {classificar_topico('Como prevenir doenças?')}")
+print(f"'Qual a capital da França?' -> {classificar_topico('Qual a capital da França?')}")
+print(f"'Qual o sintoma do câncer?' -> {classificar_topico('Qual o sintoma do câncer?')}")
+'O que é cigarro?' -> saude
+'Qual a história do Brasil?' -> historia
+'Quem descobriu o Brasil?' -> historia
+'Como prevenir doenças?' -> saude
+'Qual a capital da França?' -> geral
+'Qual o sintoma do câncer?' -> saude

@@ -1,0 +1,40 @@
+def iniciar_ravena():
+    print("\n🧠 Iniciando RAVENA (modo autônomo)...")
+
+    estado = {
+        "arquivos": 0,
+        "ciclos": 0,
+        "max_ciclos": 5
+    }
+
+    def analisar_ambiente():
+        total = 0
+        for root, dirs, files in os.walk(BASE_PATH):
+            total += len(files)
+        estado["arquivos"] = total
+
+    def tomar_decisao():
+        if estado["arquivos"] > 100:
+            return "limpeza"
+        else:
+            return "monitorar"
+
+    def agir(acao):
+        if acao == "limpeza":
+            print("🧹 Decisão: executar limpeza")
+            executar_limpeza()
+
+        elif acao == "monitorar":
+            print("👀 Sistema estável")
+
+    # 🔁 LOOP CONTROLADO
+    while estado["ciclos"] < estado["max_ciclos"]:
+        print(f"\n🔄 Ciclo {estado['ciclos'] + 1}")
+
+        analisar_ambiente()
+        acao = tomar_decisao()
+        agir(acao)
+
+        estado["ciclos"] += 1
+
+    print("\n🛑 Limite de ciclos atingido (segurança)")

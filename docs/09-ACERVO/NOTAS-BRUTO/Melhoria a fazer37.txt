@@ -1,0 +1,5 @@
+AJUSTE FINO IMPORTANTE
+Você pode melhorar ainda mais:
+
+if sim_score > 0.70:
+    ignorar validação de entidade completamente

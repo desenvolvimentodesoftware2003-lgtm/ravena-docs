@@ -1,0 +1,29 @@
+# =========================
+# 🔍 VERIFICAÇÃO ANTES DE RODAR
+# =========================
+def verificar_antes():
+    print("\n🔎 Verificando ambiente...")
+
+    if not os.path.exists(SOURCE_DIR):
+        print("❌ Pasta projeto_original não existe")
+        return False
+
+    arquivos = [f for f in os.listdir(SOURCE_DIR) if f.endswith(".py")]
+
+    if not arquivos:
+        print("⚠️ Nenhum arquivo .py encontrado")
+        return False
+
+    print(f"✅ {len(arquivos)} arquivo(s) encontrado(s):")
+    for a in arquivos:
+        print(f"   - {a}")
+
+    return True
+
+# =========================
+# ▶️ EXECUÇÃO CONTROLADA
+# =========================
+if verificar_antes():
+    reorganizar_projeto()
+else:
+    print("\n⛔ Execução cancelada (corrija antes de rodar)")

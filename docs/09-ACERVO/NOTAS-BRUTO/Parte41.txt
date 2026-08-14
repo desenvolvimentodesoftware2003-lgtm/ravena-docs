@@ -1,0 +1,5 @@
+memoria_semantica.append({
+    "pergunta": pergunta_cripto,
+    "resposta": resposta_cripto,
+    "embedding": embedding
+})

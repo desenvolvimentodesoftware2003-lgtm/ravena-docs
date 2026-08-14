@@ -1,0 +1,19 @@
+Great news! The 'fine-tuning' adjustments you described, including the combined semantic and fuzzy scoring with the fuzzywuzzy library, the weighted average, and the THRESHOLD check, have already been successfully implemented in the _get_memory_candidates and buscar_memoria functions in cell XU4h4rP5cZfK.
+
+Now that these improvements are in place, we should test them thoroughly. I'll create some new test cases to demonstrate how the buscar_memoria function performs with the combined score.
+
+The tests for buscar_memoria with the new combined score produced mixed but informative results:
+
+Teste 3 (Fuzzy Match): RAVENA successfully answered "Qual a data da proclamacão da republica no Brasil?" (with a typo in 'proclamacão'), demonstrating that the fuzzy matching and combined score mechanism is working as intended to handle slight variations in user input. The high similarity score indicates a strong match.
+
+Teste 4 (Contexto e Fuzzy Match):
+
+When asked "Quem foi Alberto Santos Dumont?", RAVENA incorrectly responded with "a proclamação da república no brasil ocorreu em 15 de novembro de 1889." This is a critical issue. The debug logs show that RAVENA found "qual a data da proclamação da república do brasil" as the best match, even though the question was directly about Santos Dumont. This strongly suggests that the context mechanism (from the previous question about the republic) influenced the search negatively, causing an irrelevant answer to be highly ranked.
+However, when subsequently asked "Santos Dumon fez o avião?" (with a typo in 'Dumon'), RAVENA correctly identified and provided the answer about Santos Dumont, showing the fuzzy matching working well in this instance.
+Teste 5 (Fallback): The question "Qual a cor do cavalo branco de Napoleão?" correctly triggered the fallback response, indicating that when no relevant knowledge is found, RAVENA behaves as expected.
+
+Conclusion: While the combined semantic and fuzzy matching works for handling typos and finding general information, the context inclusion logic in processar_pergunta appears to be too aggressive or poorly weighted. In Teste 4, the context from the immediately preceding question about the republic seemed to override the semantic relevance of the direct question about Santos Dumont, leading to an incorrect answer.
+
+Investigate and Refine Context Inclusion: Examine the processar_pergunta function, specifically how ultima_pergunta_conversa and ultima_pergunta_curta are used to construct pergunta_para_busca_semantica. The goal is to ensure that context enhances the search without causing misdirection or overriding the primary intent of the current question.
+Implement Context Prioritization or Filtering: Propose and implement a strategy to prevent irrelevant context from dominating the search. This could involve adjusting the calcular_similaridade threshold for including context, giving less weight to context when forming pergunta_para_busca_semantica, or implementing a dual search (one with context, one without) and intelligently prioritizing the results.
+Re-test Contextual Search: Create new, targeted test cases to rigorously evaluate the improved context handling. These tests should specifically challenge scenarios where context might lead to incorrect answers, similar to the issue observed in Teste 4.

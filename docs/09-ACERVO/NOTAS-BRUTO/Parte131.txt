@@ -1,0 +1,10 @@
+# ==============================
+# CONFIGURAÇÃO SEMÂNTICA
+# ==============================
+
+categorias = {...}
+exemplos = {...}
+
+# semantica.py
+categorias = {...}
+exemplos = {...}

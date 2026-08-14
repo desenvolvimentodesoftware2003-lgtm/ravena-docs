@@ -1,0 +1,27 @@
+Score de relevância para memória
+Python
+def score_memoria(item):
+    peso = item.get("peso", 1)
+    acessos = item.get("acessos", 0)
+
+    return (peso * 0.7) + (acessos * 0.3)
+#  Função de esquecimento inteligente
+Python
+def esquecer_memorias(memoria, limite=500):
+
+    if len(memoria) <= limite:
+        return memoria
+
+    # ordena da MENOS relevante → MAIS relevante
+    memoria.sort(key=lambda x: score_memoria(x))
+
+    # remove as piores
+    excesso = len(memoria) - limite
+    memoria = memoria[excesso:]
+
+    return memoria
+
+ Aplicar no salvar
+Dentro do salvar_conhecimento após aprender:
+Python
+memoria_do_topico = esquecer_memorias(memoria_do_topico)

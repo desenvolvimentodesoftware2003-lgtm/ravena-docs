@@ -1,0 +1,15 @@
+Integrar o código no carregamento da celula para não quebra o código. 
+
+Dentro da sua função carregar_conhecimento, altera para:
+
+def carregar_conhecimento(path):
+    if not os.path.exists(path):
+        return []
+
+    with open(path, 'r', encoding='utf-8') as f:
+        memoria = json.load(f)
+
+    # 🔥 aplica decay automaticamente
+    memoria = aplicar_decay(memoria)
+
+    return memoria

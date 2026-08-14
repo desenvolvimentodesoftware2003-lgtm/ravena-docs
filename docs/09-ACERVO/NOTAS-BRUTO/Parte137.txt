@@ -1,0 +1,5 @@
+Na busca:
+
+TOP_K = 5
+
+candidatos = sorted(lista_memorias, key=lambda x: x["score"], reverse=True)[:TOP_K]

@@ -1,0 +1,21 @@
+import os, hashlib
+
+def listar_duplicados(pasta):
+    hashes = {}
+    duplicados = []
+    for root, dirs, files in os.walk(pasta):
+        for file in files:
+            caminho = os.path.join(root, file)
+            with open(caminho, 'rb') as f:
+                h = hashlib.md5(f.read()).hexdigest()
+            if h in hashes:
+                duplicados.append(caminho)
+            else:
+                hashes[h] = caminho
+    return duplicados
+
+# Uso
+duplicados = listar_duplicados("RAVENA/")
+print("Arquivos duplicados detectados:")
+for f in duplicados:
+    print(f)

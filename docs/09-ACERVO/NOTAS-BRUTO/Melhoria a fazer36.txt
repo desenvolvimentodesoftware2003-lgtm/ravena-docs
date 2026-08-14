@@ -1,0 +1,10 @@
+APLICAÇÃO NO RERANK
+
+if validacao == "forte":
+    score += 0.10
+
+elif validacao == "medio":
+    score -= 0.05   # penalidade leve
+
+else:  # fraco
+    score -= 0.30   # penalidade forte

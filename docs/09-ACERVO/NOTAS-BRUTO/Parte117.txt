@@ -1,0 +1,22 @@
+import shutil
+import os
+
+# Remover base persistente
+if os.path.exists(CONHECIMENTO_BASE_PATH):
+    shutil.rmtree(CONHECIMENTO_BASE_PATH)
+    print(f"Diretório '{CONHECIMENTO_BASE_PATH}' removido.")
+else:
+    print(f"Diretório '{CONHECIMENTO_BASE_PATH}' não encontrado.")
+
+# Recriar diretório limpo
+os.makedirs(CONHECIMENTO_BASE_PATH, exist_ok=True)
+
+# Limpar memória de curto prazo
+memoria_curta.clear()
+
+# Limpar embeddings (IMPORTANTE)
+for var in ["CATEGORY_EMBEDDINGS", "MEMORY_EMBEDDINGS", "BASE_EMBEDDINGS"]:
+    if var in globals():
+        globals()[var].clear()
+
+print("Reset completo: base + memória + embeddings.")

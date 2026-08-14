@@ -1,0 +1,32 @@
+Dentro da buscar_memoria, exatamente aqui:
+
+def threshold_dinamico(similaridade_base):
+    # quanto maior a similaridade inicial, mais permissivo o sistema pode ser
+
+    ajuste = (1 - similaridade_base) * 0.2  # varia até +0.2
+    threshold = GLOBAL_MATCH_THRESHOLD - ajuste
+
+    # limites de segurança
+    if threshold < 0.50:
+        threshold = 0.50
+    if threshold > 0.70:
+        threshold = 0.70
+
+    return threshold
+
+Antes
+
+if score > GLOBAL_MATCH_THRESHOLD:
+
+Depois:
+
+threshold_local = threshold_dinamico(score_base)
+
+if score_final > threshold_local:
+
+Importante (detalhe que evita bug)
+Use:
+score_base → para calcular o threshold
+score_final → para comparar
+
+ Isso evita feedback loop errado

@@ -1,0 +1,58 @@
+def gerar_e_aprender_variacoes(
+    pergunta_base,
+    resposta_base,
+    categoria,
+    intencao,
+    max_variacoes=10,
+    similaridade_min=0.70,
+    similaridade_max_duplicado=0.95
+):
+    print(f"\n--- Gerando variações para: '{pergunta_base}' ---")
+
+    # 1. gerar variações iniciais (estrutura + heurística)
+    variacoes = expandir_semanticamente(pergunta_base)
+
+    # 2. embedding da base
+    emb_base = gerar_embedding(normalizar_texto(pergunta_base))
+
+    memoria = carregar_conhecimento(categoria)
+
+    embeddings_existentes = [
+        np.array(item['embedding_pergunta'])
+        for item in memoria if 'embedding_pergunta' in item
+    ]
+
+    variacoes_validas = []
+
+    for v in variacoes:
+        if len(variacoes_validas) >= max_variacoes:
+            break
+
+        v_norm = normalizar_texto(v)
+        emb_v = gerar_embedding(v_norm)
+
+        # 🔹 filtro 1 — similaridade mínima com conceito
+        sim_base = cosine_similarity([emb_base], [emb_v])[0][0]
+        if sim_base < similaridade_min:
+            continue
+
+        # 🔹 filtro 2 — evitar duplicação com base existente
+        duplicado = False
+        for emb_exist in embeddings_existentes:
+            sim_exist = cosine_similarity([emb_v], [emb_exist])[0][0]
+            if sim_exist > similaridade_max_duplicado:
+                duplicado = True
+                break
+
+        if duplicado:
+            continue
+
+        variacoes_validas.append(v)
+
+    print(f"Variações válidas: {len(variacoes_validas)}")
+
+    # 3. aprender variações
+    for v in variacoes_validas:
+        aprender_informacao(v, resposta_base, categoria, intencao)
+
+    print("--- Finalizado ---\n")

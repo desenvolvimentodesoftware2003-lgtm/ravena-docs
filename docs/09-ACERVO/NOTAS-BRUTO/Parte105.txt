@@ -1,0 +1,41 @@
+# Criar variável global
+
+Python
+MODO_EXPLICACAO = "tecnico"  # simples | tecnico | oculto
+
+Adaptar função
+
+Python
+def gerar_explicacao(pergunta, respostas_usadas, score, tipo):
+    
+    if MODO_EXPLICACAO == "oculto":
+        return ""
+
+    if MODO_EXPLICACAO == "simples":
+        if len(respostas_usadas) > 1:
+            return "Combinei várias informações que conheço para chegar nessa resposta."
+        elif score < 0.6:
+            return "Não tenho muita certeza, mas tentei te ajudar com o que sei."
+        else:
+            return "Usei uma informação que já conheço."
+
+    # modo técnico (seu atual)
+    explicacao = []
+    explicacao.append(f"Tipo: {tipo}")
+    explicacao.append(f"Confiança: {round(score, 2)}")
+
+    if len(respostas_usadas) > 1:
+        explicacao.append("Síntese ativa")
+
+    if score < 0.6:
+        explicacao.append("Baixa confiança")
+
+    return " | ".join(explicacao)
+
+Ajustar saída
+
+Python
+if explicacao:
+    resposta_final = f"{resposta}\n\n[Explicação: {explicacao}]"
+else:
+    resposta_final = resposta

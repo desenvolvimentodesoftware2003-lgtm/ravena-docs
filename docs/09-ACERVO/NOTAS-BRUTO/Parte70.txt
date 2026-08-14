@@ -1,0 +1,21 @@
+def prever_categorias(pergunta):
+    pergunta = pergunta.lower()
+
+    categorias = []
+
+    if any(p in pergunta for p in ["brasil", "descobriu", "história"]):
+        categorias.append("historia")
+
+    if any(p in pergunta for p in ["energia", "física", "clima"]):
+        categorias.append("ciencia")
+
+    if any(p in pergunta for p in ["equação", "matemática", "conta"]):
+        categorias.append("matematica")
+
+    if any(p in pergunta for p in ["cigarro", "saúde", "doença"]):
+        categorias.append("saude")
+
+    if not categorias:
+        categorias.append("geral")
+
+    return categorias

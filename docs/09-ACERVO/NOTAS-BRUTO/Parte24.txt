@@ -1,0 +1,9 @@
+def normalizar_texto(texto):
+    texto = texto.lower()  # tudo minúsculo
+    texto = texto.replace("?", "").replace("!", "")  # remover pontuação
+    texto = texto.strip()
+    return texto 
+
+ Ajuste do threshold:
+Teste com valores entre 0.65 e 0.75
+Ajuste até que pequenas variações sejam reconhecidas, mas respostas muito diferentes não.

@@ -1,0 +1,23 @@
+Ajustar processar_pergunta
+
+Python
+resultado = buscar_memoria(pergunta)
+
+Tratamento:
+Python
+if resultado["tipo"] == "conflito":
+    
+    respostas = resultado["respostas"]
+
+    resposta_final = (
+        "Existem opiniões diferentes sobre isso.\n\n"
+        f"• {respostas[0]}\n"
+        f"• {respostas[1]}"
+    )
+
+elif resultado["tipo"] == "normal":
+    
+    resposta_final = resultado["resposta"]
+
+else:
+    resposta_final = "Ainda não sei responder isso."

@@ -1,0 +1,17 @@
+CORREÇÃO 4 — Nova lógica da busca
+Substitui o núcleo da sua buscar_memoria por isso:
+
+melhor_score = 0
+melhor_item = None
+
+for item in memoria:
+
+    score_base = calcular_similaridade_hibrida(pergunta_processada, item)
+
+    score_boost = aplicar_boost_contextual(pergunta_processada, item, score_base)
+
+    threshold = threshold_dinamico(score_base)
+
+    if score_boost > threshold and score_boost > melhor_score:
+        melhor_score = score_boost
+        melhor_item = item

@@ -1,0 +1,7 @@
+PESOS = {
+    "ciencia": 1.0,
+    "matematica": 1.0,
+    "saude": 0.95,
+    "historia": 0.9,
+    "geral": 0.7
+}

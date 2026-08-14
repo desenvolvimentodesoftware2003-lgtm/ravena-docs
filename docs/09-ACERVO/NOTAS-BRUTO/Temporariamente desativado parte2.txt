@@ -1,0 +1,22 @@
+while True:
+    entrada = input("Você: ")
+
+    if entrada.lower() in ["sair", "exit"]:
+        print("RAVENA: Encerrando...")
+        break
+
+    resposta = processar_pergunta(entrada)
+    print("RAVENA:", resposta)
+
+if False:
+    from flask import Flask, request
+    from pyngrok import ngrok
+    from google.colab import userdata
+
+    app = Flask(__name__)
+
+    @app.route("/")
+    def home():
+        pass
+
+    app.run(port=5000)

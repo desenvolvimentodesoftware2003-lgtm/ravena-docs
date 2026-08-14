@@ -1,0 +1,18 @@
+import os, hashlib, shutil
+
+def hash_arquivo(caminho):
+    with open(caminho, 'rb') as f:
+        return hashlib.md5(f.read()).hexdigest()
+
+def limpar_codigos_duplicados(pasta, pasta_backup="backup_antigos"):
+    os.makedirs(pasta_backup, exist_ok=True)
+    hashes = {}
+    for root, dirs, files in os.walk(pasta):
+        for file in files:
+            caminho = os.path.join(root, file)
+            h = hash_arquivo(caminho)
+            if h in hashes:
+                print(f"Duplicado encontrado: {caminho} → movendo para backup")
+                shutil.move(caminho, os.path.join(pasta_backup, file))
+            else:
+                hashes[h] = caminho

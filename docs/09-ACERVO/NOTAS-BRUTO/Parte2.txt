@@ -1,0 +1,31 @@
+from flask import Flask, request, jsonify
+from pyngrok import ngrok
+
+app = Flask(__name__)
+
+# função que chama a RAVENA (usa sua lógica atual)
+def responder_ravena(pergunta):
+    # aqui você conecta com seu sistema atual
+    return processar_pergunta(pergunta)  # usa sua função já existente
+
+@app.route("/")
+def home():
+    return """
+    <h2>RAVENA Beta 1</h2>
+    <form method="post" action="/chat">
+        <input name="msg" placeholder="Digite aqui..." style="width:300px;">
+        <input type="submit" value="Enviar">
+    </form>
+    """
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    msg = request.form["msg"]
+    resposta = responder_ravena(msg)
+    return f"<p><b>Você:</b> {msg}</p><p><b>RAVENA:</b> {resposta}</p><a href='/'>Voltar</a>"
+
+# abrir túnel
+public_url = ngrok.connect(5000)
+print("Acesse no celular:", public_url)
+
+app.run(port=5000)

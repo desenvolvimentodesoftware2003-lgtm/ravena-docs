@@ -1,0 +1,26 @@
+# ============================================
+# RAVENA
+# BLOCO 5 — PRIMEIRO SISTEMA DE CHAT
+# ============================================
+
+def responder(pergunta):
+
+    pergunta = pergunta.lower()
+
+    if "oi" in pergunta or "olá" in pergunta:
+        return "Olá. Eu sou a Artificial Inteligente RAVENA."
+
+    elif "seu nome" in pergunta:
+        return "Meu nome é Artificial Inteligente RAVENA."
+
+    elif "quem te criou" in pergunta:
+        return "Fui criada por Alexsander Soares Leal de Oliveira."
+
+    elif "versão" in pergunta:
+        return "Estou na versão 0.1."
+
+    else:
+        return "Ainda estou aprendendo."
+
+print("RAVENA iniciada.")
+print("Digite 'sair' para encerrar.")

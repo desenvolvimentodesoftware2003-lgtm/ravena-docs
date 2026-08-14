@@ -1,0 +1,2 @@
+for topico in ["geral", "historia", "ciencia", "saude"]:
+    print(revisar_memoria(get_path_topico(topico)))

@@ -1,0 +1,10 @@
+Categoria vira bônus leve
+Trocar isso:
+
+score += PESOS["category_match_bonus"]
+
+Por algo mais fraco:
+
+if topico == categoria_classificada:
+    score += 0.05  # leve
+#  não pode dominar o score

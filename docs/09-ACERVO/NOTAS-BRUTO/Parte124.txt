@@ -1,0 +1,37 @@
+definicao:
+  ['o que é', 'o que significa', 'defina', 'explique', 'conceito',
+   'significado', 'qual é']
+
+causa:
+  ['por que', 'porque', 'pq', 'motivo', 'causa',
+   'razão', 'origem', 'o que provoca']
+
+efeito:
+  ['efeitos', 'resultado', 'consequências',
+   'impacto', 'o que acontece se']
+
+historico:
+  ['quem', 'quando', 'história', 'histórico',
+   'fundador', 'descobridor', 'inventor',
+   'data', 'origem histórica']
+
+comparacao:
+  ['diferença', 'qual a diferença', 'comparar',
+   'comparação', 'semelhança', 'versus', 'vs', 'entre']
+
+procedimento:
+  ['como fazer', 'como funciona', 'passo a passo',
+   'instruções', 'tutorial', 'método',
+   'guia', 'como criar', 'como usar']
+
+localizacao:
+  ['onde fica', 'onde está', 'localização',
+   'em que lugar', 'fica onde']
+
+opiniao:
+  ['vale a pena', 'é bom', 'é ruim', 'recomendado',
+   'opinião', 'o que acha']
+
+saudacao:
+  ['olá', 'oi', 'bom dia', 'boa tarde',
+   'boa noite', 'e aí', 'fala', 'tudo bem']

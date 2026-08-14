@@ -1,0 +1,15 @@
+CORREÇÃO 3 — Threshold adaptativo
+Hoje você usa algo tipo:
+
+GLOBAL_MATCH_THRESHOLD = 0.70
+
+ Isso está matando variações.
+Substitui por:
+
+def threshold_dinamico(similaridade_base):
+    if similaridade_base > 0.5:
+        return 0.55
+    elif similaridade_base > 0.4:
+        return 0.50
+    else:
+        return 0.65

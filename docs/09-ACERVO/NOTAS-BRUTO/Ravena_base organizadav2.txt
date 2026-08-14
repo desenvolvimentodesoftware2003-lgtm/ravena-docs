@@ -1,0 +1,878 @@
+# ============================================================
+# BLOCO 1 — INSTALAÇÕES (execute uma vez no Colab)
+# ============================================================
+# !pip install sentence-transformers scikit-learn cryptography
+# !pip install fuzzywuzzy python-Levenshtein gensim nltk spacy
+# !python -m spacy download pt_core_news_sm
+
+# ============================================================
+# BLOCO 2 — IMPORTS
+# ============================================================
+import os, json, re, unicodedata, shutil, time, uuid, ast
+import numpy as np
+import spacy
+import nltk
+
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.cluster import KMeans
+from cryptography.fernet import Fernet
+from collections import deque
+from nltk.corpus import stopwords
+from nltk.stem import RSLPStemmer
+from nltk.tokenize import word_tokenize
+
+try:
+    from fuzzywuzzy import fuzz
+except ImportError:
+    import subprocess
+    subprocess.run(["pip", "install", "fuzzywuzzy", "python-Levenshtein"])
+    from fuzzywuzzy import fuzz
+
+# ============================================================
+# BLOCO 3 — CARREGAMENTO DO MODELO SPACY
+# ============================================================
+try:
+    nlp_pt = spacy.load('pt_core_news_sm')
+    print("SpaCy 'pt_core_news_sm' carregado.")
+except OSError:
+    os.system("python -m spacy download pt_core_news_sm")
+    nlp_pt = spacy.load('pt_core_news_sm')
+    print("SpaCy 'pt_core_news_sm' baixado e carregado.")
+except Exception as e:
+    print(f"Erro: {e}. Tentando fallback 'en_core_web_sm'...")
+    try:
+        nlp_pt = spacy.load('en_core_web_sm')
+    except OSError:
+        os.system("python -m spacy download en_core_web_sm")
+        nlp_pt = spacy.load('en_core_web_sm')
+    print("SpaCy 'en_core_web_sm' carregado como fallback.")
+
+# ============================================================
+# BLOCO 4 — DADOS NLTK
+# ============================================================
+for _res in ['corpora/stopwords', 'tokenizers/punkt', 'tokenizers/punkt_tab']:
+    try:
+        nltk.data.find(_res)
+    except LookupError:
+        nltk.download(_res.split('/')[-1])
+print("NLTK: recursos carregados.")
+
+# ============================================================
+# BLOCO 5 — CONFIGURAÇÕES GLOBAIS
+# ============================================================
+BASE_PATH              = "/content/drive/MyDrive/RAVENA"
+CONHECIMENTO_BASE_PATH = os.path.join(BASE_PATH, "memoria", "conhecimento")
+CONVERSA_PATH          = os.path.join(BASE_PATH, "memoria", "conversa.json")
+CHAVE_PATH             = os.path.join(BASE_PATH, "seguranca", "chave.key")
+
+# ── Thresholds ─────────────────────────────────────────────
+GLOBAL_MATCH_THRESHOLD              = 0.55
+SEMANTIC_THRESHOLD                  = 0.30
+FUZZY_THRESHOLD                     = 0.6
+MAX_MEMORIA_POR_TOPICO              = 100
+MAX_VARIACOES_POR_CONCEITO          = 10
+
+# ── Auto-aprendizagem ──────────────────────────────────────
+LIMITE_CONFIANCA_MIN_AUTO_APRENDER  = 0.8
+LIMITE_CONFIANCA_MAX_AUTO_APRENDER  = 3.0
+MIN_COMPRIMENTO_RESPOSTA_AUTO_APRENDER = 15
+PONTUACAO_MIN_AUTO_APRENDER         = 5.0
+PONTUACAO_MAX_AUTO_APRENDER         = 10.0
+
+# ── Pesos dos itens ────────────────────────────────────────
+PESO_MAX = 5.0
+PESO_MIN = 0.5
+
+PESOS = {
+    "fuzzy":                            0.1,
+    "semantic":                         0.9,
+    "semantic_question_weight":         0.7,
+    "semantic_response_weight":         0.3,
+    "confidence_bonus_per_unit":        0.01,
+    "access_bonus_per_access":          0.001,
+    "category_match_bonus":             0.1,
+    "intention_match_bonus_multiplier": 1.0,
+    "short_term_memory_bonus":          0.1,
+    "decay_rate_confidence":            0.02,
+    "decay_rate_weight":                0.01,
+}
+
+INTENTION_BONUS = {
+    'definicao':       0.025,
+    'causa':           0.015,
+    'efeito':          0.015,
+    'historico':       0.025,
+    'comparacao':      0.02,
+    'geral':           0.005,
+    'saudacao':        0.01,
+    'saudacao_formal': 0.015,
+}
+
+# ── Descrições semânticas de domínio (âncoras para MPNet) ──
+DESCRICOES_CATEGORIA = {
+    "saude": """
+Área focada na manutenção, diagnóstico e tratamento da saúde de seres humanos e animais.
+Inclui medicina, doenças, sintomas, fisiologia, intervenções clínicas, hospitalares e prevenção.
+Envolve práticas terapêuticas e bem-estar baseadas em evidências.
+Não inclui explicações científicas gerais sem aplicação clínica direta.
+""",
+    "ciencia": """
+Campo do conhecimento dedicado à explicação de fenômenos naturais pelo método científico.
+Abrange física, química e biologia em nível teórico e experimental, incluindo leis naturais,
+modelos científicos e validação empírica.
+Não inclui aplicações médicas, diagnósticos clínicos ou desenvolvimento tecnológico.
+""",
+    "matematica": """
+Área abstrata focada em números, estruturas, padrões e relações lógicas.
+Inclui álgebra, geometria, cálculo, estatística e teoria dos números,
+com uso de equações, fórmulas e raciocínio lógico formal.
+Não inclui aplicações físicas diretas nem contextos clínicos.
+""",
+    "tecnologia": """
+Área voltada para o desenvolvimento e aplicação prática de sistemas, softwares e hardwares.
+Inclui programação, inteligência artificial, redes de computadores, engenharia de sistemas
+e inovação digital.
+Não inclui explicações científicas puras sem aplicação prática.
+""",
+    "historia": """
+Estudo de acontecimentos passados relacionados à humanidade.
+Inclui eventos históricos, guerras, civilizações, culturas antigas e evolução das sociedades.
+Não inclui análise geográfica nem discussões políticas atuais.
+""",
+    "geografia": """
+Estudo do espaço geográfico, incluindo relevo, clima, territórios e distribuição populacional.
+Abrange cartografia, geopolítica e características físicas da Terra.
+Não inclui eventos históricos nem análises políticas profundas.
+""",
+    "filosofia": """
+Investigação conceitual sobre existência, conhecimento, ética e realidade.
+Inclui lógica, epistemologia, metafísica e pensamento crítico.
+Não inclui religião baseada em fé nem ciência experimental.
+""",
+    "religiao": """
+Sistema de crenças, práticas espirituais e doutrinas relacionadas ao sagrado.
+Inclui tradições religiosas, rituais, fé e textos sagrados.
+Não inclui análise filosófica puramente lógica nem ciência empírica.
+""",
+    "politica": """
+Estudo e prática da organização do poder e governança.
+Inclui governos, eleições, ideologias, políticas públicas e relações internacionais.
+Não inclui economia isolada nem eventos históricos antigos sem contexto político atual.
+""",
+    "economia": """
+Área que estuda produção, distribuição e consumo de bens e serviços.
+Inclui mercado financeiro, inflação, investimentos, macro e microeconomia.
+Não inclui política institucional nem tecnologia diretamente.
+""",
+    "arte": """
+Expressão criativa e cultural humana.
+Inclui pintura, escultura, música, teatro, cinema e estética visual.
+Não inclui entretenimento comercial sem valor artístico predominante.
+""",
+    "entretenimento": """
+Conteúdo voltado ao lazer e diversão.
+Inclui filmes, séries, jogos, celebridades e cultura pop.
+Não inclui análise artística profunda nem produção cultural acadêmica.
+""",
+    "esporte": """
+Atividades físicas competitivas ou recreativas.
+Inclui regras, modalidades esportivas, desempenho físico e treinamentos.
+Não inclui saúde clínica nem entretenimento geral.
+""",
+    "linguagem": """
+Uso prático da língua para comunicação no dia a dia.
+Inclui escrita, fala, gramática normativa, vocabulário e interpretação de textos.
+Focado na aplicação da língua, não na análise científica de sua estrutura.
+""",
+    "culinaria": """
+Preparação de alimentos e técnicas de cozinha.
+Inclui receitas, ingredientes, métodos de preparo e cultura gastronômica.
+Não inclui nutrição clínica ou saúde alimentar.
+""",
+    "espaco": """
+Estudo do universo e fenômenos astronômicos.
+Inclui planetas, estrelas, galáxias, cosmologia e exploração espacial.
+Não inclui física geral fora do contexto astronômico.
+""",
+    "logistica": """
+Gestão de transporte, armazenamento e distribuição de recursos.
+Inclui cadeias de suprimento, operações, planejamento e fluxo de mercadorias.
+Não inclui economia teórica nem tecnologia isolada.
+""",
+    "geral": """
+Categoria padrão para perguntas genéricas, curiosidades e assuntos não classificados.
+""",
+}
+
+# ── Peso de rigor por categoria (influencia o threshold efetivo) ──
+PESOS_DORMANCIA_CATEGORIA = {
+    'ciencia': 1.0, 'tecnologia': 1.0, 'espaco': 1.0, 'matematica': 1.0,
+    'saude': 0.95, 'logistica': 0.95,
+    'politica': 0.9, 'economia': 0.9, 'historia': 0.9,
+    'geografia': 0.85, 'filosofia': 0.85,
+    'arte': 0.8, 'religiao': 0.8,
+    'esporte': 0.75, 'linguagem': 0.75,
+    'entretenimento': 0.7, 'culinaria': 0.7, 'geral': 0.7,
+}
+
+TIPOS_INTENCAO = {
+    'definicao':    ['o que é', 'o que significa', 'defina', 'explique', 'conceito', 'significado', 'qual é', 'descreva'],
+    'causa':        ['por que', 'porque', 'pq', 'motivo', 'causa', 'razão', 'origem', 'o que provoca'],
+    'efeito':       ['efeitos', 'resultado', 'consequências', 'impacto', 'o que acontece se'],
+    'historico':    ['quem', 'quando', 'história', 'histórico', 'fundador', 'descobridor', 'inventor', 'data', 'origem histórica'],
+    'comparacao':   ['diferença', 'qual a diferença', 'comparar', 'comparação', 'semelhança', 'versus', 'vs', 'entre'],
+    'procedimento': ['como fazer', 'como funciona', 'passo a passo', 'instruções', 'tutorial', 'método', 'guia', 'como criar', 'como usar'],
+    'localizacao':  ['onde fica', 'onde está', 'localização', 'em que lugar', 'fica onde'],
+    'opiniao':      ['vale a pena', 'é bom', 'é ruim', 'recomendado', 'opinião', 'o que acha'],
+    'saudacao':     ['olá', 'oi', 'bom dia', 'boa tarde', 'boa noite', 'e aí', 'fala', 'tudo bem'],
+    'saudacao_formal': ['bom dia', 'boa tarde', 'boa noite', 'olá'],
+}
+
+MODO_EXPLICACAO      = "tecnico"   # "tecnico" | "simples" | "oculto"
+LIMITE_MEMORIA_CURTA = 5
+memoria_curta        = deque(maxlen=LIMITE_MEMORIA_CURTA)
+
+# ============================================================
+# BLOCO 6 — MODELO DE EMBEDDING (carregado uma vez)
+# ============================================================
+modelo = SentenceTransformer('sentence-transformers/paraphrase-multilingual-mpnet-base-v2')
+print("Modelo de embedding carregado.")
+
+# ============================================================
+# BLOCO 7 — CRIPTOGRAFIA
+# (CHAVE_PATH deve estar definido antes deste bloco)
+# ============================================================
+def carregar_ou_criar_chave():
+    os.makedirs(os.path.dirname(CHAVE_PATH), exist_ok=True)
+    if not os.path.exists(CHAVE_PATH):
+        chave = Fernet.generate_key()
+        with open(CHAVE_PATH, "wb") as f:
+            f.write(chave)
+    else:
+        with open(CHAVE_PATH, "rb") as f:
+            chave = f.read()
+    return Fernet(chave)
+
+fernet = carregar_ou_criar_chave()
+
+def criptografar(texto):
+    if not isinstance(texto, str):
+        texto = str(texto)
+    return fernet.encrypt(texto.encode('utf-8')).decode('utf-8')
+
+def descriptografar(texto):
+    try:
+        if not isinstance(texto, str):
+            texto = str(texto)
+        return fernet.decrypt(texto.encode('utf-8')).decode('utf-8')
+    except Exception as e:
+        print(f"ERRO DE DESCRIPTOGRAFIA: {e} — trecho: {str(texto)[:50]}...")
+        return "[ERRO DE DESCRIPTOGRAFIA]"
+
+# ============================================================
+# BLOCO 8 — UTILITÁRIOS DE TEXTO
+# ============================================================
+def remover_acentos(texto):
+    return "".join(c for c in unicodedata.normalize('NFKD', texto)
+                   if not unicodedata.combining(c))
+
+def extrair_nucleo_semantico(texto):
+    """Mantém apenas NOUN, PROPN, VERB e ADJ — ignora ruído gramatical."""
+    doc = nlp_pt(texto.lower())
+    tokens = [t.lemma_ for t in doc
+              if t.pos_ in ('NOUN', 'PROPN', 'VERB', 'ADJ') and not t.is_stop]
+    return " ".join(tokens) if tokens else texto
+
+def normalizar_texto(texto):
+    if not isinstance(texto, str):
+        return ""
+    texto = remover_acentos(texto.lower().strip())
+    texto = re.sub(r"[^\w\s]", "", texto)
+    return extrair_nucleo_semantico(texto)
+
+STOPWORDS_PORTUGUES = set(stopwords.words('portuguese'))
+_stemmer = RSLPStemmer()
+
+def preprocessar_texto(texto, remover_sw=True, aplicar_stemming=False):
+    """Tokenização + remoção de stopwords + stemming opcional."""
+    tokens = word_tokenize(normalizar_texto(texto))
+    if remover_sw:
+        tokens = [t for t in tokens if t not in STOPWORDS_PORTUGUES]
+    if aplicar_stemming:
+        tokens = [_stemmer.stem(t) for t in tokens]
+    return " ".join(tokens)
+
+# ============================================================
+# BLOCO 9 — LEMMATIZAÇÃO DOS TIPOS DE INTENÇÃO
+# (depende de normalizar_texto e TIPOS_INTENCAO)
+# ============================================================
+LEMMATIZED_TIPOS_INTENCAO = {
+    intent: [normalizar_texto(kw) for kw in kws]
+    for intent, kws in TIPOS_INTENCAO.items()
+}
+print("LEMMATIZED_TIPOS_INTENCAO inicializado.")
+
+# ============================================================
+# BLOCO 10 — FUNÇÕES DE EMBEDDING E SIMILARIDADE
+# (depende de modelo, PESOS)
+# ============================================================
+BASE_EMBEDDINGS   = {}  # cache: texto_norm → vetor
+MEMORY_EMBEDDINGS = {}  # cache: item_id   → vetor (usado por calcular_score_final)
+
+def gerar_embedding(texto):
+    if not isinstance(texto, str) or not texto.strip():
+        texto = ""
+    if texto not in BASE_EMBEDDINGS:
+        BASE_EMBEDDINGS[texto] = modelo.encode(texto, convert_to_numpy=True)
+    return BASE_EMBEDDINGS[texto]
+
+def calcular_similaridade_hibrida(emb_perg, texto_perg, emb_item, texto_item):
+    sim_sem    = cosine_similarity([emb_perg], [emb_item])[0][0]
+    tokens_p   = set(texto_perg.split())
+    tokens_i   = set(texto_item.split())
+    sim_tokens = len(tokens_p & tokens_i) / max(len(tokens_p), 1)
+    return (sim_sem * PESOS["semantic"]) + (sim_tokens * PESOS["fuzzy"])
+
+# ============================================================
+# BLOCO 11 — ESQUECIMENTO INTELIGENTE (Decay)
+# (deve vir antes de salvar_conhecimento, que o chama)
+# ============================================================
+def score_memoria_para_esquecer(item):
+    base  = item.get("peso", 1.0) * (item.get("acessos", 0) + 1)
+    dias  = (time.time() - item.get("timestamp", time.time())) / 86400
+    return max(0.0, base - dias * PESOS["decay_rate_weight"] * 5)
+
+def esquecer_memorias(memoria):
+    if len(memoria) <= MAX_MEMORIA_POR_TOPICO:
+        return memoria
+    memoria.sort(key=score_memoria_para_esquecer)
+    return memoria[len(memoria) - MAX_MEMORIA_POR_TOPICO:]
+
+def decay_confidence(item):
+    dias = (time.time() - item.get("timestamp", time.time())) / 86400
+    if dias >= 1:
+        item["confianca"] = max(0.1,
+            item.get("confianca", 1.0) * (1 - PESOS["decay_rate_confidence"]) ** dias)
+
+def decay_weights(item):
+    dias = (time.time() - item.get("timestamp", time.time())) / 86400
+    if dias >= 1:
+        item["peso"] = max(PESO_MIN,
+            item.get("peso", 1.0) * (1 - PESOS["decay_rate_weight"]) ** dias)
+
+# ============================================================
+# BLOCO 12 — VARIÁVEIS DE ESTADO GLOBAL
+# ============================================================
+GLOBAL_KMEANS_MODELS = {}  # { categoria: {'model': KMeans, 'centroids': [...]} }
+
+# ============================================================
+# BLOCO 13 — GERENCIAMENTO DE CONHECIMENTO (armazenamento flat)
+# ============================================================
+def get_path_topico(topico):
+    os.makedirs(CONHECIMENTO_BASE_PATH, exist_ok=True)
+    topico_limpo = remover_acentos(topico.lower().strip())
+    return os.path.join(CONHECIMENTO_BASE_PATH, f"{topico_limpo}.json")
+
+def carregar_conhecimento(topico):
+    path = get_path_topico(topico)
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+            return dados if isinstance(dados, list) else []
+    except (json.JSONDecodeError, Exception) as e:
+        print(f"Erro ao carregar '{topico}': {e}")
+        return []
+
+def salvar_conhecimento(memoria, topico):
+    path = get_path_topico(topico)
+    memoria_otimizada = esquecer_memorias(memoria)
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(memoria_otimizada, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Erro ao salvar '{topico}': {e}")
+
+def carregar_conhecimento_bruto(path):
+    """Lê um arquivo JSON diretamente, sem lógica de subpastas."""
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+# ============================================================
+# BLOCO 14 — MEMÓRIA DE CURTO PRAZO
+# ============================================================
+def adicionar_a_memoria_curta(pergunta, resposta, item_conhecimento, categoria, intencao):
+    memoria_curta.append({
+        "pergunta":          pergunta,
+        "resposta":          resposta,
+        "item_conhecimento": item_conhecimento,
+        "categoria":         categoria,
+        "intencao":          intencao,
+    })
+
+def limpar_memoria_curta():
+    memoria_curta.clear()
+    if MODO_EXPLICACAO == "tecnico":
+        print("LOG: Memória de curto prazo limpa.")
+
+# ============================================================
+# BLOCO 15 — EMBEDDINGS DE CATEGORIA
+# (depende de DESCRICOES_CATEGORIA e gerar_embedding)
+# ============================================================
+print("Gerando embeddings das categorias...")
+CATEGORY_EMBEDDINGS = {
+    cat: gerar_embedding(desc.strip())
+    for cat, desc in DESCRICOES_CATEGORIA.items()
+}
+print(f"CATEGORY_EMBEDDINGS prontos: {len(CATEGORY_EMBEDDINGS)} categorias.")
+
+# ============================================================
+# BLOCO 16 — CLASSIFICAÇÃO E DETECÇÃO DE INTENÇÃO
+# (depende de CATEGORY_EMBEDDINGS, LEMMATIZED_TIPOS_INTENCAO, memoria_curta)
+# ============================================================
+def classificar_tipo_pergunta(pergunta_bruta):
+    """Usa o núcleo semântico + PESOS_DORMANCIA_CATEGORIA para classificar."""
+    nucleo      = extrair_nucleo_semantico(pergunta_bruta)
+    emb_perg    = gerar_embedding(nucleo)
+    melhor, max_sim = "geral", -1.0
+
+    for cat, emb_cat in CATEGORY_EMBEDDINGS.items():
+        sim = cosine_similarity([emb_perg], [emb_cat])[0][0]
+        sim_ajustada = sim * PESOS_DORMANCIA_CATEGORIA.get(cat, 0.7)
+        if sim_ajustada > max_sim:
+            max_sim, melhor = sim_ajustada, cat
+
+    print(f"DEBUG_RAVENA: Núcleo='{nucleo}' → Cat='{melhor}' (Score={max_sim:.4f})")
+    return melhor
+
+def detectar_intencao(pergunta_norm):
+    tokens = set(pergunta_norm.split())
+    for intencao, kws in LEMMATIZED_TIPOS_INTENCAO.items():
+        if any(kw in tokens for kw in kws):
+            return intencao
+    # Resolução contextual por anáfora
+    if memoria_curta:
+        ultima_tokens = set(normalizar_texto(memoria_curta[-1].get("pergunta", "")).split())
+        def_kws = LEMMATIZED_TIPOS_INTENCAO.get('definicao', [])
+        if (tokens & {"isso", "ele", "ela", "disto"}) and any(kw in ultima_tokens for kw in def_kws):
+            return "definicao"
+    return "geral"
+
+# ============================================================
+# BLOCO 17 — NER / RESOLUÇÃO DE ANÁFORA / REESCRITA
+# (depende de nlp_pt, descriptografar, normalizar_texto, detectar_intencao)
+# ============================================================
+def extrair_info_pos(texto):
+    doc = nlp_pt(texto)
+    return [{'text': t.text, 'lemma': t.lemma_, 'pos': t.pos_,
+             'tag': t.tag_, 'dep': t.dep_, 'head': t.head.text}
+            for t in doc]
+
+def _get_main_entity_from_item(item_conhecimento):
+    if not item_conhecimento:
+        return None
+
+    def _extract(doc):
+        for ent in doc.ents:
+            if ent.label_ in ("PER", "LOC", "ORG", "MISC", "PROPN"):
+                return ent.text
+        deps = ("nsubj", "dobj", "attr", "appos", "ROOT", "oprd", "acl:relcl")
+        for token in doc:
+            if token.pos_ in ("NOUN", "PROPN") and token.dep_ in deps:
+                if token.pos_ == "PROPN":
+                    s, e = token.i, token.i
+                    while s > 0 and doc[s - 1].pos_ == "PROPN":
+                        s -= 1
+                    while e < len(doc) - 1 and doc[e + 1].pos_ == "PROPN":
+                        e += 1
+                    return doc[s:e + 1].text
+                return token.text
+            elif token.dep_ == "ROOT" and token.pos_ == "VERB":
+                for child in token.children:
+                    if child.pos_ in ("NOUN", "PROPN") and child.dep_ in deps:
+                        return child.text
+        for token in doc:
+            if token.pos_ in ("NOUN", "PROPN"):
+                return token.text
+        return None
+
+    for campo in ("pergunta", "resposta"):
+        raw = descriptografar(item_conhecimento.get(campo, ""))
+        if raw:
+            entity = _extract(nlp_pt(raw))
+            if entity:
+                return entity
+    return None
+
+def reescrever_pergunta(pergunta_raw):
+    current = pergunta_raw
+    if memoria_curta:
+        last_item = memoria_curta[-1].get("item_conhecimento")
+        if last_item:
+            entity = _get_main_entity_from_item(last_item)
+            if entity:
+                pronouns = sorted(
+                    ["disso", "isso", "ele", "ela", "dele", "dela", "este", "esta"],
+                    key=len, reverse=True
+                )
+                pattern = r'\b(' + '|'.join(re.escape(p) for p in pronouns) + r')\b'
+                rewritten, n = re.subn(pattern, entity, current, flags=re.IGNORECASE)
+                if n > 0:
+                    print(f"LOG_CONTEXT: '{current}' → '{rewritten}' (entidade: '{entity}')")
+                    current = rewritten
+
+    norm     = normalizar_texto(current)
+    intencao = detectar_intencao(norm)
+    def_kws  = LEMMATIZED_TIPOS_INTENCAO.get('definicao', [])
+    causa_kws = LEMMATIZED_TIPOS_INTENCAO.get('causa', [])
+    if intencao == "definicao" and not any(kw in norm for kw in def_kws):
+        norm = f"o que é {norm}"
+    elif intencao == "causa" and not any(kw in norm for kw in causa_kws):
+        norm = f"por que {norm}"
+    return norm
+
+# ============================================================
+# BLOCO 18 — BUSCA NA MEMÓRIA
+# (depende de tudo acima)
+# ============================================================
+def buscar_memoria(pergunta_norm, categoria_classificada, intencao_detectada):
+    emb_perg   = gerar_embedding(pergunta_norm)
+    candidatos = []
+    print(f"LOG_BUSCAR: '{pergunta_norm}' | cat='{categoria_classificada}' | int='{intencao_detectada}'")
+
+    def _avaliar_topico(topico, bonus_cat):
+        for item in carregar_conhecimento(topico):
+            decay_confidence(item)
+            decay_weights(item)
+
+            perg_desc = descriptografar(item['pergunta'])
+            resp_desc = descriptografar(item['resposta'])
+            emb_item  = np.array(item['embedding_pergunta'])
+            perg_norm_item = normalizar_texto(perg_desc)
+
+            score = calcular_similaridade_hibrida(emb_perg, pergunta_norm, emb_item, perg_norm_item)
+            score += bonus_cat
+            score += INTENTION_BONUS.get(intencao_detectada, 0) * PESOS["intention_match_bonus_multiplier"]
+            score += item.get('confianca', 1.0) * PESOS["confidence_bonus_per_unit"]
+            score += item.get('peso', 1.0)      * PESOS["access_bonus_per_access"]
+
+            if (memoria_curta and
+                    item.get('id') == (memoria_curta[-1].get("item_conhecimento") or {}).get('id')):
+                score += PESOS["short_term_memory_bonus"]
+
+            # Threshold dinâmico por rigor de categoria
+            threshold = SEMANTIC_THRESHOLD / PESOS_DORMANCIA_CATEGORIA.get(topico, 1.0)
+            if score >= threshold:
+                candidatos.append({
+                    'item':                   item,
+                    'score':                  score,
+                    'categoria':              topico,
+                    'pergunta_original_item': perg_desc,
+                    'resposta_original_item': resp_desc,
+                })
+
+    # 1ª passada: categoria primária
+    _avaliar_topico(categoria_classificada, PESOS["category_match_bonus"])
+
+    # 2ª passada: todas as demais se não encontrou nada
+    if not candidatos:
+        print("LOG_BUSCAR: Expandindo busca para todas as categorias.")
+        for topico in DESCRICOES_CATEGORIA:
+            if topico != categoria_classificada:
+                _avaliar_topico(topico, 0)
+
+    if not candidatos:
+        print("LOG_BUSCAR: Nenhum candidato encontrado.")
+        return None
+
+    melhor = sorted(candidatos, key=lambda x: x['score'], reverse=True)[0]
+
+    # Atualiza metadados do item acessado
+    melhor['item']['acessos']   = melhor['item'].get('acessos', 0) + 1
+    melhor['item']['timestamp'] = time.time()
+    mem = carregar_conhecimento(melhor['categoria'])
+    for i, it in enumerate(mem):
+        if it['id'] == melhor['item']['id']:
+            mem[i] = melhor['item']
+            break
+    salvar_conhecimento(mem, melhor['categoria'])
+
+    adicionar_a_memoria_curta(
+        pergunta_norm,
+        melhor['resposta_original_item'],
+        melhor['item'],
+        melhor['categoria'],
+        intencao_detectada,
+    )
+    return melhor
+
+# ============================================================
+# BLOCO 19 — APRENDIZADO E FEEDBACK
+# ============================================================
+def aprender_informacao(pergunta_raw, resposta_raw, categoria_classificada, intencao_detectada):
+    perg_norm = normalizar_texto(pergunta_raw)
+    emb_perg  = gerar_embedding(perg_norm)
+    emb_resp  = gerar_embedding(normalizar_texto(resposta_raw))
+    mem       = carregar_conhecimento(categoria_classificada)
+
+    item_existente = next(
+        (it for it in mem
+         if cosine_similarity([emb_perg], [np.array(it['embedding_pergunta'])])[0][0] > GLOBAL_MATCH_THRESHOLD),
+        None
+    )
+
+    if item_existente:
+        item_existente.update({
+            'resposta':           criptografar(resposta_raw),
+            'embedding_resposta': emb_resp.tolist(),
+            'timestamp':          time.time(),
+            'confianca':          1.0,
+            'peso':               1.0,
+        })
+        print(f"Já sei sobre '{pergunta_raw}'. Informação atualizada.")
+    else:
+        mem.append({
+            'id':                 str(uuid.uuid4()),
+            'pergunta':           criptografar(pergunta_raw),
+            'resposta':           criptografar(resposta_raw),
+            'embedding_pergunta': emb_perg.tolist(),
+            'embedding_resposta': emb_resp.tolist(),
+            'timestamp':          time.time(),
+            'acessos':            0,
+            'confianca':          1.0,
+            'peso':               1.0,
+            'categoria':          categoria_classificada,
+            'intencao':           intencao_detectada,
+        })
+        print("Aprendido com sucesso.")
+
+    salvar_conhecimento(mem, categoria_classificada)
+
+def processar_feedback(pergunta_raw, feedback_tipo):
+    perg_norm = normalizar_texto(pergunta_raw)
+    cat       = classificar_tipo_pergunta(perg_norm)
+    emb_perg  = gerar_embedding(perg_norm)
+    mem       = carregar_conhecimento(cat)
+
+    melhor, max_sc = None, -1.0
+    for item in mem:
+        pn  = normalizar_texto(descriptografar(item['pergunta']))
+        sem = cosine_similarity([emb_perg], [np.array(item['embedding_pergunta'])])[0][0]
+        fuz = fuzz.ratio(perg_norm, pn) / 100.0
+        sc  = sem * 0.7 + fuz * 0.3
+        if sc > max_sc and sc >= GLOBAL_MATCH_THRESHOLD:
+            max_sc, melhor = sc, item
+
+    if not melhor:
+        return "Não consegui encontrar a informação para aplicar o feedback."
+
+    if feedback_tipo == 'correto':
+        melhor['confianca'] = min(melhor.get('confianca', 1.0) * 1.25, LIMITE_CONFIANCA_MAX_AUTO_APRENDER)
+        melhor['peso']      = min(melhor.get('peso', 1.0) + 0.2, PESO_MAX)
+    elif feedback_tipo == 'incorreto':
+        melhor['confianca'] = max(melhor.get('confianca', 1.0) * 0.75, 0.1)
+        melhor['peso']      = max(melhor.get('peso', 1.0) - 0.2, PESO_MIN)
+
+    melhor['timestamp'] = time.time()
+    salvar_conhecimento([melhor if it['id'] == melhor['id'] else it for it in mem], cat)
+    print(f"LOG: Feedback '{feedback_tipo}' → confiança={melhor['confianca']:.2f}, peso={melhor['peso']:.2f}")
+    return "Feedback aplicado com sucesso."
+
+# ============================================================
+# BLOCO 20 — AVALIAÇÃO E EXPLICAÇÃO
+# ============================================================
+def avaliar_aprendizado(perg_norm, resposta, cat, intencao, confianca, item=None):
+    p = confianca * 2.0
+    if intencao in ('definicao', 'historico', 'procedimento'):
+        p += 1.5
+    elif intencao in ('causa', 'efeito', 'comparacao'):
+        p += 1.0
+    else:
+        p += 0.5
+    p += PESOS_DORMANCIA_CATEGORIA.get(cat, 0.7) * 0.5
+    if len(resposta.split()) > MIN_COMPRIMENTO_RESPOSTA_AUTO_APRENDER:
+        p += 1.0
+    if item:
+        if item.get('acessos', 0) < 3:
+            p -= 0.5
+        if (time.time() - item.get('timestamp', 0)) < 2 * 86400:
+            p -= 0.3
+    p = max(0.0, min(p, PONTUACAO_MAX_AUTO_APRENDER))
+    print(f"LOG_AUTO_LEARN: Pontuação={p:.2f}")
+    return p
+
+def explicar_resposta(resposta, tipo, intencao, confianca, peso, acessos, score, auto_aprendido):
+    if MODO_EXPLICACAO == "oculto":
+        return resposta
+    if MODO_EXPLICACAO == "simples":
+        return f"{resposta}\n\n[Confiança: {confianca:.2f}]"
+    al = "Auto-aprendido nesta sessão. " if auto_aprendido else ""
+    return (f"{resposta}\n\n"
+            f"[Tipo: {tipo} | Intenção: {intencao} | Confiança: {confianca:.2f} | "
+            f"Peso: {peso:.2f} | Acessos: {acessos} | Score: {score:.2f} | {al}]")
+
+# ============================================================
+# BLOCO 21 — PROCESSAMENTO PRINCIPAL
+# ============================================================
+def processar_pergunta(pergunta_do_usuario):
+    pergunta_do_usuario = pergunta_do_usuario.strip()
+
+    # ── Comandos especiais ─────────────────────────────────
+    if pergunta_do_usuario.startswith("aprenda:"):
+        partes = pergunta_do_usuario[len("aprenda:"):].split('=', 1)
+        if len(partes) == 2:
+            pq, rsp = partes[0].strip(), partes[1].strip()
+            cat = classificar_tipo_pergunta(pq)
+            int_ = detectar_intencao(normalizar_texto(pq))
+            aprender_informacao(pq, rsp, cat, int_)
+            return "Informação aprendida com sucesso!"
+        return "Formato inválido. Use: aprenda: Pergunta = Resposta"
+
+    if pergunta_do_usuario.startswith("correto:"):
+        return processar_feedback(pergunta_do_usuario[len("correto:"):].strip(), 'correto')
+
+    if pergunta_do_usuario.startswith("incorreto:"):
+        return processar_feedback(pergunta_do_usuario[len("incorreto:"):].strip(), 'incorreto')
+
+    if pergunta_do_usuario.lower() == "limpar memoria":
+        limpar_memoria_curta()
+        return "Memória de curto prazo limpa."
+
+    # ── Fluxo normal ────────────────────────────────────────
+    perg_norm = reescrever_pergunta(pergunta_do_usuario)
+    cat       = classificar_tipo_pergunta(pergunta_do_usuario)
+    intencao  = detectar_intencao(perg_norm)
+    resultado = buscar_memoria(perg_norm, cat, intencao)
+
+    if resultado and resultado['score'] >= GLOBAL_MATCH_THRESHOLD:
+        resposta = resultado['resposta_original_item']
+        item     = resultado['item']
+        score    = resultado['score']
+
+        pontuacao = avaliar_aprendizado(perg_norm, resposta, cat, intencao,
+                                        item.get('confianca', 1.0), item)
+        auto_ap   = False
+        if (pontuacao >= PONTUACAO_MIN_AUTO_APRENDER
+                and item.get('confianca', 1.0) < LIMITE_CONFIANCA_MIN_AUTO_APRENDER
+                and len(resposta.split()) >= MIN_COMPRIMENTO_RESPOSTA_AUTO_APRENDER):
+            aprender_informacao(pergunta_do_usuario, resposta, cat, intencao)
+            auto_ap = True
+
+        return explicar_resposta(
+            resposta, cat, intencao,
+            item.get('confianca', 1.0), item.get('peso', 1.0),
+            item.get('acessos', 0), score, auto_ap
+        )
+
+    return (f"Ainda não sei isso com certeza. Você pode me ensinar?\n\n"
+            f"[Nenhum match ≥ {GLOBAL_MATCH_THRESHOLD:.2f} encontrado.]")
+
+# ============================================================
+# BLOCO 22 — CLUSTERIZAÇÃO SEMÂNTICA DA MEMÓRIA
+# ============================================================
+def gerar_clusters_memoria(n_clusters=3, categoria=None):
+    print("--- Iniciando clusterização semântica ---")
+    if categoria:
+        cats = [categoria]
+    else:
+        cats = [f[:-5] for f in os.listdir(CONHECIMENTO_BASE_PATH)
+                if f.endswith('.json') and os.path.isfile(
+                    os.path.join(CONHECIMENTO_BASE_PATH, f))]
+
+    for cat in cats:
+        memoria = carregar_conhecimento(cat)
+        embeddings, ids = [], []
+        for item in memoria:
+            if item.get('embedding_pergunta'):
+                embeddings.append(np.array(item['embedding_pergunta']))
+                ids.append(item['id'])
+
+        k = min(n_clusters, len(embeddings))
+        if k <= 1:
+            print(f"[{cat}] Amostras insuficientes ({len(embeddings)}). Pulando.")
+            continue
+
+        try:
+            km = KMeans(n_clusters=k, random_state=42, n_init=10)
+            km.fit(embeddings)
+            GLOBAL_KMEANS_MODELS[cat] = {
+                'model':     km,
+                'centroids': km.cluster_centers_.tolist(),
+            }
+            print(f"[{cat}] {k} clusters gerados com {len(embeddings)} itens.")
+        except Exception as e:
+            print(f"ERRO ao clusterizar '{cat}': {e}")
+
+    print("--- Clusterização finalizada ---")
+
+# ============================================================
+# BLOCO 23 — MANUTENÇÃO: REGENERAR EMBEDDINGS
+# ============================================================
+def regenerar_embeddings_conhecimento_existente():
+    print("--- Regenerando embeddings da base de conhecimento ---")
+    if not os.path.exists(CONHECIMENTO_BASE_PATH):
+        print("Base de conhecimento vazia.")
+        return
+    for fname in os.listdir(CONHECIMENTO_BASE_PATH):
+        if not fname.endswith('.json'):
+            continue
+        topico = fname.replace('.json', '')
+        mem    = carregar_conhecimento(topico)
+        for item in mem:
+            pq  = descriptografar(item['pergunta'])
+            rsp = descriptografar(item['resposta'])
+            item['embedding_pergunta'] = gerar_embedding(pq).tolist()
+            item['embedding_resposta'] = gerar_embedding(rsp).tolist()
+        salvar_conhecimento(mem, topico)
+        if MODO_EXPLICACAO == "tecnico":
+            print(f"  '{topico}': {len(mem)} itens regenerados.")
+    print("--- Regeneração concluída. ---")
+
+# ============================================================
+# BLOCO 24 — FAXINA: MIGRAÇÃO E RECLASSIFICAÇÃO
+# ============================================================
+def realizar_faxina_na_memoria():
+    print("--- INICIANDO FAXINA SEMÂNTICA NA RAVENA ---")
+    if not os.path.exists(CONHECIMENTO_BASE_PATH):
+        print("Pasta de conhecimento não encontrada.")
+        return
+
+    arquivos = [f for f in os.listdir(CONHECIMENTO_BASE_PATH)
+                if f.endswith('.json')
+                and os.path.isfile(os.path.join(CONHECIMENTO_BASE_PATH, f))]
+    print(f"Arquivos encontrados: {arquivos}")
+    migrados = 0
+
+    for arquivo in arquivos:
+        caminho_antigo = os.path.join(CONHECIMENTO_BASE_PATH, arquivo)
+        print(f"Processando: {arquivo}...")
+        itens = carregar_conhecimento_bruto(caminho_antigo)
+
+        for item in itens:
+            perg = descriptografar(item['pergunta'])
+            nova_cat = classificar_tipo_pergunta(perg)
+            destino  = carregar_conhecimento(nova_cat)
+
+            if not any(it['id'] == item['id'] for it in destino):
+                item['categoria'] = nova_cat
+                destino.append(item)
+                salvar_conhecimento(destino, nova_cat)
+                migrados += 1
+
+        os.rename(caminho_antigo, caminho_antigo + ".backup")
+        print(f"  {arquivo} → renomeado para .backup")
+
+    print(f"--- FAXINA CONCLUÍDA: {migrados} itens migrados. ---")
+
+# ============================================================
+# BLOCO 25 — EXECUÇÃO INICIAL (descomente conforme necessário)
+# ============================================================
+# regenerar_embeddings_conhecimento_existente()
+# realizar_faxina_na_memoria()
+# gerar_clusters_memoria()
+print("RAVENA pronta.")

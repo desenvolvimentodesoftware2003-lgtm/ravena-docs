@@ -1,0 +1,5 @@
+Correção:
+Na hora de salvar:
+
+if resposta contém múltiplos conceitos:
+    dividir em chunks separados

@@ -1,0 +1,18 @@
+IMPLEMENTAÇÃO BASE
+
+def validar_candidato(pergunta, candidato, sim_score):
+    entidades_p = extrair_entidades(pergunta)
+    entidades_c = extrair_entidades(candidato)
+
+    intersecao = entidades_p.intersection(entidades_c)
+
+    # CASO 1: entidade bate → ótimo
+    if len(intersecao) > 0:
+        return "forte"
+
+    # CASO 2: não bate entidade, mas é semanticamente próximo
+    if sim_score > 0.55:
+        return "medio"
+
+    # CASO 3: totalmente diferente
+    return "fraco"

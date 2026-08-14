@@ -1,0 +1,10 @@
+Ajuste final:
+Python
+melhor_score, item, melhor_pergunta, melhor_resposta = melhores[0]
+
+# aumenta relevância automaticamente
+item["acessos"] = item.get("acessos", 0) + 1
+
+salvar_memoria(memoria_semantica)
+
+return melhor_resposta

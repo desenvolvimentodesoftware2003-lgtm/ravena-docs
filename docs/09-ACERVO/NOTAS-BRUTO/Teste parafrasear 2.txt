@@ -1,0 +1,11 @@
+MÉTRICA 2 — Score médio do melhor candidato
+Você já tem score interno. Usa isso.
+
+Adiciona log temporário:
+Dentro do buscar_memoria:
+
+print(f"SCORE_FINAL: {melhor['score']:.4f}")
+
+Mede:
+média dos scores sem cluster
+média com cluster

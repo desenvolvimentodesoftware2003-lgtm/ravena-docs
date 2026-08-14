@@ -1,0 +1,45 @@
+IMPLEMENTAÇÃO (simples e escalável)
+
+ 1. Criar função de classificação
+
+def classificar_topico(pergunta):
+    pergunta = pergunta.lower()
+
+    if any(p in pergunta for p in ["cigarro", "saúde", "doença", "câncer"]):
+        return "saude"
+    
+    if any(p in pergunta for p in ["brasil", "história", "descobriu"]):
+        return "historia"
+
+    return "geral"
+
+ 2. Ajustar caminhos
+
+def get_path_topico(topico):
+    return os.path.join(BASE_PATH, "memoria", "conhecimento", f"{topico}.json")
+
+ 3. Aprender no núcleo correto
+Dentro do aprender():
+
+topico = classificar_topico(pergunta)
+
+path = get_path_topico(topico)
+memoria = carregar_memoria(path)
+
+ 4. Buscar no núcleo correto
+Antes da busca:
+
+topico = classificar_topico(pergunta_original)
+
+path = get_path_topico(topico)
+memoria_conhecimento = carregar_memoria(path)
+
+Exemplo real
+Exemplo real
+Pergunta:
+o que é cigarro Vai só em: saude.json
+
+Não mistura com história
+Pergunta:quem descobriu o brasil Vai só em:historia.json
+
+Regra importante: se não encontrar busca no "geral"

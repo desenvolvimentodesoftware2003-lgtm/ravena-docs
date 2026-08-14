@@ -1,0 +1,4 @@
+RESETAR_BASE = False
+
+if RESETAR_BASE:
+    limpar_memoria()

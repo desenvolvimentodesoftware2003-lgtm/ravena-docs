@@ -1,0 +1,5 @@
+FUNÇÃO DE RESUMO (simples e eficiente)
+
+def resumir(texto, max_palavras=12):
+    palavras = texto.split()
+    return " ".join(palavras[:max_palavras]) + "..."

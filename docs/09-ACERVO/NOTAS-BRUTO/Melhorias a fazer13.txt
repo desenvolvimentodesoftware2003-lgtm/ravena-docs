@@ -1,0 +1,141 @@
+categorias = {
+
+"saude": """
+Área focada na manutenção, diagnóstico e tratamento da saúde de seres humanos e animais.
+Inclui medicina, doenças, sintomas, fisiologia, intervenções clínicas, hospitalares e prevenção.
+Envolve práticas terapêuticas e bem-estar baseadas em evidências.
+
+Não inclui explicações científicas gerais sem aplicação clínica direta.
+""",
+
+"ciencia": """
+Campo do conhecimento dedicado à explicação de fenômenos naturais por meio do método científico.
+Abrange física, química e biologia em nível teórico e experimental, incluindo leis naturais,
+modelos científicos e validação empírica.
+
+Não inclui aplicações médicas, diagnósticos clínicos ou desenvolvimento tecnológico.
+""",
+
+"matematica": """
+Área abstrata focada em números, estruturas, padrões e relações lógicas.
+Inclui álgebra, geometria, cálculo, estatística e teoria dos números,
+com uso de equações, fórmulas e raciocínio lógico formal.
+
+Não inclui aplicações físicas diretas nem contextos clínicos.
+""",
+
+"tecnologia": """
+Área voltada para o desenvolvimento e aplicação prática de sistemas, softwares e hardwares.
+Inclui programação, inteligência artificial, redes de computadores, engenharia de sistemas
+e inovação digital.
+
+Não inclui explicações científicas puras sem aplicação prática.
+""",
+
+"historia": """
+Estudo de acontecimentos passados relacionados à humanidade.
+Inclui eventos históricos, guerras, civilizações, culturas antigas e evolução das sociedades.
+
+Não inclui análise geográfica nem discussões políticas atuais.
+""",
+
+"geografia": """
+Estudo do espaço geográfico, incluindo relevo, clima, territórios e distribuição populacional.
+Abrange cartografia, geopolítica e características físicas da Terra.
+
+Não inclui eventos históricos nem análises políticas profundas.
+""",
+
+"filosofia": """
+Investigação conceitual sobre existência, conhecimento, ética e realidade.
+Inclui lógica, epistemologia, metafísica e pensamento crítico.
+
+Não inclui religião baseada em fé nem ciência experimental.
+""",
+
+"religiao": """
+Sistema de crenças, práticas espirituais e doutrinas relacionadas ao sagrado.
+Inclui tradições religiosas, rituais, fé e textos sagrados.
+
+Não inclui análise filosófica puramente lógica nem ciência empírica.
+""",
+
+"politica": """
+Estudo e prática da organização do poder e governança.
+Inclui governos, eleições, ideologias, políticas públicas e relações internacionais.
+
+Não inclui economia isolada nem eventos históricos antigos sem contexto político atual.
+""",
+
+"economia": """
+Área que estuda produção, distribuição e consumo de bens e serviços.
+Inclui mercado financeiro, inflação, investimentos, macro e microeconomia.
+
+Não inclui política institucional nem tecnologia diretamente.
+""",
+
+"arte": """
+Expressão criativa e cultural humana.
+Inclui pintura, escultura, música, teatro, cinema e estética visual.
+
+Não inclui entretenimento comercial sem valor artístico predominante.
+""",
+
+"entretenimento": """
+Conteúdo voltado ao lazer e diversão.
+Inclui filmes, séries, jogos, celebridades e cultura pop.
+
+Não inclui análise artística profunda nem produção cultural acadêmica.
+""",
+
+"esporte": """
+Atividades físicas competitivas ou recreativas.
+Inclui regras, modalidades esportivas, desempenho físico e treinamentos.
+
+Não inclui saúde clínica nem entretenimento geral.
+""",
+
+"linguagem": """
+Uso prático da comunicação verbal e escrita.
+Inclui gramática, vocabulário, interpretação de texto e uso cotidiano da língua.
+
+Não inclui estudo científico profundo da linguagem.
+""",
+
+"linguistica": """
+Estudo científico da linguagem.
+Inclui fonética, sintaxe, semântica, estrutura das línguas e análise linguística formal.
+
+Não inclui uso cotidiano da língua nem literatura.
+""",
+
+"culinaria": """
+Preparação de alimentos e técnicas de cozinha.
+Inclui receitas, ingredientes, métodos de preparo e cultura gastronômica.
+
+Não inclui nutrição clínica ou saúde alimentar.
+""",
+
+"espaco": """
+Estudo do universo e fenômenos astronômicos.
+Inclui planetas, estrelas, galáxias, cosmologia e exploração espacial.
+
+Não inclui física geral fora do contexto astronômico.
+""",
+
+"logistica": """
+Gestão de transporte, armazenamento e distribuição de recursos.
+Inclui cadeias de suprimento, operações, planejamento e fluxo de mercadorias.
+
+Não inclui economia teórica nem tecnologia isolada.
+"""
+
+"linguagem": """
+Uso prático da língua para comunicação no dia a dia.
+Inclui escrita, fala, gramática normativa, vocabulário, interpretação de textos
+e produção de conteúdo em contextos reais de comunicação.
+
+Focado na aplicação da língua, não na análise científica de sua estrutura.
+"""
+
+}

@@ -1,0 +1,9 @@
+# Tipos de intenção (primeira versão) Simples e poderoso:
+
+TIPOS_INTENCAO = {
+    "definicao": ["o que é", "defina", "explique"],
+    "causa": ["por que", "motivo", "causa"],
+    "efeito": ["o que causa", "efeitos", "resultado"],
+    "historico": ["quem", "quando", "história"],
+    "comparacao": ["diferença", "comparar"],
+}

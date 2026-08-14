@@ -1,0 +1,22 @@
+# ============================================
+# RAVENA
+# BLOCO 2 — CRIAR ESTRUTURA DE PASTAS
+# ============================================
+
+import os
+
+# >>> PERSONALIZAR AQUI SE QUISER MUDAR O CAMINHO <<<
+pasta_base = "/content/drive/MyDrive/RAVENA"
+
+pastas = [
+    "seguranca",
+    "logs",
+    "memoria",
+    "modelos"
+]
+
+for pasta in pastas:
+    caminho = os.path.join(pasta_base, pasta)
+    os.makedirs(caminho, exist_ok=True)
+
+print("Estrutura da Artificial Inteligente RAVENA criada com sucesso.")

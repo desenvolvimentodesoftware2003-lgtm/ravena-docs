@@ -1,0 +1,153 @@
+import os
+import hashlib
+import shutil
+import ast
+from datetime import datetime
+
+# 🔧 CONFIG
+PASTA_PROJETO = "/content/drive/MyDrive/RAVENA"
+
+BASE_QUARENTENA = os.path.join(PASTA_PROJETO, "__quarentena__")
+PASTA_DUPLICADOS = os.path.join(BASE_QUARENTENA, "duplicados")
+PASTA_SUSPEITOS = os.path.join(BASE_QUARENTENA, "suspeitos", "arquivo_morto")
+
+RELATORIO = os.path.join(PASTA_PROJETO, f"ravena_cleaner_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+
+# Criar pastas
+os.makedirs(PASTA_DUPLICADOS, exist_ok=True)
+os.makedirs(PASTA_SUSPEITOS, exist_ok=True)
+
+# =========================
+# 🔁 DETECÇÃO DE DUPLICADOS
+# =========================
+
+def hash_arquivo(caminho):
+    hasher = hashlib.md5()
+    with open(caminho, 'rb') as f:
+        while True:
+            chunk = f.read(4096)
+            if not chunk:
+                break
+            hasher.update(chunk)
+    return hasher.hexdigest()
+
+hashes = {}
+duplicados_movidos = []
+
+for root, dirs, files in os.walk(PASTA_PROJETO):
+    if "__quarentena__" in root:
+        continue
+
+    for file in files:
+        caminho = os.path.join(root, file)
+
+        try:
+            file_hash = hash_arquivo(caminho)
+
+            if file_hash in hashes:
+                destino = os.path.join(PASTA_DUPLICADOS, file)
+
+                base, ext = os.path.splitext(file)
+                contador = 1
+                while os.path.exists(destino):
+                    destino = os.path.join(PASTA_DUPLICADOS, f"{base}_{contador}{ext}")
+                    contador += 1
+
+                shutil.move(caminho, destino)
+                duplicados_movidos.append((caminho, destino))
+
+            else:
+                hashes[file_hash] = caminho
+
+        except:
+            pass
+
+# =========================
+# 🧠 DEAD CODE
+# =========================
+
+funcoes_definidas = {}
+funcoes_usadas = set()
+
+classes_definidas = {}
+classes_usadas = set()
+
+for root, dirs, files in os.walk(PASTA_PROJETO):
+    if "__quarentena__" in root:
+        continue
+
+    for file in files:
+        if file.endswith(".py"):
+            caminho = os.path.join(root, file)
+
+            try:
+                with open(caminho, "r", encoding="utf-8") as f:
+                    tree = ast.parse(f.read())
+
+                for node in ast.walk(tree):
+                    if isinstance(node, ast.FunctionDef):
+                        funcoes_definidas[node.name] = caminho
+
+                    elif isinstance(node, ast.Call):
+                        if isinstance(node.func, ast.Name):
+                            funcoes_usadas.add(node.func.id)
+
+                    elif isinstance(node, ast.ClassDef):
+                        classes_definidas[node.name] = caminho
+
+                    elif isinstance(node, ast.Call):
+                        if isinstance(node.func, ast.Name):
+                            classes_usadas.add(node.func.id)
+
+            except:
+                pass
+
+funcoes_mortas = {n: c for n, c in funcoes_definidas.items() if n not in funcoes_usadas}
+classes_mortas = {n: c for n, c in classes_definidas.items() if n not in classes_usadas}
+
+arquivos_suspeitos = set()
+
+for caminho in funcoes_mortas.values():
+    arquivos_suspeitos.add(caminho)
+
+for caminho in classes_mortas.values():
+    arquivos_suspeitos.add(caminho)
+
+suspeitos_movidos = []
+
+for caminho in arquivos_suspeitos:
+    if os.path.exists(caminho):
+        nome = os.path.basename(caminho)
+        destino = os.path.join(PASTA_SUSPEITOS, nome)
+
+        base, ext = os.path.splitext(nome)
+        contador = 1
+        while os.path.exists(destino):
+            destino = os.path.join(PASTA_SUSPEITOS, f"{base}_{contador}{ext}")
+            contador += 1
+
+        try:
+            shutil.move(caminho, destino)
+            suspeitos_movidos.append((caminho, destino))
+        except:
+            pass
+
+# =========================
+# 📄 RELATÓRIO FINAL
+# =========================
+
+with open(RELATORIO, "w", encoding="utf-8") as f:
+    f.write("RAVENA CLEANER - RELATÓRIO\n\n")
+
+    f.write("DUPLICADOS MOVIDOS:\n")
+    for o, d in duplicados_movidos:
+        f.write(f"{o} -> {d}\n")
+
+    f.write("\nARQUIVOS SUSPEITOS (DEAD CODE):\n")
+    for o, d in suspeitos_movidos:
+        f.write(f"{o} -> {d}\n")
+
+print("✅ RAVENA CLEANER FINALIZADO")
+print(f"📦 Duplicados: {len(duplicados_movidos)}")
+print(f"⚠️ Suspeitos (dead code): {len(suspeitos_movidos)}")
+print(f"📄 Relatório: {RELATORIO}")

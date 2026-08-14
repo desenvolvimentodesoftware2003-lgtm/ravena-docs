@@ -1,0 +1,8 @@
+if score >= GLOBAL_MATCH_THRESHOLD:
+    return resposta
+
+elif score >= 0.50:
+    return resposta_com_baixa_confianca  # << NOVO BLOCO
+
+else:
+    return "não sei"

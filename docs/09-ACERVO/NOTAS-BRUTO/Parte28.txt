@@ -1,0 +1,10 @@
+def ajustar_threshold():
+    n = len(memoria_semantica)
+    if n < 10:
+        return 0.7
+    elif n < 50:
+        return 0.65
+    else:
+        return 0.6
+
+Threshold diminui conforme a memória cresce → RAVENA fica mais flexível.

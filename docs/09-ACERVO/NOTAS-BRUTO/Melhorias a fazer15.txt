@@ -1,0 +1,10 @@
+embedding = gerar_embedding(pergunta)
+
+cluster_id = atribuir_cluster_id(embedding, clusters)
+
+salvar_memoria({
+    "pergunta": pergunta,
+    "resposta": resposta,
+    "embedding": embedding,
+    "cluster_id": cluster_id
+})

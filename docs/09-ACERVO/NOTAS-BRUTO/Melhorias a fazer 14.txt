@@ -1,0 +1,15 @@
+def atribuir_cluster_id(novo_embedding, clusters_existentes):
+    melhor_cluster = None
+    melhor_score = 0
+
+    for cluster_id, centroid in clusters_existentes.items():
+        score = cosine_similarity(novo_embedding, centroid)
+
+        if score > melhor_score:
+            melhor_score = score
+            melhor_cluster = cluster_id
+
+    if melhor_score > 0.65:
+        return melhor_cluster
+    else:
+        return criar_novo_cluster(novo_embedding)

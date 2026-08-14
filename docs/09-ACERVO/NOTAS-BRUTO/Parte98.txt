@@ -1,0 +1,4 @@
+Dentro do buscar_memoria, quando detectar erro:
+
+if status == "possivel_erro":
+    melhor_item_ref["confianca"] -= 0.1

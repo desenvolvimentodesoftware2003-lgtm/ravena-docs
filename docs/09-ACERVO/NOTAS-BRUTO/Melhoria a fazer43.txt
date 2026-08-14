@@ -1,0 +1,20 @@
+Hard Cut (OBRIGATÓRIO)
+Antes de qualquer bônus:
+
+if sem_sim < 0.5:
+    continue
+ Isso sozinho já elimina:
+
+Validação SEMÂNTICA DA RESPOSTA (o que faltava)
+Depois de escolher o melhor candidato:
+
+sem_sim_resposta = calcular_similaridade(pergunta, melhor_resposta)
+
+if sem_sim_resposta < 0.65:
+    return "Ainda não sei isso com certeza. Você pode me ensinar?"
+
+Anti-contaminação na memória
+Antes de salvar:
+
+if sem_sim_resposta < 0.7:
+    NÃO SALVAR

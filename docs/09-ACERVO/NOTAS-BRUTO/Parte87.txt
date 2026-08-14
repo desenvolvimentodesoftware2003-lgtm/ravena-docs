@@ -1,0 +1,22 @@
+# Criar função de decay
+
+def aplicar_decay(memoria):
+    """
+    Reduz gradualmente o peso de memórias pouco utilizadas
+    """
+    for item in memoria:
+        acessos = item.get("acessos", 0)
+        peso = item.get("peso", 1)
+
+        # pouca relevância → perde força
+        if acessos == 0:
+            peso -= 0.02
+        elif acessos < 3:
+            peso -= 0.01
+
+        # limite mínimo
+        peso = max(0.5, peso)
+
+        item["peso"] = peso
+
+    return memoria

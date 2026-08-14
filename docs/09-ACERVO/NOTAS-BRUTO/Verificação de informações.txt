@@ -1,0 +1,22 @@
+Use IA, mas com filtro:
+
+Python
+sim = cosine_similarity(
+    [embedding_original],
+    [embedding_variacao]
+)[0][0]
+
+if sim < 0.70:
+    descartar
+
+ 2. Evitar duplicação semântica
+Antes de salvar:
+
+Python
+if sim_com_outros > 0.95:
+    ignorar
+
+ 3. Limite por conceito
+Python
+MAX_VARIACOES = 12
+👉 evita explosão

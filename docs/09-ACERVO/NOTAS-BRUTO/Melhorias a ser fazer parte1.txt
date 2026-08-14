@@ -1,0 +1,44 @@
+# ============================================================
+# BLOCO 12 — GERENCIAMENTO DE CONHECIMENTO (ORGANIZAÇÃO POR CATEGORIA)
+# ============================================================
+def get_path_topico(topico):
+    """
+    Cria uma estrutura de pastas: /RAVENA/memoria/conhecimento/saude/saude.json
+    Isso isola completamente os domínios e evita buscas cruzadas erradas.
+    """
+    # Normalizamos o nome da pasta para evitar erros de caracteres
+    topico_limpo = remover_acentos(topico.lower().strip())
+    
+    # Define o caminho da pasta da categoria específica
+    pasta_categoria = os.path.join(CONHECIMENTO_BASE_PATH, topico_limpo)
+    
+    # Cria a pasta se ela não existir (garante a estrutura física)
+    os.makedirs(pasta_categoria, exist_ok=True)
+    
+    # Retorna o caminho do arquivo JSON dentro da pasta da categoria
+    return os.path.join(pasta_categoria, f"{topico_limpo}.json")
+
+def carregar_conhecimento(topico):
+    path = get_path_topico(topico)
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+            # Garantimos que retornamos uma lista, mesmo que o arquivo esteja corrompido
+            return dados if isinstance(dados, list) else []
+    except (json.JSONDecodeError, Exception) as e:
+        print(f"Erro ao carregar {topico}: {e}")
+        return []
+
+def salvar_conhecimento(memoria, topico):
+    path = get_path_topico(topico)
+    
+    # Aplica o esquecimento inteligente antes de salvar (Bloco 14)
+    memoria_otimizada = esquecer_memorias(memoria)
+    
+    try:
+        with open(path, 'w', encoding='utf-8') as f:
+            json.dump(memoria_otimizada, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"Erro ao salvar conhecimento em {topico}: {e}")

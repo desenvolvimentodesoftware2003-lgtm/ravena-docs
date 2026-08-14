@@ -1,0 +1,11 @@
+for item in memoria_semantica:
+    pergunta_salva = descriptografar(item["pergunta"])
+    resposta_salva = descriptografar(item["resposta"])
+
+    emb_salvo = item["embedding"]
+
+    similaridade = cosine_similarity(
+        [pergunta_emb], [emb_salvo]
+    )[0][0]
+
+    melhores.append((similaridade, resposta_salva))

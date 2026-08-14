@@ -1,0 +1,4 @@
+resposta, score = buscar_memoria(pergunta)
+
+if score < THRESHOLD:
+    return resposta_padrao

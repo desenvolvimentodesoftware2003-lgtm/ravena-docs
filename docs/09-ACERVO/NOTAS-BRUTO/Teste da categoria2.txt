@@ -1,0 +1,7 @@
+for cat in categorias:
+    print(cat["nome"])
+    print(sim(pergunta, cat["descricao"]))
+
+for cat in categorias:
+    scores = [sim(pergunta, ex) for ex in cat["exemplos"]]
+    print(max(scores))

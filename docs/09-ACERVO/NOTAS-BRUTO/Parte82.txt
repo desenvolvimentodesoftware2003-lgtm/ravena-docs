@@ -1,0 +1,28 @@
+Substitui sua função reescrever_pergunta por essa:
+def reescrever_pergunta(pergunta):
+    pergunta = pergunta.lower().strip()
+
+    intencao = detectar_intencao(pergunta)
+
+    # Evita duplicação de estrutura
+    if intencao == "definicao":
+        if pergunta.startswith("o que é"):
+            return pergunta
+        return f"o que é {pergunta}"
+
+    elif intencao == "causa":
+        if pergunta.startswith("por que"):
+            return pergunta
+        return f"por que {pergunta}"
+
+    elif intencao == "efeito":
+        if "o que causa" in pergunta:
+            return pergunta
+        return f"o que causa {pergunta}"
+
+    elif intencao == "historico":
+        if pergunta.startswith("quem") or pergunta.startswith("quando"):
+            return pergunta
+        return f"história de {pergunta}"
+
+    return pergunta

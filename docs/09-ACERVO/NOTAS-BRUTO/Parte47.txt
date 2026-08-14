@@ -1,0 +1,18 @@
+from cryptography.fernet import Fernet
+
+CHAVE_PATH = os.path.join(BASE_PATH, "seguranca", "chave.key")
+
+def carregar_ou_criar_chave():
+    os.makedirs(os.path.dirname(CHAVE_PATH), exist_ok=True)
+
+    if not os.path.exists(CHAVE_PATH):
+        chave = Fernet.generate_key()
+        with open(CHAVE_PATH, "wb") as f:
+            f.write(chave)
+    else:
+        with open(CHAVE_PATH, "rb") as f:
+            chave = f.read()
+
+    return Fernet(chave)
+
+fernet = carregar_ou_criar_chave()

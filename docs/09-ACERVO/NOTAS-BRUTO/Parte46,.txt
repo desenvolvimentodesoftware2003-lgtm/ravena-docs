@@ -1,0 +1,12 @@
+Preciso estruturar um script Python chamado "organizacao.py" para rodar no Google Colab sem erros ao clicar em "Executar tudo".
+
+O código deve:
+1. Montar o Google Drive automaticamente
+2. Definir os diretórios dentro de /content/drive/MyDrive/RAVENA/
+3. Criar e validar as pastas "projeto_original" e "projeto_organizado"
+4. Verificar se existem arquivos .py dentro de "projeto_original"
+5. Só executar o processamento se houver arquivos válidos
+6. Organizar as funções em arquivos separados dentro de "projeto_organizado"
+7. Evitar sobrescrita de arquivos e tratar erros
+
+Quero o código completo, organizado

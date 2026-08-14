@@ -1,0 +1,8 @@
+ajustar regra (não memória)
+if resposta_errada:
+    log_erro({
+        "pergunta": pergunta,
+        "top_1": candidatos[0],
+        "top_2": candidatos[1],
+        "intencao_detectada": intencao
+    })

@@ -1,0 +1,10 @@
+Implementa esse código na celula para não quebra o codigo. 
+
+Integrar na busca
+Dentro da sua buscar_memoria, onde já tem isso:
+
+item["acessos"] = item.get("acessos", 0) + 1
+
+ adiciona logo abaixo:
+
+ajustar_peso(item, melhor_global["score_final"])

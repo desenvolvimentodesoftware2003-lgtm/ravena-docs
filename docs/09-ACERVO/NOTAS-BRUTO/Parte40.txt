@@ -1,0 +1,5 @@
+def criptografar_dado(dado):
+    return fernet.encrypt(dado.encode()).decode()
+
+def descriptografar_dado(dado):
+    return fernet.decrypt(dado.encode()).decode()

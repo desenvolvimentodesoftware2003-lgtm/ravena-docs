@@ -1,0 +1,26 @@
+# ============================================
+# RAVENA
+# BLOCO 3 — IDENTIDADE DO SISTEMA
+# ============================================
+
+import json
+
+# >>> PERSONALIZAR AQUI <<<
+nome_ia = "Artificial Inteligente RAVENA"
+
+# >>> PERSONALIZAR AQUI <<<
+criador = "Alexsander Soares Leal de Oliveira"
+
+# >>> PERSONALIZAR AQUI SE QUISER ALTERAR <<<
+versao = "0.1"
+
+identidade = {
+    "nome": nome_ia,
+    "criador": criador,
+    "versao": versao
+}
+
+print("Sistema iniciado.")
+print("Nome:", nome_ia)
+print("Criador:", criador)
+print("Versão:", versao)

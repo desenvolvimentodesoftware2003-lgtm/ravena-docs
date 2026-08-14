@@ -1,0 +1,19 @@
+# Regra híbrida simples
+No processar_pergunta, adiciona:
+Python
+def deve_aprender(pergunta, resposta, score):
+    
+    # aprendizado automático baseado em confiança
+    if score > 0.85:
+        return True
+    
+    # respostas longas (explicativas)
+    if len(resposta.split()) > 10:
+        return True
+    
+    return False
+
+E depois:
+Python
+if resposta_final and deve_aprender(pergunta_original, resposta_final, score_sem_contexto):
+    aprender(pergunta_original, resposta_final)

@@ -1,0 +1,58 @@
+Transforma disso print("📡 Aguardando comandos...") para isso.
+ 
+def iniciar_ravena():
+    print("\n🧠 Iniciando RAVENA...")
+
+    while True:
+        comando = input("RAVENA > ")
+
+        if comando == "status":
+            print("📊 Sistema operacional")
+
+        elif comando == "limpeza":
+            executar_limpeza()
+
+        elif comando == "sair":
+            print("🛑 Encerrando RAVENA...")
+            break
+
+        else:
+            print("❓ Comando desconhecido")
+def iniciar_ravena():
+    print("\n🧠 Iniciando RAVENA (modo autônomo)...")
+
+    estado = {
+        "arquivos": 0,
+        "ultima_limpeza": False
+    }
+
+    def analisar_ambiente():
+        total = 0
+        for root, dirs, files in os.walk(BASE_PATH):
+            total += len(files)
+        estado["arquivos"] = total
+
+    def tomar_decisao():
+        if estado["arquivos"] > 100:
+            return "limpeza"
+        else:
+            return "monitorar"
+
+    def agir(acao):
+        if acao == "limpeza":
+            print("🧹 Decisão: executar limpeza")
+            executar_limpeza()
+            estado["ultima_limpeza"] = True
+
+        elif acao == "monitorar":
+            print("👀 Sistema estável, apenas monitorando")
+
+    # 🔁 LOOP AUTÔNOMO
+    for ciclo in range(3):  # pode aumentar depois
+        print(f"\n🔄 Ciclo {ciclo+1}")
+
+        analisar_ambiente()
+        acao = tomar_decisao()
+        agir(acao)
+
+    print("\n✅ Ciclo autônomo finalizado")

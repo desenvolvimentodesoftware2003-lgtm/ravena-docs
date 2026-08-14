@@ -1,0 +1,5 @@
+if modo == "aprendizado":
+    atribuir_cluster()
+
+elif modo == "consulta":
+    apenas_buscar()

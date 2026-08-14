@@ -1,0 +1,11 @@
+E no classificador (ESSENCIAL)
+Você PRECISA usar exemplos:
+
+score_desc = sim(pergunta, descricao)
+
+score_ex = max([
+    sim(pergunta, ex)
+    for ex in exemplos
+]) if exemplos else 0
+
+score_final = 0.6 * score_desc + 0.4 * score_ex

@@ -1,0 +1,63 @@
+def buscar_resposta(pergunta, memoria):
+    
+    # =========================
+    # 1. PRÉ-PROCESSAMENTO
+    # =========================
+    pergunta_clean = normalizar(pergunta)
+
+    # =========================
+    # 2. INTENÇÃO
+    # =========================
+    intencao = detectar_intencao(pergunta_clean)
+
+    # =========================
+    # 3. CATEGORIA (com confiança)
+    # =========================
+    cat_pred, conf_cat = detectar_categoria(pergunta_clean)
+
+    if conf_cat < 0.5:
+        modo_busca = "global"
+    else:
+        modo_busca = "filtrado"
+
+    # =========================
+    # 4. SELEÇÃO INICIAL
+    # =========================
+    candidatos = []
+
+    for item in memoria:
+
+        if modo_busca == "filtrado" and item["categoria"] != cat_pred:
+            continue
+
+        score_sem = similaridade_semantica(pergunta_clean, item["texto"])
+        score_fuzzy = similaridade_fuzzy(pergunta_clean, item["texto"])
+
+        score_base = (0.8 * score_sem) + (0.2 * score_fuzzy)
+
+        candidatos.append({
+            "item": item,
+            "score": score_base,
+            "score_sem": score_sem,
+            "score_fuzzy": score_fuzzy
+        })
+
+    # =========================
+    # 5. CLUSTER FILTER (se existir)
+    # =========================
+    candidatos = filtrar_por_cluster(pergunta_clean, candidatos)
+
+    # =========================
+    # 6. RERANK INTELIGENTE
+    # =========================
+    candidatos = rerank_avancado(candidatos, intencao, pergunta_clean)
+
+    # =========================
+    # 7. ZONA CINZENTA (fallback)
+    # =========================
+    melhor = candidatos[0]
+
+    if melhor["score"] < 0.75:
+        return fallback_resposta(pergunta)
+
+    return melhor["item"]["resposta"]

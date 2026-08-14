@@ -1,0 +1,42 @@
+def gerar_clusters_memoria(n_clusters=5):
+    print("\n--- Iniciando clusterização semântica ---")
+
+    if not os.path.exists(CONHECIMENTO_BASE_PATH):
+        print("Base de conhecimento não encontrada.")
+        return
+
+    for categoria in DESCRICOES_CATEGORIA:
+        memoria = carregar_conhecimento(categoria)
+
+        if not memoria or len(memoria) < n_clusters:
+            print(f"[{categoria}] Poucos dados para clusterizar. Pulando.")
+            continue
+
+        # Coletar embeddings
+        embeddings = []
+        for item in memoria:
+            emb = item.get("embedding_pergunta")
+            if emb:
+                embeddings.append(emb)
+            else:
+                embeddings.append(np.zeros(768))  # fallback seguro
+
+        embeddings = np.array(embeddings)
+
+        try:
+            # Criar clusters
+            kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+            labels = kmeans.fit_predict(embeddings)
+
+            # Atribuir cluster_id
+            for i, item in enumerate(memoria):
+                item["cluster_id"] = int(labels[i])
+
+            salvar_conhecimento(memoria, categoria)
+
+            print(f"[{categoria}] Clusterização concluída → {n_clusters} clusters.")
+
+        except Exception as e:
+            print(f"[{categoria}] Erro na clusterização: {e}")
+
+    print("--- Clusterização finalizada ---\n")

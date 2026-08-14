@@ -1,0 +1,16 @@
+Estrutura de destino no Drive:
+ravena-modula/
+├── src/
+│   ├── cognitive_ingestion.py      ← Prioridade 1
+│   ├── auditor.py                  ← Prioridade 2
+│   ├── engine_patch_seguranca_ia.py← Prioridade 3
+│   ├── social_connector.py         ← Prioridade 4
+│   └── omega.py                    ← Prioridade 5
+└── tests/
+    ├── conftest.py
+    ├── test_cognitive_ingestion.py
+    ├── test_auditor.py
+    ├── test_engine_patch.py
+    ├── test_social_connector.py
+    └── test_omega.py
+Baixa os arquivos aqui em cima e arrasta para o Drive — é o caminho mais direto!

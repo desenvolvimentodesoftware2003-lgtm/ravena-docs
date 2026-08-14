@@ -1,0 +1,60 @@
+1. FILTRO DE INTENÇÃO (OBRIGATÓRIO)
+Antes do score final:
+
+def mesma_intencao(pergunta1, pergunta2):
+    palavras_q1 = set(pergunta1.lower().split())
+    palavras_q2 = set(pergunta2.lower().split())
+
+    palavras_chave_intencao = {
+        "o que": "definicao",
+        "como": "procedimento",
+        "por que": "causa",
+        "qual": "identificacao",
+        "diferença": "comparacao",
+        "perigos": "risco"
+    }
+
+    def extrair_intencao(p):
+        for chave, tipo in palavras_chave_intencao.items():
+            if chave in p:
+                return tipo
+        return "geral"
+
+    return extrair_intencao(pergunta1) == extrair_intencao(pergunta2)
+ Aplicação no rerank:
+
+if not mesma_intencao(pergunta_usuario, candidato["pergunta"]):
+    score *= 0.6  # penalidade forte
+ 2. BOOST DE MATCH EXATO
+Isso resolve 80% dos seus erros direto:
+
+if pergunta_usuario.strip().lower() == candidato["pergunta"].strip().lower():
+    score += 0.5
+
+ 3. BLOQUEIO DE APRENDIZADO COM BAIXA CONFIANÇA
+Você está aprendendo com:
+Plain text
+Confiança: 0.28, 0.34...
+ Isso é perigoso.
+Solução:
+
+if confianca_categoria < 0.5:
+    salvar_como = "geral"
+else:
+    salvar_como = categoria
+Ou melhor:
+Python
+if confianca_categoria < 0.4:
+    BLOQUEAR aprendizado
+
+4. PENALIDADE POR OVERLAP FRACO
+Evita coisas tipo:
+fotossíntese vs perigos
+
+def overlap(p1, p2):
+    s1 = set(p1.lower().split())
+    s2 = set(p2.lower().split())
+    return len(s1 & s2) / max(len(s1), 1)
+
+if overlap(pergunta, candidato["pergunta"]) < 0.3:
+    score *= 0.7

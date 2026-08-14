@@ -1,0 +1,47 @@
+Correção
+
+Use a pergunta ORIGINAL para comando:
+
+if pergunta_original.lower().startswith("aprenda"):
+🔥 Estrutura correta (ESSENCIAL)
+Python
+pergunta_original = msg
+pergunta = normalizar_texto(msg)
+
+#  COMANDO USA ORIGINAL
+if pergunta_original.lower().startswith("aprenda"):
+    try:
+        conteudo = pergunta_original.lower().replace("aprenda", "").replace(":", "").strip()
+        p, r = conteudo.split("=")
+        return aprender(p.strip(), r.strip())
+    except:
+        return "Formato inválido. Use: aprenda: pergunta = resposta"
+
+Fluxo ideal
+
+pergunta_original = msg
+
+# comandos primeiro
+if pergunta_original.lower().startswith("aprenda"):
+    ...
+
+# depois normaliza
+pergunta = normalizar_texto(pergunta_original)
+
+# depois resto do sistema
+
+Outro possível erro (confere isso também)
+Se tiver isso ANTES do comando:
+Python
+if "oi" in pergunta:
+    return ...
+
+ pode interceptar o fluxo
+
+ Ordem correta do fluxo
+
+1. receber pergunta_original
+2. checar comando (aprenda)
+3. depois normalizar
+4. depois buscar memória
+5. depois fallback

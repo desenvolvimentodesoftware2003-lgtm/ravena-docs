@@ -1,0 +1,11 @@
+# verificar comandos internos
+
+comando = comando_interno(pergunta)
+
+if comando:
+    return comandodef responder(pergunta):
+
+    comando = comando_interno(pergunta)
+
+    if comando:
+        return comando

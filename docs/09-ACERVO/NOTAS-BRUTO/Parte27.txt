@@ -1,0 +1,4 @@
+def aprender_continuo(pergunta, resposta):
+    variacoes = gerar_variacoes(pergunta)
+    for var in variacoes:
+        aprender_semantico(var, resposta)

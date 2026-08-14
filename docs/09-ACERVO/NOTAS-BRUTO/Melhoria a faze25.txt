@@ -1,0 +1,7 @@
+"linguistica": """
+Estudo científico da estrutura e funcionamento das línguas.
+Inclui análise de fonética, fonologia, sintaxe, semântica e pragmática,
+buscando entender padrões, regras e evolução da linguagem humana.
+
+Não trata do uso cotidiano da língua, mas de sua análise teórica e estrutural.
+"""

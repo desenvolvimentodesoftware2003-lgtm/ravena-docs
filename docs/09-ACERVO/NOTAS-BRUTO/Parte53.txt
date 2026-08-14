@@ -1,0 +1,18 @@
+ALTERAR estrutura da memória
+No aprender, muda isso:
+
+memoria_semantica.append({
+    "pergunta": criptografar(pergunta_norm),
+    "resposta": criptografar(resposta),
+    "embedding": emb.tolist()
+})
+
+✅ PARA ISSO:
+
+memoria_semantica.append({
+    "pergunta": criptografar(pergunta_norm),
+    "resposta": criptografar(resposta),
+    "embedding": emb.tolist(),
+    "peso": 1,              # força da memória
+    "acessos": 0            # quantas vezes foi usada
+})

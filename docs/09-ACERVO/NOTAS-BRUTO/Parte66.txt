@@ -1,0 +1,30 @@
+FILTRO DUPLO (ESSENCIAL)
+
+ Similaridade semântica (já tem)
+
+score_semantico
+
+Similaridade textual (fuzzy) 
+ você já começou isso 
+
+ Aqui entra:
+
+fuzz.ratio()
+
+COMBINAÇÃO (isso resolve seu problema)
+
+score_final = (score_semantico * 0.7) + (score_fuzzy * 0.3)
+
+AJUSTE IDEAL AGORA
+
+Faça isso:
+
+Mantém threshold em:
+
+THRESHOLD = 0.65
+
+Adiciona score combinado
+
+Só aceita resposta se:
+
+score_final >= 0.65

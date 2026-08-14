@@ -1,0 +1,8 @@
+# usa, não define
+embedding_categoria = gerar_embedding(categorias, exemplos)
+
+# core.py
+from semantica import categorias, exemplos
+
+def classificar(texto):
+    ...

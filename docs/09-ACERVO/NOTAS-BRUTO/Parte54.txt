@@ -1,0 +1,14 @@
+ALTERAR 
+Dentro de buscar_memoria:
+❌ Antes:
+Python
+melhores.append((similaridade, pergunta_salva, resposta_salva))
+
+✅ Agora:
+
+peso = item.get("peso", 1)
+acessos = item.get("acessos", 0)
+
+score_final = similaridade + (peso * 0.05) + (acessos * 0.01)
+
+melhores.append((score_final, item, pergunta_salva, resposta_salva))

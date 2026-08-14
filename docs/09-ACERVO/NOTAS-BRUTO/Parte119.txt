@@ -1,0 +1,16 @@
+CORREÇÃO 2 — Boost contextual (ESSENCIAL)
+
+def aplicar_boost_contextual(pergunta, memoria_item, score):
+    palavras_chave = [
+        "planta", "plantas", "luz", "solar", "oxigenio", 
+        "glicose", "energia", "alimento", "fotossintese"
+    ]
+
+    bonus = 0
+
+    for palavra in palavras_chave:
+        if palavra in pergunta["texto"]:
+            if palavra in memoria_item["resposta"]:
+                bonus += 0.05
+
+    return score + bonus

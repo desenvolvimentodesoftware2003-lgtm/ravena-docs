@@ -1,0 +1,15 @@
+OUTRO PROBLEMA GRAVE (mas silencioso)
+🔴 Categoria errada (culinária, saúde, etc.)
+Exemplo:
+
+planta → culinaria ❌
+arco-íris → saude ❌
+Mas…
+
+ Isso NÃO quebrou o sistema porque você faz busca global
+✔️ arquitetura robusta
+❌ classificação inútil (por enquanto)
+
+ Correção (depois, não agora)
+usar categoria só como boost leve
+nunca como filtro inicial

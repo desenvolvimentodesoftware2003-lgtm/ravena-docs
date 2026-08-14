@@ -1,0 +1,13 @@
+SOLUÇÃO 2 — Embedding da RESPOSTA (você não usa direito ainda)
+Você já salva:
+Python
+'embedding_resposta'
+ mas NÃO usa na busca
+erro
+Correção:
+
+Na similaridade:
+Python
+sim_resposta = cosine_similarity([emb_perg], [embedding_resposta])[0][0]
+
+score = (sim_pergunta * 0.7) + (sim_resposta * 0.3)

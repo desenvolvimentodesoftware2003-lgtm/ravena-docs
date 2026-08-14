@@ -1,0 +1,13 @@
+Ajuste fino (isso eleva o nível)
+
+ 4. não use só pergunta — use resposta também
+Cluster atual:
+
+embedding_pergunta
+
+Melhor:
+
+embedding_misto = (emb_pergunta * 0.7 + emb_resposta * 0.3)
+
+if tamanho_cluster < 3 AND media_similaridade < 0.65:
+    reforçar

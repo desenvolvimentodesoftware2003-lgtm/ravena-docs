@@ -1,0 +1,60 @@
+============================================
+RAVENA 0.8 - VERSÃO ORGANIZADA
+Base limpa para evolução → 0.9 (Criptografia)
+============================================
+-- coding: utf-8 --
+============================================
+BLOCO 1 — GOOGLE DRIVE
+============================================
+from google.colab import drive drive.mount('/content/drive')
+BASE_PATH = "/content/drive/MyDrive/RAVENA"
+============================================
+BLOCO 2 — IMPORTS
+============================================
+import os import json from sentence_transformers import SentenceTransformer from sklearn.metrics.pairwise import cosine_similarity
+============================================
+BLOCO 3 — CONFIGURAÇÕES
+============================================
+MEMORIA_PATH = os.path.join(BASE_PATH, "memoria", "memoria_semantica.json") THRESHOLD = 0.65
+modelo = SentenceTransformer('all-MiniLM-L6-v2')
+============================================
+BLOCO 4 — MEMÓRIA
+============================================
+def carregar_memoria(): if not os.path.exists(MEMORIA_PATH): return [] with open(MEMORIA_PATH, 'r', encoding='utf-8') as f: return json.load(f)
+def salvar_memoria(memoria): os.makedirs(os.path.dirname(MEMORIA_PATH), exist_ok=True) with open(MEMORIA_PATH, 'w', encoding='utf-8') as f: json.dump(memoria, f, ensure_ascii=False, indent=4)
+memoria_semantica = carregar_memoria()
+============================================
+BLOCO 5 — FUNÇÕES AUXILIARES
+============================================
+def normalizar_texto(texto): return texto.lower().strip()
+def gerar_embedding(texto): return modelo.encode([texto])[0]
+============================================
+BLOCO 6 — BUSCA SEMÂNTICA
+============================================
+def buscar_memoria(pergunta): if not memoria_semantica: return None
+pergunta_emb = gerar_embedding(pergunta) melhores = [] for item in memoria_semantica: similaridade = cosine_similarity( [pergunta_emb], [item['embedding']] )[0][0] melhores.append((similaridade, item)) melhores.sort(reverse=True, key=lambda x: x[0]) melhor_score, melhor_item = melhores[0] print(f"DEBUG: Similaridade: {melhor_score}") if melhor_score >= THRESHOLD: return melhor_item['resposta'] return None 
+============================================
+BLOCO 7 — APRENDIZADO
+============================================
+def aprender(pergunta, resposta): pergunta_norm = normalizar_texto(pergunta) emb = gerar_embedding(pergunta_norm)
+memoria_semantica.append({ "pergunta": pergunta_norm, "resposta": resposta, "embedding": emb.tolist() }) salvar_memoria(memoria_semantica) return "Aprendido com sucesso." 
+============================================
+BLOCO 8 — CÉREBRO DA RAVENA
+============================================
+def processar_pergunta(pergunta): pergunta_original = pergunta pergunta = normalizar_texto(pergunta)
+print(f"LOG: Pergunta recebida: {pergunta_original}") # comando aprender if pergunta.startswith("aprenda:"): try: conteudo = pergunta.replace("aprenda:", "").strip() p, r = conteudo.split("=") return aprender(p.strip(), r.strip()) except: return "Formato inválido. Use: aprenda: pergunta = resposta" # resposta padrão simples if "oi" in pergunta: return "Olá, eu sou a Artificial Inteligente RAVENA!" if "quem te criou" in pergunta: return "Fui criada por Alexsander Soares Leal de Oliveira!" # busca na memória resposta = buscar_memoria(pergunta) if resposta: return resposta return "Ainda não sei responder isso. Você pode me ensinar usando: aprenda: pergunta = resposta" 
+============================================
+BLOCO 9 — INTERFACE (FLASK)
+============================================
+from flask import Flask, request from pyngrok import ngrok
+app = Flask(name)
+@app.route("/") def home(): return """ 
+RAVENA Beta 1
+""" 
+@app.route("/chat", methods=["POST"]) def chat(): msg = request.form["msg"] resposta = processar_pergunta(msg) return f"
+Você: {msg}
+RAVENA: {resposta}
+Voltar" 
+iniciar servidor
+public_url = ngrok.connect(5000) print("Link:", public_url)
+app.run(port=5000)

@@ -1,0 +1,21 @@
+Atualizar quando aprende de novo
+Dentro do aprender:
+
+item["confianca"] = item.get("confianca", 1.0) + 0.1
+
+ Integrar no score final
+
+Onde você calcula:
+
+score_final = combined_similarity + (peso * 0.05) + (acessos * 0.01)
+
+ muda para:
+
+confianca = item.get("confianca", 1.0)
+
+score_final = (
+    combined_similarity
+    + (peso * 0.05)
+    + (acessos * 0.01)
+    + (confianca * 0.03)
+)

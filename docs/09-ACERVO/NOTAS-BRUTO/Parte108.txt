@@ -1,0 +1,9 @@
+INTEGRAÇÃO (no seu fluxo atual)
+Dentro do processar_pergunta:
+Isso:
+resposta, score = buscar_memoria(pergunta_original)
+Depois:
+Depois:
+if resposta:
+    if deve_aprender(pergunta_original, resposta, score):
+        aprender(pergunta_original, resposta)

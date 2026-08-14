@@ -1,0 +1,5 @@
+def gerar_embedding_categoria(cat, exemplos):
+    return mean([
+        embed(cat),
+        mean([embed(e) for e in exemplos])
+    ])

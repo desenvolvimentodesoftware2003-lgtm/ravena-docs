@@ -1,0 +1,16 @@
+Agora o upgrade: dentro do buscar_memoria,
+
+# Ajustar busca com intenção
+
+intencao = detectar_intencao(pergunta)
+
+# dentro do loop dos itens:
+bonus_intencao = 0
+
+if intencao == "causa" and "causa" in descriptografar(item["pergunta"]):
+    bonus_intencao += 0.05
+
+if intencao == "definicao" and "o que é" in descriptografar(item["pergunta"]):
+    bonus_intencao += 0.05
+
+score_final = (score * peso) + bonus_intencao

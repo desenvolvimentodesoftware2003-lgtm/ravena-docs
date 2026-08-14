@@ -1,0 +1,17 @@
+# ============================================
+# RAVENA
+# BLOCO 10 — CONSULTA INTELIGENTE DA MEMÓRIA
+# ============================================
+
+def buscar_memoria(pergunta):
+
+    pergunta_limpa = limpar_texto(pergunta)
+
+    for chave in memoria:
+
+        chave_limpa = limpar_texto(chave)
+
+        if pergunta_limpa == chave_limpa:
+            return memoria[chave]
+
+    return None

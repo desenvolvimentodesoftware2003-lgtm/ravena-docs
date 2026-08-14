@@ -1,0 +1,155 @@
+exemplos = {
+
+"saude": [
+ "Quais são os sintomas de dengue?",
+ "Estou com dor no peito, o que pode ser?",
+ "Como tratar ansiedade?",
+ "O que causa pressão alta?",
+ "Febre e dor no corpo pode ser o quê?"
+],
+
+"ciencia": [
+ "O que é energia cinética?",
+ "Como funciona a gravidade?",
+ "O que são átomos?",
+ "Explique a termodinâmica",
+ "Como ocorre uma reação química?"
+],
+
+"matematica": [
+ "Quanto é 2+2?",
+ "Resolve essa equação x² + 5x = 0",
+ "O que é derivada?",
+ "Como calcular porcentagem?",
+ "Explique função do segundo grau"
+],
+
+"tecnologia": [
+ "Como criar um programa em Python?",
+ "O que é inteligência artificial?",
+ "Como funciona uma rede de computadores?",
+ "O que é um algoritmo?",
+ "Como fazer um site?"
+],
+
+"historia": [
+ "O que foi a Segunda Guerra Mundial?",
+ "Quem descobriu o Brasil?",
+ "O que foi o Império Romano?",
+ "Explique a Revolução Francesa",
+ "Quem foi Napoleão?"
+],
+
+"geografia": [
+ "Qual é a capital do Canadá?",
+ "O que é clima tropical?",
+ "O que é relevo?",
+ "Como funciona a divisão dos continentes?",
+ "O que é geopolítica?"
+],
+
+"filosofia": [
+ "O que é existencialismo?",
+ "O que é ética?",
+ "O que significa livre-arbítrio?",
+ "O que é a realidade?",
+ "O que é o sentido da vida?"
+],
+
+"religiao": [
+ "O que é o cristianismo?",
+ "Quem é Deus?",
+ "O que é pecado?",
+ "O que significa fé?",
+ "Quais são as principais religiões do mundo?"
+],
+
+"politica": [
+ "O que faz um presidente?",
+ "O que é democracia?",
+ "Como funcionam as eleições?",
+ "O que é esquerda e direita na política?",
+ "O que é um governo?"
+],
+
+"economia": [
+ "O que é inflação?",
+ "Como funciona a bolsa de valores?",
+ "O que é PIB?",
+ "O que são investimentos?",
+ "O que é oferta e demanda?"
+],
+
+"arte": [
+ "O que é arte moderna?",
+ "Quem foi Picasso?",
+ "O que é pintura abstrata?",
+ "O que é expressão artística?",
+ "O que é estética?"
+],
+
+"entretenimento": [
+ "Qual é a melhor série da Netflix?",
+ "Me indica um filme bom",
+ "Quem é esse famoso?",
+ "O que lançou no cinema esse ano?",
+ "Qual jogo está em alta?"
+],
+
+"esporte": [
+ "Quantos jogadores tem um time de futebol?",
+ "O que é impedimento?",
+ "Quem ganhou a Copa do Mundo?",
+ "Como funciona o basquete?",
+ "Qual é a regra do vôlei?"
+],
+
+"linguagem": [
+ "Corrige essa frase pra mim",
+ "Como escreve essa palavra?",
+ "Me ajuda a melhorar esse texto",
+ "O que significa essa palavra?",
+ "Como usar vírgula corretamente?"
+],
+
+"linguistica": [
+ "O que é sintaxe?",
+ "O que é fonética?",
+ "Explique semântica",
+ "O que é estrutura da linguagem?",
+ "Como a linguagem evolui?"
+],
+
+"culinaria": [
+ "Como fazer arroz?",
+ "Receita de bolo simples",
+ "Como preparar carne?",
+ "O que vai nessa receita?",
+ "Como temperar frango?"
+],
+
+"espaco": [
+ "O que é um buraco negro?",
+ "Quantos planetas existem?",
+ "O que é a Via Láctea?",
+ "Como funciona o universo?",
+ "O que é uma estrela?"
+],
+
+"logistica": [
+ "O que é cadeia de suprimentos?",
+ "Como funciona a logística de entrega?",
+ "O que é estoque?",
+ "Como otimizar transporte?",
+ "O que é distribuição de mercadorias?"
+],
+
+"geral": [
+ "Pode explicar melhor?",
+ "Não entendi isso",
+ "Me ajuda com isso aqui",
+ "O que você acha?",
+ "Pode resumir?"
+]
+
+}

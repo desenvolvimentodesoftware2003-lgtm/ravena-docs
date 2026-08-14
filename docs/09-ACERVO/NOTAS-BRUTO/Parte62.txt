@@ -1,0 +1,35 @@
+Correção no buscar_memoria
+
+ Antes de adicionar aos melhores:
+
+if similaridade < 0.5:
+    continue
+
+ Código completo corrigido:
+
+for item in memoria_conhecimento:
+    pergunta_salva = descriptografar(item["pergunta"])
+    resposta_salva = descriptografar(item["resposta"])
+
+    emb_salvo = item["embedding"]
+
+    similaridade = cosine_similarity(
+        [pergunta_emb], [emb_salvo]
+    )[0][0]
+
+    # FILTRO CRÍTICO
+    if similaridade < 0.5:
+        continue
+
+    peso = item.get("peso", 1)
+    acessos = item.get("acessos", 0)
+
+    score_final = similaridade + (peso * 0.05) + (acessos * 0.01)
+
+    melhores.append((score_final, item, pergunta_salva, resposta_salva))
+
+Ajuste fino
+Você pode calibrar:
+
+0.5 → mais flexível (esse no momento não)
+0.6 → mais rigoroso (recomendado)

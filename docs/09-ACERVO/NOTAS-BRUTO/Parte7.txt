@@ -1,0 +1,19 @@
+# ============================================
+# RAVENA
+# BLOCO 7 — SISTEMA DE MEMÓRIA
+# ============================================
+
+import json
+
+# >>> CAMINHO DA MEMÓRIA <<<
+memoria_path = "/content/drive/MyDrive/RAVENA/memoria/memoria_ravena.json"
+
+try:
+    with open(memoria_path, "r") as arquivo:
+        memoria = json.load(arquivo)
+except:
+    memoria = {}
+
+def salvar_memoria():
+    with open(memoria_path, "w") as arquivo:
+        json.dump(memoria, arquivo)

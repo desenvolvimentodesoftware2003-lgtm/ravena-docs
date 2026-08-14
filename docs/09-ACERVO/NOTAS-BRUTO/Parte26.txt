@@ -1,0 +1,17 @@
+def gerar_variacoes(pergunta):
+    base = normalizar_texto(pergunta)
+    variacoes = [base]
+    
+    # Remover/Adicionar acento inicial "qual é" → "qual a"
+    if "qual é" in base:
+        variacoes.append(base.replace("qual é", "qual a"))
+    
+    # Remover "é" para simplificação
+    if "é" in base:
+        variacoes.append(base.replace("é", ""))
+    
+    # Pergunta com/sem ponto de interrogação
+    if not base.endswith("?"):
+        variacoes.append(base + "?")
+    
+    return list(set(variacoes))  # remove duplicatas

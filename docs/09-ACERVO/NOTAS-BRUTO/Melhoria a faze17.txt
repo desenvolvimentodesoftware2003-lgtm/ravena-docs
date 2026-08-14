@@ -1,0 +1,12 @@
+EXTRAÇÃO DOS CONCEITOS
+
+Simples, mas funcional:
+
+import re
+
+def extrair_conceitos(pergunta):
+    # padrão: "diferença entre X e Y"
+    match = re.search(r"entre (.+?) e (.+)", pergunta.lower())
+    if match:
+        return match.group(1).strip(), match.group(2).strip()
+    return None, None

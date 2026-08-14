@@ -1,0 +1,14 @@
+from cryptography.fernet import Fernet
+
+# gerar chave (faça isso UMA vez e salve)
+chave = Fernet.generate_key()
+
+# salvar chave no Drive
+with open("/content/drive/MyDrive/RAVENA/seguranca/chave.key", "wb") as f:
+    f.write(chave)
+
+# carregar chave
+with open("/content/drive/MyDrive/RAVENA/seguranca/chave.key", "rb") as f:
+    chave = f.read()
+
+fernet = Fernet(chave)

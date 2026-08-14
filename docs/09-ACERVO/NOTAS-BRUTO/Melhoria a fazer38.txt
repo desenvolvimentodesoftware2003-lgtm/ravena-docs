@@ -1,0 +1,11 @@
+Correção:
+Você precisa separar:
+AMBIGUIDADE REAL ≠ PROXIMIDADE SEMÂNTICA
+
+ Solução:
+
+if abs(score1 - score2) < 0.05:
+    if cluster(top1) == cluster(top2):
+        # MESMO CONCEITO → NÃO FAZ FALLBACK
+        escolher top1
+    else:

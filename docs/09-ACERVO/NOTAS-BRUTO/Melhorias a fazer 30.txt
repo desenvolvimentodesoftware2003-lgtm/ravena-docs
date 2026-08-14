@@ -1,0 +1,10 @@
+Correção obrigatória:
+Você precisa validar antes de salvar:
+Python
+def validar_antes_de_aprender(pergunta, resposta):
+    score = similaridade(pergunta, resposta)
+    return score > 0.55
+E mais importante:
+Python
+if score < 0.55:
+    NÃO SALVAR

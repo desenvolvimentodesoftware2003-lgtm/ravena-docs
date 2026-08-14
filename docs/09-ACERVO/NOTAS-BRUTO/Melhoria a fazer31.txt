@@ -1,0 +1,13 @@
+Correção:
+Troca isso:
+
+if intersecao == 0:
+    penalizar
+
+Por isso:
+
+if intersecao == 0:
+    if similaridade_semantica > 0.55:
+        penalidade_leve
+    else:
+        penalidade_forte

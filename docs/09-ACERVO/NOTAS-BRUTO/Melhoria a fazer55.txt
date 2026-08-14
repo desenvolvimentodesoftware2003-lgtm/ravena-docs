@@ -1,0 +1,153 @@
+FLUXO COMPLETO
+
+def processar_pergunta(pergunta):
+    embedding = gerar_embedding(pergunta)
+
+    categorias = detectar_categorias_multiplas(pergunta, embedding)
+
+    candidatos = []
+    for cat, confianca in categorias:
+        candidatos_cat = buscar_por_categoria(cat, embedding)
+        candidatos.extend(candidatos_cat)
+
+    candidatos = remover_duplicados(candidatos)
+
+    candidatos_ranqueados = reranquear_candidatos(
+        pergunta,
+        embedding,
+        candidatos
+    )
+
+    melhor = selecionar_melhor(candidatos_ranqueados)
+
+    if validar_resposta(melhor):
+        return melhor['resposta']
+    else:
+        return fallback_inteligente(pergunta, candidatos_ranqueados)
+
+ 1. DETECÇÃO MULTI-CATEGORIA (SUBSTITUI O ATUAL)
+
+ Problema resolvido:
+categoria errada
+score -1
+rigidez
+
+✅ Implementação:
+
+def detectar_categorias_multiplas(pergunta, embedding):
+    resultados = []
+
+    for cat, desc in DESCRICOES_CATEGORIA.items():
+        emb_cat = gerar_embedding(desc)
+        score = similaridade(embedding, emb_cat)
+
+        resultados.append((cat, score))
+
+    # ordena
+    resultados.sort(key=lambda x: x[1], reverse=True)
+
+    # pega TOP 3 com confiança mínima
+    categorias_validas = [
+        (cat, score) for cat, score in resultados[:3]
+        if score > 0.30
+    ]
+
+    # fallback controlado
+    if not categorias_validas:
+        return [("fallback_controlado", 0.0)]
+
+    return categorias_validas
+
+ 2. BUSCA HÍBRIDA (SEM DEPENDER SÓ DA CATEGORIA)
+Python
+def buscar_por_categoria(categoria, embedding):
+    resultados = []
+
+    for item in MEMORIA:
+        if item['categoria'] == categoria:
+            score = similaridade(embedding, item['embedding'])
+            if score > 0.40:
+                resultados.append({
+                    **item,
+                    'score_base': score
+                })
+
+    return resultados
+
+3. RERANQUEAMENTO COM VALIDAÇÃO (O CORAÇÃO DO NÍVEL 2)
+
+ Resolve:
+fotossíntese vs respiração celular
+efeito estufa vs energia da planta
+respostas misturadas
+Python
+def reranquear_candidatos(pergunta, embedding, candidatos):
+    resultado = []
+
+    termos_pergunta = extrair_termos_relevantes(pergunta)
+
+    for item in candidatos:
+        score = item['score_base']
+
+        termos_item = extrair_termos_relevantes(item['pergunta'])
+
+        # validação por interseção de termos
+        intersecao = len(set(termos_pergunta) & set(termos_item))
+
+        if intersecao == 0:
+            score -= 0.15  # penalidade forte
+        else:
+            score += intersecao * 0.05
+
+        #  penalidade por conflito semântico leve
+        if conflito_semantico(pergunta, item['pergunta']):
+            score -= 0.10
+
+        # 🔹 ônus por cluster (se existir)
+        if 'cluster_id' in item:
+            score += 0.05
+
+        item['score_final'] = score
+        resultado.append(item)
+
+    return sorted(resultado, key=lambda x: x['score_final'], reverse=True)
+
+ 4. VALIDAÇÃO FINAL (ANTI-ERRO DEFINITIVO)
+Python
+def validar_resposta(item):
+    if not item:
+        return False
+
+    if item['score_final'] < 0.65:
+        return False
+
+    return True
+5. FALLBACK INTELIGENTE (NÍVEL 2)
+🔴 Antes: “não sei”
+
+Agora: diagnóstico real
+
+def fallback_inteligente(pergunta, candidatos):
+    if not candidatos:
+        return "Não encontrei nenhuma informação relacionada. Pode me ensinar?"
+
+    melhor = candidatos[0]
+
+    if melhor['score_base'] > 0.50:
+        return f"Encontrei algo parecido, mas não tenho certeza:\n→ {melhor['resposta']}"
+
+    return "Ainda não sei isso com segurança. Pode me ensinar?"
+ 6. EXTRAÇÃO DE TERMOS (ESSENCIAL)
+
+def extrair_termos_relevantes(texto):
+    stopwords = {"o", "a", "de", "da", "do", "e", "é", "um", "uma"}
+
+    palavras = texto.lower().split()
+
+    return [p for p in palavras if p not in stopwords and len(p) > 3]
+
+CONFIGURAÇÃO FINAL (IMPORTANTE)
+
+SEMANTIC_THRESHOLD = 0.40
+GLOBAL_MATCH_THRESHOLD = 0.65
+CATEGORIA_MIN_SCORE = 0.30

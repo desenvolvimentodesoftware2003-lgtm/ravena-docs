@@ -1,0 +1,17 @@
+Forma correta (equilíbrio)
+Você deve fazer:
+Python
+if confianca_categoria > 0.7:
+    buscar primeiro nesse núcleo
+    se não achar → fallback global
+
+ NÃO:
+Python
+bloquear outros núcleos
+
+ Implementação correta
+Python
+if item["categoria"] == categoria:
+    score_final *= 1.15  # prioriza
+else:
+    score_final *= 0.95  # leve penalidade

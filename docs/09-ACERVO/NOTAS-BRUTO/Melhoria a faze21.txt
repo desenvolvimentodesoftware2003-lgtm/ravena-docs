@@ -1,0 +1,7 @@
+INTEGRAÇÃO FINAL
+No seu pipeline principal:
+
+if detectar_comparacao(pergunta):
+    c1, c2 = extrair_conceitos(pergunta)
+    if c1 and c2:
+        return comparar_conceitos(c1, c2)

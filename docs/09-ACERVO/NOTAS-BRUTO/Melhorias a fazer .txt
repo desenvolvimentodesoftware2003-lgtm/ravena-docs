@@ -1,0 +1,85 @@
+# ============================================================
+# BLOCO 5 — CONFIGURAÇÕES GLOBAIS E ÂNCORAS SEMÂNTICAS (REFATORADO)
+# ============================================================
+# Mudamos de "Lista de Palavras" para "Descrições de Domínio" (Âncoras)
+# O modelo MPNet entende melhor frases do que palavras isoladas.
+
+DESCRICOES_CATEGORIA = {
+    'saude': "Temas sobre medicina, patologias, bem-estar, tratamentos biológicos, sintomas de doenças, tabagismo e práticas hospitalares.",
+    'historia': "Acontecimentos passados, fatos históricos, cronologia de impérios, guerras, revoluções e formação de nações.",
+    'matematica': "Cálculos numéricos, equações algébricas, geometria, teoremas, estatística e lógica matemática pura.",
+    'ciencia': "Método científico, leis da física, reações químicas, biologia celular, evolução, ecossistemas e natureza.",
+    'tecnologia': "Desenvolvimento de software, hardware, inteligência artificial, redes de computadores, programação e inovação digital.",
+    'geografia': "Geopolítica, relevo terrestre, demografia, cartografia, climas globais e divisões territoriais de países.",
+    'arte': "Expressões culturais, história da pintura, escultura, música clássica e contemporânea, teatro e estética visual.",
+    'esporte': "Competições atléticas, regras de jogos, performance física, campeonatos mundiais e treinamento esportivo.",
+    'politica': "Sistemas de governo, legislação, eleições, ideologias políticas, diplomacia e gestão do Estado.",
+    'economia': "Mercado financeiro, macroeconomia, inflação, investimentos, fluxos de capital e gestão bancária.",
+    'entretenimento': "Cultura pop, cinema, streaming, jogos eletrônicos, celebridades e lazer mediático.",
+    'filosofia': "Investigação da existência, ética, moralidade, metafísica, epistemologia e grandes pensadores.",
+    'religiao': "Sistemas de crença, espiritualidade, teologia, textos sagrados, rituais e instituições religiosas.",
+    'linguagem': "Estudo da gramática, semântica, origem dos idiomas, linguística, escrita e comunicação verbal.",
+    'culinaria': "Gastronomia, técnicas de preparo de alimentos, ingredientes, receitas e cultura alimentar.",
+    'espaco': "Astronomia, astrofísica, corpos celestes, exploração aeroespacial, galáxias e física do vácuo.",
+    'logistica': "Cadeia de suprimentos, transporte de cargas, gestão de estoque, distribuição e fluxo operacional.",
+    'geral': "Assuntos cotidianos, perguntas genéricas, curiosidades variadas e informações de contexto amplo."
+}
+
+# Thresholds Dinâmicos por Prioridade (O peso agora ajusta o rigor, não o score)
+# Categorias com peso 1.0 exigem 0.70 de score. Categorias com 0.85 aceitam 0.60.
+PESOS_DORMANCIA_CATEGORIA = {
+    'ciencia': 1.0, 'tecnologia': 1.0, 'espaco': 1.0, 'matematica': 1.0,
+    'saude': 0.95, 'logistica': 0.95, 'politica': 0.9, 'economia': 0.9,
+    'historia': 0.85, 'geografia': 0.85, 'filosofia': 0.85, 'arte': 0.8,
+    'geral': 0.7
+}
+
+# ============================================================
+# BLOCO 8 — UTILITÁRIOS DE TEXTO (REFATORADO: EXTRAÇÃO DE NÚCLEO)
+# ============================================================
+def extrair_nucleo_semantico(texto):
+    """
+    Remove o 'eu lírico' e foca no que importa: Substantivos e Verbos.
+    """
+    doc = nlp_pt(texto.lower())
+    # Filtramos apenas o que carrega significado pesado
+    tokens = [t.lemma_ for t in doc if t.pos_ in ['NOUN', 'PROPN', 'VERB', 'ADJ'] and not t.is_stop]
+    return " ".join(tokens) if tokens else texto
+
+def normalizar_texto(texto):
+    if not isinstance(texto, str): return ""
+    texto = remover_acentos(texto.lower().strip())
+    texto = re.sub(r"[^\w\s]", "", texto)
+    return extrair_nucleo_semantico(texto)
+
+# ============================================================
+# BLOCO 11 — EMBEDDINGS DE CATEGORIA (REFATORADO)
+# ============================================================
+print("Gerando Mapas Conceituais das Categorias...")
+CATEGORY_EMBEDDINGS = {
+    cat: gerar_embedding(desc) for cat, desc in DESCRICOES_CATEGORIA.items()
+}
+print("CATEGORY_EMBEDDINGS prontos para uso semântico.")
+
+# ============================================================
+# BLOCO 15 — CLASSIFICAÇÃO INTELIGENTE (REFATORADO)
+# ============================================================
+def classificar_tipo_pergunta(pergunta_bruta):
+    # 1. Extraímos o núcleo para não ser enganado por "olá", "eu queria saber sobre..."
+    nucleo = extrair_nucleo_semantico(pergunta_bruta)
+    emb_pergunta = gerar_embedding(nucleo)
+    
+    melhor_cat, max_sim = "geral", -1
+    
+    for cat, emb_cat in CATEGORY_EMBEDDINGS.items():
+        sim = cosine_similarity([emb_pergunta], [emb_cat])[0][0]
+        
+        # Aplicamos o peso de importância da categoria na similaridade
+        sim_ajustada = sim * PESOS_DORMANCIA_CATEGORIA.get(cat, 0.7)
+        
+        if sim_ajustada > max_sim:
+            max_sim = sim_ajustada
+            melhor_cat = cat
+            
+    print(f"DEBUG_RAVENA: Núcleo: '{nucleo}' -> Cat: '{melhor_cat}' (Score: {max_sim:.4f})")
+    return melhor_cat

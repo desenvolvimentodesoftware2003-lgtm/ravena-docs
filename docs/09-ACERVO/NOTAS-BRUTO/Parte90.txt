@@ -1,0 +1,38 @@
+Substitui a lógica atual por essa: 
+
+def aprender(pergunta, resposta):
+    pergunta_norm = normalizar_texto(pergunta)
+    emb = gerar_embedding(pergunta_norm)
+
+    topico = classificar_topico(pergunta)
+    path = get_path_topico(topico)
+    memoria = carregar_conhecimento(path)
+
+    for item in memoria:
+        if descriptografar(item["pergunta"]) == pergunta_norm:
+
+            # 🔥 adiciona nova versão
+            item["respostas"].append({
+                "texto": criptografar(resposta),
+                "peso": 1,
+                "acessos": 0,
+                "confianca": 1.0
+            })
+
+            salvar_conhecimento(memoria, path)
+            return "Nova versão aprendida!"
+
+    # novo item
+    memoria.append({
+        "pergunta": criptografar(pergunta_norm),
+        "respostas": [{
+            "texto": criptografar(resposta),
+            "peso": 1,
+            "acessos": 0,
+            "confianca": 1.0
+        }],
+        "embedding": emb.tolist()
+    })
+
+    salvar_conhecimento(memoria, path)
+    return "Aprendido com sucesso."

@@ -1,0 +1,16 @@
+No seu buscar_memoria, você já tem lista de candidatos.
+
+Adiciona isso:
+Python
+def detectar_conflito(candidatos):
+    if len(candidatos) < 2:
+        return False
+
+    score1 = candidatos[0][0]
+    score2 = candidatos[1][0]
+
+    # diferença pequena = conflito
+    if abs(score1 - score2) < 0.05:
+        return True
+
+    return False

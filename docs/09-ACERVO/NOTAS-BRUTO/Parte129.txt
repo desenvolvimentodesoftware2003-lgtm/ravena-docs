@@ -1,0 +1,4 @@
+Ajuste inteligente (recomendado)
+Você pode deixar dinâmico:
+
+n_clusters = max(2, int(len(memoria) / 5))

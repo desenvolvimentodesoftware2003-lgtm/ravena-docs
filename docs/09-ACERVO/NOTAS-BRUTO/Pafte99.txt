@@ -1,0 +1,30 @@
+# função de revisão
+
+def revisar_memoria(path):
+    memoria = carregar_conhecimento(path)
+
+    alterado = False
+
+    for item in memoria:
+        respostas_validas = []
+
+        for r in item["respostas"]:
+            peso = r.get("peso", 1)
+            acessos = r.get("acessos", 0)
+            confianca = r.get("confianca", 1.0)
+
+            # 🔥 critério de descarte leve
+            if peso <= 0.5 and acessos == 0 and confianca < 0.8:
+                continue
+
+            respostas_validas.append(r)
+
+        # se removeu algo
+        if len(respostas_validas) != len(item["respostas"]):
+            item["respostas"] = respostas_validas
+            alterado = True
+
+    if alterado:
+        salvar_conhecimento(memoria, path)
+
+    return "Revisão concluída"

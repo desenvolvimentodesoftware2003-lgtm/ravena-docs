@@ -1,0 +1,21 @@
+# Criar função de reescrita
+
+def reescrever_pergunta(pergunta):
+    pergunta = pergunta.lower()
+
+    intencao = detectar_intencao(pergunta)
+
+    # PADRÕES CONTROLADOS
+    if intencao == "definicao":
+        return f"o que é {pergunta}"
+
+    elif intencao == "causa":
+        return f"por que {pergunta}"
+
+    elif intencao == "efeito":
+        return f"o que causa {pergunta}"
+
+    elif intencao == "historico":
+        return f"história de {pergunta}"
+
+    return pergunta

@@ -1,0 +1,8 @@
+LIMITADOR
+Adiciona:
+Python
+MAX_MEMORIA_POR_TOPICO = 500
+E antes de salvar:
+Python
+if len(memoria_do_topico) > MAX_MEMORIA_POR_TOPICO:
+    memoria_do_topico.pop(0)  # remove mais antigo

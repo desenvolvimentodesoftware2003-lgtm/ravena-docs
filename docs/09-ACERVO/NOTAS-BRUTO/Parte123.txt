@@ -1,0 +1,80 @@
+saude:
+  ['cigarro', 'saúde', 'doença', 'doenças', 'câncer', 'tabagismo', 'sintoma', 'sintomas',
+   'medicina', 'hospital', 'diagnóstico', 'tratamento', 'remédio', 'remedios', 'vacina',
+   'vírus', 'bactéria', 'infecção', 'febre', 'dor', 'terapia', 'prevenção', 'exame', 'clínico']
+
+historia:
+  ['brasil', 'história', 'histórico', 'descobriu', 'descobrimento', 'independência',
+   'colonização', 'república', 'império', 'guerra', 'revolução', 'período', 'era',
+   'civilização', 'acontecimento', 'evento histórico', 'linha do tempo']
+
+matematica:
+  ['equação', 'matemática', 'cálculo', 'calculo', 'geometria', 'álgebra', 'numeros', 'números',
+   'fórmula', 'função', 'gráfico', 'teorema', 'estatística', 'probabilidade', 'logaritmo',
+   'derivada', 'integral', 'aritmética']
+
+ciencia:
+  ['ciência', 'clima', 'física', 'química', 'biologia', 'átomo', 'universo', 'gravidade',
+   'teoria', 'experimento', 'energia', 'matéria', 'organismo', 'ecologia', 'natureza',
+   'ambiente', 'célula', 'DNA', 'evolução', 'fotossíntese', 'respiração celular',
+   'ciclo de carbono', 'reação química', 'ecossistema', 'cadeia alimentar']
+
+tecnologia:
+  ['computador', 'internet', 'software', 'hardware', 'inteligência artificial',
+   'programação', 'código', 'codigo', 'desenvolvimento', 'algoritmo', 'algoritmos',
+   'dados', 'banco de dados', 'rede', 'redes', 'servidor', 'cloud', 'nuvem',
+   'machine learning', 'IA', 'robótica', 'automação', 'sistema']
+
+geografia:
+  ['país', 'pais', 'capital', 'cidade', 'continente', 'oceano', 'mar', 'montanha',
+   'rio', 'população', 'mapa', 'fronteira', 'território', 'clima', 'região', 'local']
+
+literatura:
+  ['livro', 'autor', 'escritor', 'poesia', 'romance', 'conto', 'literatura',
+   'gênero', 'personagem', 'enredo', 'história', 'obra', 'texto']
+
+arte:
+  ['arte', 'pintura', 'escultura', 'música', 'teatro', 'cinema', 'artista',
+   'obra', 'estilo', 'dança', 'fotografia', 'cultura']
+
+esporte:
+  ['futebol', 'esporte', 'olimpíadas', 'atleta', 'competição', 'time',
+   'campeonato', 'regra', 'partida', 'treino', 'técnica']
+
+politica:
+  ['governo', 'presidente', 'eleição', 'eleições', 'democracia', 'ditadura',
+   'lei', 'política', 'partido', 'justiça', 'estado', 'poder', 'senado',
+   'deputado', 'ministro']
+
+economia:
+  ['dinheiro', 'mercado', 'inflação', 'banco', 'investimento', 'empresa',
+   'negócio', 'economia', 'lucro', 'prejuízo', 'renda', 'salário',
+   'taxa', 'juros', 'bolsa', 'finanças']
+
+entretenimento:
+  ['filme', 'série', 'jogo', 'game', 'diversão', 'lazer', 'mídia',
+   'streaming', 'netflix', 'youtube', 'celebridade']
+
+filosofia:
+  ['existência', 'conhecimento', 'moral', 'ética', 'razão',
+   'pensamento', 'filósofo', 'verdade', 'realidade',
+   'consciência', 'lógica']
+
+religiao:
+  ['deus', 'fé', 'igreja', 'crença', 'espiritualidade',
+   'bíblia', 'corão', 'torá', 'religião', 'oração', 'alma']
+
+linguagem:
+  ['palavra', 'significado', 'gramática', 'verbo',
+   'substantivo', 'idioma', 'linguística',
+   'frase', 'texto', 'linguagem']
+
+culinaria:
+  ['receita', 'comida', 'prato', 'ingrediente',
+   'culinária', 'cozinha', 'restaurante',
+   'preparo', 'alimento']
+
+geral:
+  ['o que é', 'o que significa', 'quem é', 'onde é', 'quando foi',
+   'como funciona', 'me diga sobre', 'informações sobre',
+   'explique', 'resuma']

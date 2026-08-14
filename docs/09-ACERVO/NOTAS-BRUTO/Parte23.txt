@@ -1,0 +1,8 @@
+def aprender_semantico(pergunta, resposta):
+    embedding = gerar_embedding(pergunta)
+    memoria_semantica.append({
+        "pergunta": pergunta,
+        "resposta": resposta,
+        "embedding": embedding
+    })
+    salvar_memoria_semantica()  # função que grava no Drive

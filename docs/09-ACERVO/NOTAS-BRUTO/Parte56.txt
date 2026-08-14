@@ -1,0 +1,24 @@
+1. Criar memória curta 
+No topo do código:
+Python
+memoria_curta = []
+LIMITE_MEMORIA_CURTA = 5
+
+Altera
+🔹 2. Salvar conversa 
+Dentro do processar_pergunta:
+Antes do return final:
+Python
+memoria_curta.append({
+    "pergunta": pergunta_original,
+    "resposta": resposta
+})
+
+if len(memoria_curta) > LIMITE_MEMORIA_CURTA:
+    memoria_curta.pop(0)
+🔹 3. Usar contexto (primeiro passo simples)
+Antes de buscar memória:
+Python
+if memoria_curta:
+    contexto = memoria_curta[-1]["pergunta"]
+    pergunta = contexto + " " + pergunta

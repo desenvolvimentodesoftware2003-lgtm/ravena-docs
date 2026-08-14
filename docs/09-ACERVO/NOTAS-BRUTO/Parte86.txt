@@ -1,0 +1,20 @@
+Implementa esse código na celula para não quebra o código 
+
+Atualiza sua função 
+
+# ajustar funções
+
+def ajustar_peso(item, score):
+    peso_atual = item.get("peso", 1)
+
+    if score > 0.80:
+        peso_atual += 0.1
+    elif score > 0.65:
+        peso_atual += 0.05
+    else:
+        peso_atual -= 0.05
+
+    #  trava de segurança
+    peso_atual = max(PESO_MIN, min(PESO_MAX, peso_atual))
+
+    item["peso"] = peso_atual

@@ -1,0 +1,4 @@
+  File "/tmp/ipykernel_274/747947514.py", line 3
+    Base limpa para evolução ? 0.9 (Criptografia)
+                             ^
+SyntaxError: invalid character '?' (U+2192)

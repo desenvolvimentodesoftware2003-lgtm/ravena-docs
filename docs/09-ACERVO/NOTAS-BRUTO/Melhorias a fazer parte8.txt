@@ -1,0 +1,9 @@
+Correção essencial (filtro semântico)
+
+sim = cosine_similarity(
+    [gerar_embedding(pergunta_original)],
+    [gerar_embedding(pergunta_gerada)]
+)[0][0]
+
+if sim < 0.75:
+    descartar

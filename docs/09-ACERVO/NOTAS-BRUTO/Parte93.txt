@@ -1,0 +1,10 @@
+Implementa esse código na celula para não quebra o código. 
+
+Lógica simples inicial
+Depois de rankear respostas:
+
+if len(candidatos) > 1:
+    diff = abs(candidatos[0][0] - candidatos[1][0])
+
+    if diff < 0.05:
+        print("⚠️ Conflito detectado entre respostas")

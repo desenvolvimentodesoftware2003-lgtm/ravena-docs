@@ -1,0 +1,22 @@
+Integrar na busca
+Dentro do buscar_memoria, depois de rankear:
+
+Substitui:
+
+melhor_resposta = ...
+Por:
+
+top_respostas = []
+
+for score, item_ref, path in todas_memorias_candidatas[:3]:
+    for r in item_ref["respostas"]:
+        top_respostas.append(r)
+
+#  filtrar só respostas relevantes
+top_respostas = sorted(
+    top_respostas,
+    key=lambda x: x.get("confianca", 1.0),
+    reverse=True
+)[:2]
+
+resposta_final = sintetizar_respostas(top_respostas)

@@ -1,0 +1,69 @@
+# =========================
+# 🔥 RAVENA - BLOCO ÚNICO
+# =========================
+
+import os
+
+# 📌 CAMINHOS
+BASE_PATH = "/content/drive/MyDrive/RAVENA"
+CLEANER_PATH = "/content/drive/MyDrive/ravena_cleaner.py"
+
+# =========================
+# 🧹 ETAPA 1 - LIMPEZA
+# =========================
+
+def executar_limpeza():
+    print("\n🧹 Iniciando limpeza automática...")
+
+    if os.path.exists(CLEANER_PATH):
+        try:
+            exec(open(CLEANER_PATH).read())
+            print("✅ Limpeza concluída")
+        except Exception as e:
+            print(f"⚠️ Erro na limpeza: {e}")
+    else:
+        print("⚠️ Cleaner não encontrado")
+
+# =========================
+# 📊 ETAPA 2 - STATUS
+# =========================
+
+def verificar_estrutura():
+    print("\n📊 Verificando estrutura do projeto...")
+
+    total_arquivos = 0
+
+    for root, dirs, files in os.walk(BASE_PATH):
+        total_arquivos += len(files)
+
+    print(f"📁 Total de arquivos: {total_arquivos}")
+
+# =========================
+# 🧠 ETAPA 3 - CORE INICIAL
+# =========================
+
+def iniciar_ravena():
+    print("\n🧠 Iniciando RAVENA...")
+
+    # Aqui você vai plugar seus módulos depois
+    print("⚙️ Sistema ativo")
+    print("📡 Aguardando comandos...")
+
+# =========================
+# 🚀 EXECUÇÃO PRINCIPAL
+# =========================
+
+def main():
+    print("🚀 BOOT RAVENA\n")
+
+    executar_limpeza()
+    verificar_estrutura()
+    iniciar_ravena()
+
+    print("\n✅ RAVENA PRONTO")
+
+# =========================
+# ▶️ START
+# =========================
+
+main()

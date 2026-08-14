@@ -1,0 +1,16 @@
+# ============================================
+# RAVENA
+# BLOCO 11 — REGISTRO DE APRENDIZADO
+# ============================================
+
+def aprender(pergunta, resposta):
+
+    pergunta = limpar_texto(pergunta)
+
+    memoria[pergunta] = resposta
+
+    salvar_memoria()
+
+    registrar_log(f"RAVENA aprendeu: '{pergunta}' = '{resposta}'")
+
+    return "Aprendi algo novo."

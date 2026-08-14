@@ -1,0 +1,14 @@
+# Criar classificador de tipo
+
+def classificar_tipo_pergunta(pergunta):
+    pergunta = pergunta.lower()
+
+    # opinião
+    if any(p in pergunta for p in ["melhor", "pior", "mais bonito", "mais forte"]):
+        return "opiniao"
+
+    # fato
+    if any(p in pergunta for p in ["quem", "quando", "onde", "quantos"]):
+        return "fato"
+
+    return "geral"
