@@ -89,6 +89,7 @@ Prioridade: **P0** usar agora · **P1** alta · **P2** média/após base · **P3
 | [LanceDB](https://github.com/lancedb/lancedb) | 🧠 | **P0** | Vector store leve/embedded, sem servidor — melhor custo p/ aim |
 | [Mem0](https://github.com/mem0ai/mem0) | 🧠 | **P0** | Camada de memória persistente p/ agentes (o aim tem módulo memory) |
 | [LlamaIndex](https://github.com/run-llama/llama_index) | 🧠 | **P0** | Busca híbrida p/ o RAG do aim (rag_advanced) |
+| [AgentSearch](https://github.com/SciPhi-AI/agent-search) | 🧠 | **P0** | JÁ É a Fonte 1b do aim — busca/RAG p/ agentes, local (sem chave) ou hospedada |
 | [Letta (MemGPT)](https://github.com/letta-ai/letta) | 🧠 | **P1** | Memória hierárquica/paginação de contexto |
 | [RedisVL](https://github.com/RedisVentures/redisvl) | 🧠 | **P1** | Busca vetorial em Redis (já tem Redis no sandbox-ravena) |
 | [LangGraph](https://github.com/langchain-ai/langgraph) | 🧠 | **P1** | Fluxos em grafo p/ orquestração (omega_core) |
